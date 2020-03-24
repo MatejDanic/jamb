@@ -377,7 +377,7 @@ function endGame() {
 }
 
 function recordGame() {
-	person = prompt("Molimo unesite vase ime:");
+	person = prompt("Molimo unesite nadimak:");
 	if (person != null && person != "") {
 		var http = new XMLHttpRequest();
 		var url = 'https://jamb-remote.herokuapp.com/scores';
