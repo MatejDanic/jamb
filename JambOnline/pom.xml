@@ -10,7 +10,7 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>matej.jamb</groupId>
-	<artifactId>jamb-remote</artifactId>
+	<artifactId>JambOnline</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>OnlineGame</name>
 	<description>Demo project for Spring Boot</description>
