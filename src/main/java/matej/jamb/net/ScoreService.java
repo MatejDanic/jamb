@@ -40,7 +40,16 @@ public class ScoreService {
 	}
 
 	public List<Score> getScoreList() {
-		return scoreRepo.findAll();
+		List<Score> scoreList = new LinkedList<>();
+		scoreList = scoreRepo.findAll();
+		Collections.sort(scoreList, new Comparator<Score>() {
+		    @Override
+		    public int compare(Score s1, Score s2) {
+		        return (int) (s2.getDate().getTime() - s1.getDate().getTime());
+		    }
+		});
+		
+		return scoreList;
 	}
 
 	public void deleteScoreById(int id) {
