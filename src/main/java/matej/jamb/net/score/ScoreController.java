@@ -1,4 +1,4 @@
-package matej.jamb.net;
+package matej.jamb.net.score;
 
 
 import java.util.List;

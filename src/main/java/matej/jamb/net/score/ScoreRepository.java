@@ -1,4 +1,4 @@
-package matej.jamb.net;
+package matej.jamb.net.score;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
