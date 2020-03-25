@@ -423,7 +423,7 @@ function showLeaderboard() {
 //				console.log(obj);
 				text += (i+1) + ". " + obj.value + " - " + obj.name + "\n";
 			}
-			alert("Danasnji najbolji rezultati:\n" + text);
+			alert("Najbolji rezultati ovaj tjedan:\n" + text);
 		}
 	}
 	http.send();
