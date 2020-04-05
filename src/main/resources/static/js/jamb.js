@@ -108,6 +108,7 @@ function writeDown(id) {
 			}, 1000);
 		}
 		rollDiceButton.className = 'roll-dice-button';
+		updateScore();
 	}
 }
 
