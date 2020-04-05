@@ -106,6 +106,7 @@ function writeDown(id) {
 				endGame();
 			}, 1000);
 		}
+		rollDiceButton.className = 'roll-dice-button';
 	}
 }
 
@@ -185,7 +186,13 @@ function initializeGrid() {
 function rollDice() {
 	var number;
 	diceRolls++;
-
+	if (diceRolls == 1) {
+		rollDiceButton.className = 'roll-dice-button gradient_1';
+	} else if (diceRolls == 2) {
+		rollDiceButton.className = 'roll-dice-button gradient_2';
+	} else if (diceRolls == 3) {
+		rollDiceButton.className = 'roll-dice-button gradient_3';
+	}
 	for (var i = 0; i < diceButtons.length; i++) {
 		if (diceButtons[i].style.backgroundColor == "rgb(220, 220, 220)") {
 			number = Math.floor(Math.random() * (7 - 1) ) + 1;
@@ -359,9 +366,20 @@ function calculateSums() {
 	}
 }
 
-function endGame() {
+function updateScore() {
 	var xmlHttp = new XMLHttpRequest();
 	chargeURLPut('https://jamb-remote.herokuapp.com/scores/'+scoreId);
+	function chargeURLPut(url) { 
+		var mimeType = "text/plain";  
+		xmlHttp.open('PUT', url, true);
+		xmlHttp.setRequestHeader('Content-Type', mimeType);  
+		xmlHttp.send(scores[15].value); 
+	}
+}
+
+function endGame() {
+	var xmlHttp = new XMLHttpRequest();
+	chargeURLPut('https://jamb-remote.herokuapp.com/scores/finish/'+scoreId);
 
 	function chargeURLPut(url) { 
 		var mimeType = "text/plain";  
@@ -447,7 +465,7 @@ function showAllScores() {
 //				console.log(obj);
 				if (obj.finished == true) {
 					var date = new Date(obj.date)
-					
+
 					text += obj.name + " (" + date.toLocaleDateString() + ") -" + obj.value + "\n";
 				}
 			}
