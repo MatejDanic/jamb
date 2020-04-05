@@ -21,8 +21,10 @@ public class ScoreService {
 
 	public void clearUnfinishedScores() {
 		Queue<Score> queue = new LinkedList<>();
+		Calendar today = Calendar.getInstance();
+		today.set(Calendar.HOUR_OF_DAY, 0);
 		for (Score score : scoreRepo.findAll()) {
-			if (!score.isFinished()) {
+			if (!score.isFinished() && !isSameDay(score.getDate(), today.getTime())) {
 				queue.add(score);
 			}
 		}
