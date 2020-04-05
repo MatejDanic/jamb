@@ -6,6 +6,7 @@ var scores;
 var announcement;
 var counter;
 var scoreId;
+var person;
 
 window.onload = function () {
 	diceRolls = 0;
@@ -367,27 +368,30 @@ function calculateSums() {
 }
 
 function updateScore() {
-	var xmlHttp = new XMLHttpRequest();
-	chargeURLPut('https://jamb-remote.herokuapp.com/scores/'+scoreId);
-	function chargeURLPut(url) { 
-		var mimeType = "text/plain";  
-		xmlHttp.open('PUT', url, true);
-		xmlHttp.setRequestHeader('Content-Type', mimeType);  
-		xmlHttp.send(scores[15].value); 
+	if (person != null && person != "") {
+		var xmlHttp = new XMLHttpRequest();
+		chargeURLPut('https://jamb-remote.herokuapp.com/scores/'+scoreId);
+		function chargeURLPut(url) { 
+			var mimeType = "text/plain";  
+			xmlHttp.open('PUT', url, true);
+			xmlHttp.setRequestHeader('Content-Type', mimeType);  
+			xmlHttp.send(scores[15].value); 
+		}
 	}
 }
 
 function endGame() {
-	var xmlHttp = new XMLHttpRequest();
-	chargeURLPut('https://jamb-remote.herokuapp.com/scores/finish/'+scoreId);
+	if (person != null && person != "") {
+		var xmlHttp = new XMLHttpRequest();
+		chargeURLPut('https://jamb-remote.herokuapp.com/scores/finish/'+scoreId);
 
-	function chargeURLPut(url) { 
-		var mimeType = "text/plain";  
-		xmlHttp.open('PUT', url, true);
-		xmlHttp.setRequestHeader('Content-Type', mimeType);  
-		xmlHttp.send(scores[15].value); 
+		function chargeURLPut(url) { 
+			var mimeType = "text/plain";  
+			xmlHttp.open('PUT', url, true);
+			xmlHttp.setRequestHeader('Content-Type', mimeType);  
+			xmlHttp.send(scores[15].value); 
+		}
 	}
-
 	var txt;
 	if (confirm("Cestitamo, vas rezultat je " + scores[15].value + "\nZapocni novu igru?")) {
 		location.reload();
