@@ -49,9 +49,14 @@ public class ScoreController {
 		scoreService.deleteScoreById(id);
 	}
 
+	@PutMapping("/finish/{id}")
+	public void finishScore(@RequestBody String value, @PathVariable("id") int id) {
+		scoreService.saveScore(id, value, true);
+	}
+	
 	@PutMapping("/{id}")
-	public void saveResource(@RequestBody String value, @PathVariable("id") int id) {
-		scoreService.saveScore(id, value);
+	public void saveScore(@RequestBody String value, @PathVariable("id") int id) {
+		scoreService.saveScore(id, value, false);
 	}
 
 	@GetMapping("/leaderboard")

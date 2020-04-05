@@ -98,6 +98,32 @@
 	width: 170px;
 }
 
+.roll-dice-button {
+	cursor: pointer;
+	display: inline-block;
+	border-radius: 5px;
+	border: 1px solid rgba(0, 0, 0, 0.8);
+	font-size: 20px;
+	text-align: center;
+	width: 170px;
+	background-color: rgb(176, 196, 222);
+}
+
+.gradient_1 {
+	background-image: linear-gradient(to right, rgba(255, 255, 255, 0) 0%,
+		rgba(255, 255, 255, 0) 66.5%, rgba(255, 255, 255, 1) 66.6%);
+}
+
+.gradient_2 {
+	background-image: linear-gradient(to right, rgba(255, 255, 255, 0) 0%,
+		rgba(255, 255, 255, 0) 33.2%, rgba(255, 255, 255, 1) 33.3%);
+}
+
+.gradient_3 {
+	background-image: linear-gradient(to right, rgba(255, 255, 255, 0) 0%,
+		rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 0%);
+}
+
 .dice-button {
 	border-radius: 15px;
 	border: 1px solid rgba(0, 0, 0, 0.8);

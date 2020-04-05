@@ -8,10 +8,12 @@
 
 
 <head>
-<link rel="stylesheet" type="text/css" th:href="@{css/jamb.css}">
+<!-- <link rel="stylesheet" type="text/css" th:href="@{css/jamb.css}"> -->
+<link rel="stylesheet" type="text/css" href="../static/css/jamb.css"/>
 <link rel="icon" th:href="@{/images/favicon.png}" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script type="text/javascript" th:src="@{js/jamb.js}"></script>
+<!-- <script type="text/javascript" th:src="@{js/jamb.js}"></script> -->
+<script type="text/javascript" src="../static/js/jamb.js"></script>
 </head>
 
 <header class="header">
@@ -23,7 +25,7 @@
 </header>
 
 <div class="button-container">
-	<button class="button" id="roll-dice" onClick="rollDice(0)">BACI
+	<button class="roll-dice-button" id="roll-dice" onClick="rollDice(0)">BACI
 		KOCKE</button>
 
 </div>

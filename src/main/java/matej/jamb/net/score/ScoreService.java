@@ -56,9 +56,9 @@ public class ScoreService {
 		scoreRepo.deleteById(id);
 	}
 
-	public void saveScore(int id, String value) {
+	public void saveScore(int id, String value, boolean finished) {
 		Score score = scoreRepo.findById(id).get();
-		score.setFinished(true);
+		score.setFinished(finished);
 		score.setValue(Integer.parseInt(value));
 		scoreRepo.save(score);	
 	}
