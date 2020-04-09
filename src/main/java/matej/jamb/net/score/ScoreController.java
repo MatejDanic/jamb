@@ -3,8 +3,10 @@ package matej.jamb.net.score;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +24,7 @@ public class ScoreController {
 
 	@Autowired
 	ScoreService scoreService;
-	
+
 
 	@Scheduled(fixedRate = 86400000)
 	public void clearUnfinishedScores() {
@@ -44,6 +46,13 @@ public class ScoreController {
 		return scoreService.getScoreList();
 	}
 
+
+	@GetMapping("/test")
+	public String showAll(Model model) {
+		model.addAttribute("scores", scoreService.getScoreList());
+		return "allScores";
+	}
+
 	@DeleteMapping("/{id}")
 	public void deleteScoreById(@PathVariable(value="id") int id) {
 		scoreService.deleteScoreById(id);
@@ -53,7 +62,7 @@ public class ScoreController {
 	public void finishScore(@RequestBody String value, @PathVariable("id") int id) {
 		scoreService.saveScore(id, value, true);
 	}
-	
+
 	@PutMapping("/{id}")
 	public void saveScore(@RequestBody String value, @PathVariable("id") int id) {
 		scoreService.saveScore(id, value, false);
