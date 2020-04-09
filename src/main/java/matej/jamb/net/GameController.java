@@ -12,8 +12,8 @@ public class GameController {
     CachingService cachingService;
     
     @RequestMapping("/bjamb")
-    public String index() {
-        return "index";
+    public String bjamb() {
+        return "bjamb";
     }
     
     @Scheduled(fixedRate = 86400000)

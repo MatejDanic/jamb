@@ -41,12 +41,12 @@ public class ScoreController {
 		return scoreService.getScoreById(id);
 	}
 
-	@GetMapping("")
+	@GetMapping("/list")
 	public List<Score> getScoreList() {
 		return scoreService.getScoreList();
 	}
 
-	@GetMapping("/test")
+	@GetMapping("")
 	public String showAll(Model model) {
 		model.addAttribute("scores", scoreService.getScoreList());
 		return "allScores";
