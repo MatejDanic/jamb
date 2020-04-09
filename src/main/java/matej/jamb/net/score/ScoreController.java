@@ -16,8 +16,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 @RequestMapping("/scores")
 @CrossOrigin(origins = "http://jamb-remote.herokuapp.com")
 public class ScoreController {
@@ -44,12 +45,6 @@ public class ScoreController {
 	@GetMapping("/list")
 	public List<Score> getScoreList() {
 		return scoreService.getScoreList();
-	}
-
-	@GetMapping("")
-	public String showAll(Model model) {
-		model.addAttribute("scores", scoreService.getScoreList());
-		return "allScores";
 	}
 
 	@DeleteMapping("/{id}")
