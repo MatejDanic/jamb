@@ -453,7 +453,13 @@ function showLeaderboard() {
 }
 
 function showAllScores() {
-	var http = new XMLHttpRequest();
+	var r = confirm("Pregled rezultata resetira igru\nZelite li nastaviti?");
+	if (r == true) {
+		location.href='https://jamb-remote.herokuapp.com/scores';
+	}
+
+
+	/*var http = new XMLHttpRequest();
 	const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 	var url = 'https://jamb-remote.herokuapp.com/scores/list';
 	http.open('GET', url, true);
@@ -477,5 +483,5 @@ function showAllScores() {
 			alert(text);
 		}
 	}
-	http.send();
+	http.send();*/
 }

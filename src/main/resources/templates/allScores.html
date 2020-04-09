@@ -2,9 +2,11 @@
 <head>
 	<title>Scores</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" th:href="@{css/jamb.css?rndstr=<%= getRandomStr() %>}">
 </head>
 <link rel="icon" th:href="@{/images/favicon.png}" />
 <body>
+<button class="button-bottom" onclick="location.href='https://jamb-remote.herokuapp.com/bjamb';">Jamb</button>
 <div class="container">
 	<div class="row">
 		<div class="col-md-6">
