@@ -1,40 +1,46 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title>Scores</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
-	<link rel="stylesheet" type="text/css" th:href="@{css/jamb.css?rndstr=<%= getRandomStr() %>}">
+<title>Scores</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css"
+	th:href="@{css/jamb.css?rndstr=<%= getRandomStr() %>}">
 </head>
 <link rel="icon" th:href="@{/images/favicon.png}" />
 <body>
-<button class="button-bottom" onclick="location.href='https://jamb-remote.herokuapp.com/bjamb';">Jamb</button>
-<div class="container">
-	<div class="row">
-		<div class="col-md-6">
-			<table class="table">
-				<thead>
-					<tr>
-						<th> ID </th>
-						<th> Name </th>
-						<th> Value </th>
-						<th> Date </th>
-						<th> Finished </th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:if="${scores.empty}">
-						<td colspan="2"> No Scores Available </td>
-					</tr>
-					<tr th:each="score : ${scores}">
-						<td><span th:text="${score.id}"> ID </span></td>
-						<td><span th:text="${score.name}"> Name </span></td>
-						<td><span th:text="${score.value}"> Value </span></td>
-						<td><span th:text="${score.date}"> Date </span></td>
-						<td><span th:text="${score.finished}"> Finished </span></td>
-					</tr>
-				</tbody>
-			</table>
+	<div style="text-align: center;">
+		<button class="button-bottom"
+			onclick="location.href='https://jamb-remote.herokuapp.com/bjamb';">Jamb</button>
+	</div>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Name</th>
+							<th>Value</th>
+							<th>Date</th>
+							<th>Finished</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:if="${scores.empty}">
+							<td colspan="2">No Scores Available</td>
+						</tr>
+						<tr th:each="score : ${scores}">
+							<td><span th:text="${score.id}"> ID </span></td>
+							<td><span th:text="${score.name}"> Name </span></td>
+							<td><span th:text="${score.value}"> Value </span></td>
+							<td><span th:text="${score.date}"> Date </span></td>
+							<td><span th:text="${score.finished}"> Finished </span></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</div>
-</div>
 </body>
 </html>

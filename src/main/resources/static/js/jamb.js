@@ -453,7 +453,7 @@ function showLeaderboard() {
 }
 
 function showAllScores() {
-	var r = confirm("Pregled rezultata resetira igru\nZelite li nastaviti?");
+	var r = confirm("Pregled rezultata resetira igru.\nZelite li nastaviti?");
 	if (r == true) {
 		location.href='https://jamb-remote.herokuapp.com/scores';
 	}
