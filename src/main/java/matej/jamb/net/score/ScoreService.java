@@ -47,7 +47,7 @@ public class ScoreService {
 		Collections.sort(scoreList, new Comparator<Score>() {
 			@Override
 			public int compare(Score s1, Score s2) {
-				return (int) (s2.getDate().getTime() - s1.getDate().getTime());
+				return (int) (s2.getId() - s1.getId());
 			}
 		});
 
