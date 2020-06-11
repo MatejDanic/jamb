@@ -1,4 +1,4 @@
-package matej.jamb.net;
+package matej.jamb.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -7,7 +7,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import matej.jamb.net.score.ScoreService;
+import matej.jamb.net.CachingService;
+import matej.jamb.services.ScoreService;
 
 @Controller
 public class GameController {
