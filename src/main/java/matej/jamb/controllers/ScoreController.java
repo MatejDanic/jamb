@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
-//import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,7 +21,7 @@ import matej.jamb.services.ScoreService;
 
 @RestController
 @RequestMapping("/scores")
-//@CrossOrigin(origins = "http://jamb-remote.herokuapp.com")
+@CrossOrigin(origins = "http://jamb-remote.herokuapp.com")
 public class ScoreController {
 
 	@Autowired

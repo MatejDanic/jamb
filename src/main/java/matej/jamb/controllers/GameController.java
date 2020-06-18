@@ -26,7 +26,7 @@ public class GameController {
 	@GetMapping("/scores")
 	public String showAll(Model model) {
 		model.addAttribute("scores", scoreService.getScoreList());
-		return "allScores";
+		return "scorePage";
 	}
     
     @Scheduled(fixedRate = 86400000)

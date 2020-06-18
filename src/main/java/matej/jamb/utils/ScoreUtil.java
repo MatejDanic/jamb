@@ -1,4 +1,4 @@
-package matej.jamb.calculation;
+package matej.jamb.utils;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -7,9 +7,12 @@ import matej.jamb.constants.JambConstants;
 import matej.jamb.models.Dice;
 import matej.jamb.models.enums.BoxType;
 
-public class ScoreCalculation {
+public final class ScoreUtil {
 
-	public static int calculateScore(Set<Dice> diceSet, BoxType boxType) {
+	// Private constructor prevents direct instatiation of class
+	private ScoreUtil() { }
+
+	public static int checkScore(Set<Dice> diceSet, BoxType boxType) {
 		int value = 0;
 		switch(boxType) {
 		case ONES:

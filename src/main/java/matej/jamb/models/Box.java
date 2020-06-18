@@ -11,8 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import matej.jamb.calculation.ScoreCalculation;
 import matej.jamb.models.enums.BoxType;
+import matej.jamb.utils.ScoreUtil;
 
 @Entity
 @Table(name="BOX")
@@ -82,7 +82,7 @@ public class Box {
 	}
 
 	public void update(Set<Dice> diceSet) {
-		value = ScoreCalculation.calculateScore(diceSet, boxType);
+		value = ScoreUtil.checkScore(diceSet, boxType);
 	}
 	
 }
