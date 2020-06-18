@@ -1,4 +1,4 @@
-package matej.jamb.services;
+package matej.jamb.api.services;
 
 import java.time.LocalDate;
 import java.util.Collections;
@@ -11,8 +11,8 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import matej.jamb.api.repos.ScoreRepository;
 import matej.jamb.models.Score;
-import matej.jamb.repos.ScoreRepository;
 import matej.jamb.utils.DateUtil;
 
 
@@ -22,7 +22,6 @@ public class ScoreService {
 	@Autowired
 	ScoreRepository scoreRepo;
 	
-
 	public int addScore(Score score) {
 		scoreRepo.save(score);
 		return score.getId();

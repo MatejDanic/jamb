@@ -1,4 +1,4 @@
-package matej.jamb.repos;
+package matej.jamb.api.repos;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

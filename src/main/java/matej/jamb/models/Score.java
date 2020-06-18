@@ -2,7 +2,6 @@ package matej.jamb.models;
 
 import java.time.LocalDate;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -34,7 +33,7 @@ public class Score {
 	private boolean finished;
 	
 	@JsonIgnore
-	@OneToOne(mappedBy = "score", cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "score")
 	private Form form;
 
 	public int getId() {
@@ -45,11 +44,11 @@ public class Score {
 		this.id = id;
 	}
 	
-	public String getName() {
+	public String getNickname() {
 		return nickname;
 	}
 	
-	public void setName(String nickname) {
+	public void setNickname(String nickname) {
 		this.nickname = nickname;
 	}
 	

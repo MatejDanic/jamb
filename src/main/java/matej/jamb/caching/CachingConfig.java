@@ -1,4 +1,4 @@
-package matej.jamb.net;
+package matej.jamb.caching;
 
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;

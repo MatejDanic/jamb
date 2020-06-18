@@ -1,4 +1,4 @@
-package matej.jamb.controllers;
+package matej.jamb.api.controllers;
 
 import java.util.List;
 
@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import matej.jamb.api.services.FormService;
+import matej.jamb.api.services.ScoreService;
 import matej.jamb.models.Form;
 import matej.jamb.models.Score;
-import matej.jamb.services.FormService;
-import matej.jamb.services.ScoreService;
 
 @RestController
 @RequestMapping("/scores")

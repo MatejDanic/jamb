@@ -1,9 +1,6 @@
 package matej.jamb.models;
 
-import java.util.HashSet;
 import java.util.Set;
-import java.util.concurrent.ThreadLocalRandom;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,7 +13,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import matej.jamb.constants.JambConstants;
 import matej.jamb.models.enums.BoxType;
 import matej.jamb.models.enums.ColumnType;
 
@@ -30,10 +26,10 @@ public class Form {
 	private int id;
 
 	@OneToOne
-	@JoinColumn(name = "score_id", referencedColumnName = "id", nullable = false)
+	@JoinColumn(name = "score_id", referencedColumnName = "id", nullable = true)
 	private Score score;
 	
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy ="form", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Set<FormColumn> columns;
 
 	@OneToMany(mappedBy = "form", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -56,33 +52,6 @@ public class Form {
 	
 	@Column(name = "label_sum")
 	private int labelSum;
-	
-	public Form() {
-		columns = new HashSet<>();
-		columns.add(new FormColumn(ColumnType.DOWNWARDS));
-		columns.add(new FormColumn(ColumnType.UPWARDS));
-		columns.add(new FormColumn(ColumnType.ANY_DIRECTION));
-		columns.add(new FormColumn(ColumnType.ANNOUNCEMENT));
-		diceSet = new HashSet<>();
-		for (int i = 0; i < JambConstants.NUM_OF_DICE; i++) {
-			diceSet.add(new Dice());
-		}
-		rollCount = 0;
-		announcement = null;
-		finalSum = 0;
-		numberSum = 0;
-		diffSum = 0;
-		labelSum = 0;
-	}
-	
-	public Set<Dice> rollRice() {
-		for (Dice dice : diceSet) {
-			if (!dice.isHold()) {
-				dice.setValue(ThreadLocalRandom.current().nextInt(0, 6));
-			}
-		}
-		return diceSet;
-	}
 
 	public int getId() {
 		return id;
@@ -101,7 +70,7 @@ public class Form {
 	}
 	
 	public FormColumn getColumnByType(ColumnType columnType) {
-		FormColumn column = new FormColumn(columnType);
+		FormColumn column = new FormColumn();
 		for (FormColumn fc : columns) {
 			if (fc.getColumnType() == columnType) {
 				column = fc;
@@ -173,6 +142,15 @@ public class Form {
 
 	public void setLabelSum(int labelSum) {
 		this.labelSum = labelSum;
+	}
+
+	public Dice getDiceByOrder(Integer order) {
+		Dice dice = new Dice();
+		for (Dice d : diceSet) {
+			if (d.getOrder() == order) dice = d;
+			break;
+		}
+		return dice;
 	}
 	
 }

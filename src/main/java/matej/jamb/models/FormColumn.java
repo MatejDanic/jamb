@@ -1,11 +1,11 @@
 package matej.jamb.models;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,25 +14,28 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import matej.jamb.models.enums.BoxType;
 import matej.jamb.models.enums.ColumnType;
 
 @Entity
-@Table(name="FCOLUMN")
+@Table(name="FORMCOLUMN")
 public class FormColumn {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
+	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name = "column_id", referencedColumnName = "id", nullable = false)
+	@JoinColumn(name = "form_id", referencedColumnName = "id", nullable = false)
 	private Form form;
 	
 	@Column(name = "type")
 	private ColumnType columnType;
 
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(mappedBy ="column", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Set<Box> boxes;
 	
 	@Column(name = "number_sum")
@@ -43,27 +46,6 @@ public class FormColumn {
 	
 	@Column(name = "label_sum")
 	private int labelSum;
-	
-	public FormColumn(ColumnType columnType) {
-		this.columnType = columnType;
-		boxes = new HashSet<>();
-		boxes.add(new Box(BoxType.ONES));
-		boxes.add(new Box(BoxType.TWOS));
-		boxes.add(new Box(BoxType.THREES));
-		boxes.add(new Box(BoxType.FOURS));
-		boxes.add(new Box(BoxType.FIVES));
-		boxes.add(new Box(BoxType.SIXES));
-		boxes.add(new Box(BoxType.MAX));
-		boxes.add(new Box(BoxType.MIN));
-		boxes.add(new Box(BoxType.TRIPS));
-		boxes.add(new Box(BoxType.STRAIGHT));
-		boxes.add(new Box(BoxType.FULL));
-		boxes.add(new Box(BoxType.POKER));	
-		boxes.add(new Box(BoxType.JAMB));	
-		numberSum = 0;
-		diffSum = 0;
-		labelSum = 0;
-	}
 
 	public int getId() {
 		return id;
@@ -98,7 +80,7 @@ public class FormColumn {
 	}
 
 	public Box getBoxByType(BoxType boxType) {
-		Box box = new Box(boxType);
+		Box box = new Box();
 		for (Box b : boxes) {
 			if (b.getBoxType() == boxType) {
 				box = b;

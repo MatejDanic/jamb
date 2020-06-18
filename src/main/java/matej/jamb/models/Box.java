@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import matej.jamb.models.enums.BoxType;
 import matej.jamb.utils.ScoreUtil;
 
@@ -22,8 +24,9 @@ public class Box {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
+	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name= "column_id", referencedColumnName = "id", nullable = false)
+	@JoinColumn(name = "column_id", referencedColumnName = "id", nullable = false)
 	private FormColumn column;
 	
 	@Column(name = "value")
@@ -34,12 +37,6 @@ public class Box {
 	
 	@Column(name = "type")
 	private BoxType boxType;
-	
-	public Box(BoxType boxType) {
-		this.boxType = boxType;
-		value = 0;
-		written = false;
-	}
 
 	public int getId() {
 		return id;

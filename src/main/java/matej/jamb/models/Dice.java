@@ -1,5 +1,7 @@
 package matej.jamb.models;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,22 +11,26 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="Dice")
 public class Dice {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "form_id", referencedColumnName = "id", nullable = false)
 	private Form form;
-	
+
 	@Column(name = "value")
 	private int value;
-
-	@Column(name = "hold")
-	private boolean hold;
+	
+	@Column(name = "order")
+	private int order;
 
 	public int getId() {
 		return id;
@@ -49,13 +55,16 @@ public class Dice {
 	public void setValue(int value) {
 		this.value = value;
 	}
-
-	public boolean isHold() {
-		return hold;
-	}
-
-	public void setHold(boolean hold) {
-		this.hold = hold;
-	}
 	
+	public int getOrder() {
+		return order;
+	}
+
+	public void setOrder(int order) {
+		this.order = order;
+	}
+
+	public void roll(boolean hold) {
+		if (!hold) value = ThreadLocalRandom.current().nextInt(0, 6);
+	}
 }
