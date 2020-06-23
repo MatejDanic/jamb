@@ -144,10 +144,10 @@ public class Form {
 		this.labelSum = labelSum;
 	}
 
-	public Dice getDiceByOrder(Integer order) {
+	public Dice getDiceByOrder(int ordNum) {
 		Dice dice = new Dice();
 		for (Dice d : diceSet) {
-			if (d.getOrder() == order) dice = d;
+			if (d.getOrdNum() == ordNum) dice = d;
 			break;
 		}
 		return dice;

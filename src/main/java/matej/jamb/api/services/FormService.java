@@ -90,7 +90,7 @@ public class FormService {
 	private void createDice(Form form) {
 		for (int i = 0; i < JambConstants.NUM_OF_DICE; i++) {
 			Dice dice = new Dice();
-			dice.setOrder(i);
+			dice.setOrdNum(i);
 			dice.setForm(form);
 			diceRepo.save(dice);
 		}

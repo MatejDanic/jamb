@@ -11,7 +11,7 @@ import matej.jamb.api.services.ScoreService;
 import matej.jamb.caching.CachingService;
 
 @Controller
-public class GameController {
+public class MainController {
 	
 	@Autowired
     CachingService cachingService;
