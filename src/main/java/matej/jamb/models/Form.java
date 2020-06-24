@@ -144,13 +144,41 @@ public class Form {
 		this.labelSum = labelSum;
 	}
 
-	public Dice getDiceByOrder(int ordNum) {
+	public Dice getDiceByOrdNum(int ordNum) {
 		Dice dice = new Dice();
 		for (Dice d : diceSet) {
 			if (d.getOrdNum() == ordNum) dice = d;
 			break;
 		}
 		return dice;
+	}
+
+	public boolean isAnnouncementMandatory() {
+		for (FormColumn column : columns) {
+			if (column.getColumnType() != ColumnType.ANNOUNCEMENT) {
+				if (!column.isCompleted()) return false;
+			}
+		}
+		return true;
+	}
+	
+	public boolean isCompleted() {
+		for (FormColumn column : columns) {
+			if (!column.isCompleted()) return false;
+		}
+		return true;
+	}
+
+	public void updateSums() {
+		numberSum = 0;
+		diffSum = 0;
+		labelSum = 0;
+		for (FormColumn column : columns) {
+			numberSum += column.getNumberSum();
+			diffSum += column.getDiffSum();
+			labelSum += column.getLabelSum();
+		}
+		finalSum = numberSum + diffSum + labelSum;
 	}
 	
 }

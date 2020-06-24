@@ -12,6 +12,8 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import matej.jamb.models.composite.DiceId;
+
 @Entity
 @Table(name="Dice")
 @IdClass(DiceId.class)
@@ -54,7 +56,13 @@ public class Dice {
 		this.ordNum = ordNum;
 	}
 
-	public void roll(boolean hold) {
-		if (!hold) value = ThreadLocalRandom.current().nextInt(0, 6);
+	public void roll() {
+		value = ThreadLocalRandom.current().nextInt(1, 7);
 	}
+	
+	@Override
+	public String toString() {
+		return form.getId() + " Dice #" + ordNum + ": " + value;
+	}
+	
 }

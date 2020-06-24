@@ -12,6 +12,7 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import matej.jamb.models.composite.BoxId;
 import matej.jamb.models.enums.BoxType;
 import matej.jamb.utils.ScoreUtil;
 
@@ -33,8 +34,11 @@ public class Box {
 	@Column(name = "value")
 	private int value;
 
-	@Column(name = "written")
-	private boolean written;
+	@Column(name = "filled")
+	private boolean filled;
+
+	@Column(name = "available")
+	private boolean available;
 
 	public FormColumn getColumn() {
 		return column;
@@ -60,16 +64,26 @@ public class Box {
 		this.value = value;
 	}
 
-	public boolean isWritten() {
-		return written;
+	public boolean isFilled() {
+		return filled;
 	}
 
-	public void setWritten(boolean written) {
-		this.written = written;
+	public void setFilled(boolean filled) {
+		this.filled = filled;
+	}
+	
+	public boolean isAvailable() {
+		return available;
+	}
+
+	public void setAvailable(boolean available) {
+		this.available = available;
 	}
 
 	public void update(Set<Dice> diceSet) {
 		value = ScoreUtil.checkScore(diceSet, boxType);
+		filled = true;
+		available = false;
 	}
 	
 }

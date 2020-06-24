@@ -45,13 +45,14 @@ public final class ScoreUtil {
 			value = checkJamb(diceSet);
 			break;			
 		}
+//		System.out.println(diceSet + ", " + boxType + " -> " + value);
 		return value;
 	}
 	
 	public static int checkSumByType(Set<Dice> diceSet, BoxType boxType) { 
 		int result = 0; 
-		for (Dice d : diceSet) { 
-			if (d.getValue() == boxType.ordinal()) {
+		for (Dice d : diceSet) {
+			if (d.getValue() == boxType.ordinal() + 1) {
 				result += d.getValue();
 			}
 		} 
@@ -77,7 +78,7 @@ public final class ScoreUtil {
 					if (count <= 3) value += d2.getValue(); 
 				} 
 			} 
-			if (count >= 3) { 
+			if (count >= 3) {
 				result = value + JambConstants.BONUS_TRIPS; 
 				break; 
 			} 

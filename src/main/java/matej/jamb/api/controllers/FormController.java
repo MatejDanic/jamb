@@ -5,6 +5,8 @@ import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,8 +22,7 @@ import matej.jamb.models.Dice;
 import matej.jamb.models.Form;
 import matej.jamb.models.FormColumn;
 import matej.jamb.models.Score;
-import matej.jamb.models.enums.BoxType;
-import matej.jamb.models.enums.ColumnType;
+import matej.jamb.models.exceptions.IllegalMoveException;
 
 @RestController
 @RequestMapping("/forms")
@@ -57,17 +58,17 @@ public class FormController {
 	
 	@GetMapping("/{id}/columns/{columnType}")
 	public FormColumn getFormColumnByType(@PathVariable(value="id") int id, @PathVariable(value="columnType") int columnType) {
-		return formService.getFormById(id).getColumnByType(ColumnType.values()[columnType]);
+		return formService.getFormColumn(id, columnType);
 	}
 	
 	@GetMapping("/{id}/columns/{columnType}/boxes")
 	public Set<Box> getFormColumnBoxes(@PathVariable(value="id") int id, @PathVariable(value="columnType") int columnType) {
-		return formService.getFormById(id).getColumnByType(ColumnType.values()[columnType]).getBoxes();
+		return formService.getFormColumn(id, columnType).getBoxes();
 	}
 	
 	@GetMapping("/{id}/columns/{columnType}/boxes/{boxType}")
 	public Box getFormColumnBoxByType(@PathVariable(value="id") int id, @PathVariable(value="columnType") int columnType, @PathVariable(value="boxType") int boxType) {
-		return formService.getFormById(id).getColumnByType(ColumnType.values()[columnType]).getBoxByType(BoxType.values()[boxType]);
+		return formService.getFormColumnBox(id, columnType, boxType);
 	}
 	
 	@GetMapping("/{id}/dice")
@@ -81,8 +82,30 @@ public class FormController {
 	}
 	
 	@PutMapping("/{id}/roll")
-	public Set<Dice> getFormScore(@PathVariable(value="id") int id, @RequestBody Map<Integer, Boolean> diceHolding) {
-		return formService.rollDice(id, diceHolding);
-		
+	public ResponseEntity<Object> rollDice(@PathVariable(value="id") int id, @RequestBody Map<Integer, Boolean> diceHolding) {
+		try {
+			return new ResponseEntity<>(formService.rollDice(id, diceHolding), HttpStatus.OK);	
+		} catch (IllegalMoveException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
 	}
+	
+	@PutMapping("/{id}/announce")
+	public ResponseEntity<Object> announce(@PathVariable(value="id") int id, @RequestBody int announcement) {
+		try {
+			return new ResponseEntity<>(formService.announce(id, announcement), HttpStatus.OK);
+		} catch (IllegalMoveException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@PutMapping("/{id}/columns/{columnType}/boxes/{boxType}/update")
+	public ResponseEntity<Object> update(@PathVariable(value="id") int id, @PathVariable(value="columnType") int columnType, @PathVariable(value="boxType") int boxType) {
+		try {
+			return new ResponseEntity<>(formService.update(id, columnType, boxType), HttpStatus.OK);
+		} catch (IllegalMoveException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+	}
+	
 }

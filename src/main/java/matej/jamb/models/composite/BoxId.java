@@ -1,4 +1,4 @@
-package matej.jamb.models;
+package matej.jamb.models.composite;
 
 import java.io.Serializable;
 import java.util.Objects;

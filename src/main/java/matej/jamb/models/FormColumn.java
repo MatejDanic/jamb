@@ -79,6 +79,18 @@ public class FormColumn {
 		this.boxes = boxes;
 	}
 
+	public int getNumberSum() {
+		return numberSum;
+	}
+
+	public int getDiffSum() {
+		return diffSum;
+	}
+
+	public int getLabelSum() {
+		return labelSum;
+	}
+
 	public Box getBoxByType(BoxType boxType) {
 		Box box = new Box();
 		for (Box b : boxes) {
@@ -88,6 +100,35 @@ public class FormColumn {
 			}
 		}
 		return box;
+	}
+
+	public boolean isCompleted() {
+		for (Box box : boxes) {
+			if (!box.isFilled()) return false;
+		}
+		return true;
+	}
+
+	public void updateSums() {
+		boolean diffReady = true;
+		numberSum = 0;
+		labelSum = 0;
+		diffSum = 0;
+		for (Box box : boxes) {
+			if (box.getBoxType().ordinal() == 0 || box.getBoxType().ordinal() == 6 || box.getBoxType().ordinal() == 7) {
+				if (!box.isFilled()) {
+					diffReady = false;
+				}
+			}
+			if (box.getBoxType().ordinal() <= 5) {
+				numberSum += box.getValue();
+			} else if (box.getBoxType().ordinal() >= 8) {
+				labelSum += box.getValue();
+			}
+		}
+		if (diffReady) {
+			diffSum = (getBoxByType(BoxType.MAX).getValue() - getBoxByType(BoxType.MIN).getValue()) * getBoxByType(BoxType.ONES).getValue();
+		}
 	}
 
 }

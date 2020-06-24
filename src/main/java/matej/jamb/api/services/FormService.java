@@ -21,6 +21,7 @@ import matej.jamb.models.FormColumn;
 import matej.jamb.models.Score;
 import matej.jamb.models.enums.BoxType;
 import matej.jamb.models.enums.ColumnType;
+import matej.jamb.models.exceptions.IllegalMoveException;
 
 
 @Service
@@ -69,20 +70,23 @@ public class FormService {
 	}
 
 	private void createColumns(Form form) {
-		for (int i = 0; i < 4; i++) {
+		for (ColumnType columnType : ColumnType.values()) {
 			FormColumn column = new FormColumn();
 			column.setForm(form);
-			column.setColumnType(ColumnType.values()[i]);
+			column.setColumnType(columnType);
 			columnRepo.save(column);
 			createBoxes(column);
 		}
 	}
 
 	private void createBoxes(FormColumn column) {
-		for (int i = 0; i < 13; i++) {
+		for (BoxType boxType : BoxType.values()) {
 			Box box = new Box();
-			box.setBoxType(BoxType.values()[i]);
 			box.setColumn(column);
+			if (column.getColumnType() == ColumnType.ANY_DIRECTION) box.setAvailable(true);
+			else if (column.getColumnType() == ColumnType.DOWNWARDS && boxType == BoxType.ONES) box.setAvailable(true);
+			else if (column.getColumnType() == ColumnType.UPWARDS && boxType == BoxType.JAMB) box.setAvailable(true);
+			box.setBoxType(boxType);
 			boxRepo.save(box);
 		}
 	}
@@ -90,8 +94,8 @@ public class FormService {
 	private void createDice(Form form) {
 		for (int i = 0; i < JambConstants.NUM_OF_DICE; i++) {
 			Dice dice = new Dice();
-			dice.setOrdNum(i);
 			dice.setForm(form);
+			dice.setOrdNum(i);
 			diceRepo.save(dice);
 		}
 	}
@@ -104,27 +108,107 @@ public class FormService {
 		return formRepo.findById(id).get();
 	}
 
+	public FormColumn getFormColumn(int id, int columnType) {
+		return getFormById(id).getColumnByType(ColumnType.values()[columnType]);
+	}
+
+	public Box getFormColumnBox(int id, int columnType, int boxType) {
+		return getFormById(id).getColumnByType(ColumnType.values()[columnType]).getBoxByType(BoxType.values()[boxType]);
+	}
+
 	public List<Form> getFormList() {
 		return formRepo.findAll();
 	}
 
-	public Set<Dice> rollDice (int id, Map<Integer, Boolean> diceHolding) {
-		Form form = formRepo.findById(id).get();
-		
-		if (form.getRollCount() == 0) diceHolding.forEach((k, v) -> v = false);
-		else if (form.getRollCount() == 0) diceHolding.forEach((k, v) -> v = true);
-		
-		
-		for (Map.Entry<Integer, Boolean> entry : diceHolding.entrySet()) {
-			Dice dice = form.getDiceByOrder(entry.getKey());
-			dice.roll(entry.getValue());
-			diceRepo.save(dice);
+	public Set<Dice> rollDice (int id, Map<Integer, Boolean> diceToThrow) throws IllegalMoveException {
+		Form form = getFormById(id);
+
+		if (form.getRollCount() == 0) diceToThrow.replaceAll((k,v) -> v = true);
+		else if (form.getRollCount() == JambConstants.NUM_OF_ROLLS) throw new IllegalMoveException("Dice roll limit reached!");
+		else if (form.isAnnouncementMandatory()) throw new IllegalMoveException("Announcement is mandatory!");
+
+		if (form.getRollCount() < JambConstants.NUM_OF_ROLLS) {
+			form.setRollCount(form.getRollCount() + 1);
+			formRepo.save(form);
+		}
+
+		for (Map.Entry<Integer, Boolean> entry : diceToThrow.entrySet()) {
+			Dice dice = form.getDiceByOrdNum(entry.getKey());
+			if (entry.getValue()) {
+				dice.setForm(form);
+				dice.setOrdNum(entry.getKey());
+				dice.roll();
+				diceRepo.save(dice);
+			}
 		}
 		return form.getDiceSet();
 	}
 
-	public void updateForm(int id, ColumnType columnType, BoxType boxType) {
-		Form form = formRepo.findById(id).get();
-		form.getColumnByType(columnType).getBoxByType(boxType).update(form.getDiceSet());
+	public BoxType announce(int id, int announcement) throws IllegalMoveException {
+		Form form  = getFormById(id);
+
+		if (form.getAnnouncement() != null) throw new IllegalMoveException("Announcement already declared!");
+		if (form.getRollCount() >= 2) throw new IllegalMoveException("Announcement unavailable after second roll!");
+
+		form.setAnnouncement(BoxType.values()[announcement]);
+		return BoxType.values()[announcement];
 	}
+
+	public int update(int id, int columnType, int boxType) throws IllegalMoveException {
+		Form form = getFormById(id);
+		FormColumn column = form.getColumnByType(ColumnType.values()[columnType]);
+		Box box = column.getBoxByType(BoxType.values()[boxType]);
+		Score score = form.getScore();
+
+		if (box.isFilled()) throw new IllegalMoveException("Box already filled!");
+		else if (form.getRollCount() == 0) throw new IllegalMoveException("Cannot fill box without rolling dice!");
+		else if (!box.isAvailable() && form.getAnnouncement() == null) throw new IllegalMoveException("Box is currently not available!");
+		else if (form.getAnnouncement() != null) {
+			box.setBoxType(form.getAnnouncement());
+		}
+
+		box.update(form.getDiceSet());
+		box.setColumn(column);
+
+		boxRepo.save(box);
+		advance(form, column, boxType);
+
+		column.updateSums();
+		column.setForm(form);
+		columnRepo.save(column);
+		
+		form.updateSums();
+		formRepo.save(form);
+		
+		score.setValue(form.getFinalSum());
+		
+		boolean end = form.isCompleted();
+		if (end) {
+			score.setFinished(true);
+			formRepo.delete(form);
+		}
+		scoreRepo.save(score);
+
+		return box.getValue();
+	}
+
+	private void advance (Form form, FormColumn column, int boxType) {
+		Box box = new Box();
+		if (column.getColumnType() == ColumnType.DOWNWARDS) {
+			boxType++;
+		} else if (column.getColumnType() == ColumnType.UPWARDS) {
+			boxType--;
+		} else {
+			return;
+		}
+		try {
+			box = column.getBoxByType(BoxType.values()[boxType]);
+			box.setAvailable(true);
+			box.setColumn(column);
+			boxRepo.save(box);
+		} catch(IndexOutOfBoundsException e) {
+//			e.printStackTrace();
+		}
+	}
+
 }
