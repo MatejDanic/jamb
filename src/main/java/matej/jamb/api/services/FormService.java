@@ -14,6 +14,7 @@ import matej.jamb.api.repos.FormColumnRepository;
 import matej.jamb.api.repos.FormRepository;
 import matej.jamb.api.repos.ScoreRepository;
 import matej.jamb.constants.JambConstants;
+import matej.jamb.exceptions.IllegalMoveException;
 import matej.jamb.models.Box;
 import matej.jamb.models.Dice;
 import matej.jamb.models.Form;
@@ -21,8 +22,6 @@ import matej.jamb.models.FormColumn;
 import matej.jamb.models.Score;
 import matej.jamb.models.enums.BoxType;
 import matej.jamb.models.enums.ColumnType;
-import matej.jamb.models.exceptions.IllegalMoveException;
-
 
 @Service
 public class FormService {
@@ -70,23 +69,23 @@ public class FormService {
 	}
 
 	private void createColumns(Form form) {
-		for (ColumnType columnType : ColumnType.values()) {
+		for (ColumnType columnTypeOrdinal : ColumnType.values()) {
 			FormColumn column = new FormColumn();
 			column.setForm(form);
-			column.setColumnType(columnType);
+			column.setColumnType(columnTypeOrdinal);
 			columnRepo.save(column);
 			createBoxes(column);
 		}
 	}
 
 	private void createBoxes(FormColumn column) {
-		for (BoxType boxType : BoxType.values()) {
+		for (BoxType boxTypeOrdinal : BoxType.values()) {
 			Box box = new Box();
 			box.setColumn(column);
 			if (column.getColumnType() == ColumnType.ANY_DIRECTION) box.setAvailable(true);
-			else if (column.getColumnType() == ColumnType.DOWNWARDS && boxType == BoxType.ONES) box.setAvailable(true);
-			else if (column.getColumnType() == ColumnType.UPWARDS && boxType == BoxType.JAMB) box.setAvailable(true);
-			box.setBoxType(boxType);
+			else if (column.getColumnType() == ColumnType.DOWNWARDS && boxTypeOrdinal == BoxType.ONES) box.setAvailable(true);
+			else if (column.getColumnType() == ColumnType.UPWARDS && boxTypeOrdinal == BoxType.JAMB) box.setAvailable(true);
+			box.setBoxType(boxTypeOrdinal);
 			boxRepo.save(box);
 		}
 	}
@@ -108,12 +107,12 @@ public class FormService {
 		return formRepo.findById(id).get();
 	}
 
-	public FormColumn getFormColumn(int id, int columnType) {
-		return getFormById(id).getColumnByType(ColumnType.values()[columnType]);
+	public FormColumn getFormColumn(int id, int columnTypeOrdinal) {
+		return getFormById(id).getColumnByType(ColumnType.fromOrdinal(columnTypeOrdinal));
 	}
 
-	public Box getFormColumnBox(int id, int columnType, int boxType) {
-		return getFormById(id).getColumnByType(ColumnType.values()[columnType]).getBoxByType(BoxType.values()[boxType]);
+	public Box getFormColumnBox(int id, int columnTypeOrdinal, int boxTypeOrdinal) {
+		return getFormById(id).getColumnByType(ColumnType.fromOrdinal(columnTypeOrdinal)).getBoxByType(BoxType.fromOrdinal(boxTypeOrdinal));
 	}
 
 	public List<Form> getFormList() {
@@ -144,20 +143,20 @@ public class FormService {
 		return form.getDiceSet();
 	}
 
-	public BoxType announce(int id, int announcement) throws IllegalMoveException {
+	public BoxType announce(int id, int announcementOrdinal) throws IllegalMoveException {
 		Form form  = getFormById(id);
 
 		if (form.getAnnouncement() != null) throw new IllegalMoveException("Announcement already declared!");
 		if (form.getRollCount() >= 2) throw new IllegalMoveException("Announcement unavailable after second roll!");
 
-		form.setAnnouncement(BoxType.values()[announcement]);
-		return BoxType.values()[announcement];
+		form.setAnnouncement(BoxType.fromOrdinal(announcementOrdinal));
+		return BoxType.fromOrdinal(announcementOrdinal);
 	}
 
-	public int update(int id, int columnType, int boxType) throws IllegalMoveException {
+	public int update(int id, int columnTypeOrdinal, int boxTypeOrdinal) throws IllegalMoveException {
 		Form form = getFormById(id);
-		FormColumn column = form.getColumnByType(ColumnType.values()[columnType]);
-		Box box = column.getBoxByType(BoxType.values()[boxType]);
+		FormColumn column = form.getColumnByType(ColumnType.fromOrdinal(columnTypeOrdinal));
+		Box box = column.getBoxByType(BoxType.fromOrdinal(boxTypeOrdinal));
 		Score score = form.getScore();
 
 		if (box.isFilled()) throw new IllegalMoveException("Box already filled!");
@@ -171,7 +170,7 @@ public class FormService {
 		box.setColumn(column);
 
 		boxRepo.save(box);
-		advance(form, column, boxType);
+		advance(form, column, boxTypeOrdinal);
 
 		column.updateSums();
 		column.setForm(form);
@@ -192,22 +191,21 @@ public class FormService {
 		return box.getValue();
 	}
 
-	private void advance (Form form, FormColumn column, int boxType) {
+	private void advance (Form form, FormColumn column, int boxTypeOrdinal) {
 		Box box = new Box();
 		if (column.getColumnType() == ColumnType.DOWNWARDS) {
-			boxType++;
+			boxTypeOrdinal++;
 		} else if (column.getColumnType() == ColumnType.UPWARDS) {
-			boxType--;
+			boxTypeOrdinal--;
 		} else {
 			return;
 		}
 		try {
-			box = column.getBoxByType(BoxType.values()[boxType]);
+			box = column.getBoxByType(BoxType.fromOrdinal(boxTypeOrdinal));
 			box.setAvailable(true);
 			box.setColumn(column);
 			boxRepo.save(box);
 		} catch(IndexOutOfBoundsException e) {
-//			e.printStackTrace();
 		}
 	}
 

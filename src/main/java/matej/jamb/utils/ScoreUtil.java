@@ -9,9 +9,6 @@ import matej.jamb.models.enums.BoxType;
 
 public final class ScoreUtil {
 
-	// Private constructor prevents direct instatiation of class
-	private ScoreUtil() { }
-
 	public static int checkScore(Set<Dice> diceSet, BoxType boxType) {
 		int value = 0;
 		switch(boxType) {
@@ -45,7 +42,6 @@ public final class ScoreUtil {
 			value = checkJamb(diceSet);
 			break;			
 		}
-//		System.out.println(diceSet + ", " + boxType + " -> " + value);
 		return value;
 	}
 	
@@ -168,6 +164,5 @@ public final class ScoreUtil {
 		} 
 		return result; 
 	}
-
 
 }

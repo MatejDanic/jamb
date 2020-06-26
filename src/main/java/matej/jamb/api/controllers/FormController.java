@@ -17,12 +17,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import matej.jamb.api.services.FormService;
+import matej.jamb.exceptions.IllegalMoveException;
 import matej.jamb.models.Box;
 import matej.jamb.models.Dice;
 import matej.jamb.models.Form;
 import matej.jamb.models.FormColumn;
 import matej.jamb.models.Score;
-import matej.jamb.models.exceptions.IllegalMoveException;
+import matej.jamb.models.enums.BoxType;
+import matej.jamb.models.enums.ColumnType;
 
 @RestController
 @RequestMapping("/forms")
@@ -56,19 +58,19 @@ public class FormController {
 		return formService.getFormById(id).getColumns();
 	}
 	
-	@GetMapping("/{id}/columns/{columnType}")
-	public FormColumn getFormColumnByType(@PathVariable(value="id") int id, @PathVariable(value="columnType") int columnType) {
-		return formService.getFormColumn(id, columnType);
+	@GetMapping("/{id}/columns/{columnTypeOrdinal}")
+	public FormColumn getFormColumnByType(@PathVariable(value="id") int id, @PathVariable(value="columnTypeOrdinal") int columnTypeOrdinal) {
+		return formService.getFormById(id).getColumnByType(ColumnType.values()[columnTypeOrdinal]);
 	}
 	
-	@GetMapping("/{id}/columns/{columnType}/boxes")
-	public Set<Box> getFormColumnBoxes(@PathVariable(value="id") int id, @PathVariable(value="columnType") int columnType) {
-		return formService.getFormColumn(id, columnType).getBoxes();
+	@GetMapping("/{id}/columns/{columnTypeOrdinal}/boxes")
+	public Set<Box> getFormColumnBoxes(@PathVariable(value="id") int id, @PathVariable(value="columnTypeOrdinal") int columnTypeOrdinal) {
+		return formService.getFormById(id).getColumnByType(ColumnType.values()[columnTypeOrdinal]).getBoxes();
 	}
 	
-	@GetMapping("/{id}/columns/{columnType}/boxes/{boxType}")
-	public Box getFormColumnBoxByType(@PathVariable(value="id") int id, @PathVariable(value="columnType") int columnType, @PathVariable(value="boxType") int boxType) {
-		return formService.getFormColumnBox(id, columnType, boxType);
+	@GetMapping("/{id}/columns/{columnTypeOrdinal}/boxes/{boxTypeOrdinal}")
+	public Box getFormColumnBoxByType(@PathVariable(value="id") int id, @PathVariable(value="columnTypeOrdinal") int columnTypeOrdinal, @PathVariable(value="boxTypeOrdinal") int boxTypeOrdinal) {
+		return formService.getFormById(id).getColumnByType(ColumnType.values()[columnTypeOrdinal]).getBoxByType(BoxType.values()[boxTypeOrdinal]);
 	}
 	
 	@GetMapping("/{id}/dice")
@@ -91,18 +93,18 @@ public class FormController {
 	}
 	
 	@PutMapping("/{id}/announce")
-	public ResponseEntity<Object> announce(@PathVariable(value="id") int id, @RequestBody int announcement) {
+	public ResponseEntity<Object> announce(@PathVariable(value="id") int id, @RequestBody int announcementOrdinal) {
 		try {
-			return new ResponseEntity<>(formService.announce(id, announcement), HttpStatus.OK);
+			return new ResponseEntity<>(formService.announce(id, announcementOrdinal), HttpStatus.OK);
 		} catch (IllegalMoveException e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
 	
-	@PutMapping("/{id}/columns/{columnType}/boxes/{boxType}/update")
-	public ResponseEntity<Object> update(@PathVariable(value="id") int id, @PathVariable(value="columnType") int columnType, @PathVariable(value="boxType") int boxType) {
+	@PutMapping("/{id}/columns/{columnTypeOrdinal}/boxes/{boxTypeOrdinal}/update")
+	public ResponseEntity<Object> update(@PathVariable(value="id") int id, @PathVariable(value="columnTypeOrdinal") int columnTypeOrdinal, @PathVariable(value="boxTypeOrdinal") int boxTypeOrdinal) {
 		try {
-			return new ResponseEntity<>(formService.update(id, columnType, boxType), HttpStatus.OK);
+			return new ResponseEntity<>(formService.update(id, columnTypeOrdinal, boxTypeOrdinal), HttpStatus.OK);
 		} catch (IllegalMoveException e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}

@@ -1,4 +1,4 @@
-package matej.jamb.models.exceptions;
+package matej.jamb.exceptions;
 
 public class IllegalMoveException extends Exception {
 	

@@ -7,9 +7,6 @@ import java.util.Calendar;
 import java.util.Locale;
 
 public final class DateUtil {
-
-	// Private constructor prevents direct instatiation of class
-	private DateUtil() { }
 	
 	public static boolean isSameDay(Calendar cal1, Calendar cal2) {
 		if (cal1 == null || cal2 == null) {
@@ -29,4 +26,5 @@ public final class DateUtil {
 				date1.getYear() == date2.getYear() &&
 				date1.get(woy) == date2.get(woy));
 	}
+	
 }
