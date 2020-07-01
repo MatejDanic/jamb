@@ -26,8 +26,8 @@ public class Dice {
 	private Form form;
 	
 	@Id
-	@Column(name = "ordNum")
-	private int ordNum;
+	@Column(name = "ordinalNumber")
+	private int ordinalNumber;
 
 	@Column(name = "value")
 	private int value;
@@ -48,12 +48,12 @@ public class Dice {
 		this.value = value;
 	}
 	
-	public int getOrdNum() {
-		return ordNum;
+	public int getOrdinalNumber() {
+		return ordinalNumber;
 	}
 
-	public void setOrdNum(int ordNum) {
-		this.ordNum = ordNum;
+	public void setOrdinalNumber(int ordinalNumber) {
+		this.ordinalNumber = ordinalNumber;
 	}
 
 	public void roll() {
@@ -62,7 +62,7 @@ public class Dice {
 	
 	@Override
 	public String toString() {
-		return form.getId() + " Dice #" + ordNum + ": " + value;
+		return form.getId() + " Dice #" + ordinalNumber + ": " + value;
 	}
 	
 }

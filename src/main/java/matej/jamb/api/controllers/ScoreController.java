@@ -30,47 +30,47 @@ public class ScoreController {
 	@Autowired
 	FormService formService;
 
-	@Scheduled(fixedRate = 86400000)
-	public void clearUnfinishedScores() {
-		scoreService.clearUnfinishedScores();
-	}
-
-	@PostMapping("")
-	public int addScore(@RequestBody Score score) {
-		scoreService.addScore(score);
-		Form form = new Form();
-		form.setScore(score);
-		score.setForm(form);
-		scoreService.addScore(score);
+//	@Scheduled(fixedRate = 86400000)
+//	public void clearUnfinishedScores() {
+//		scoreService.clearUnfinishedScores();
+//	}
+//
+//	@PostMapping("")
+//	public int addScore(@RequestBody Score score) {
+//		scoreService.addScore(score);
+//		Form form = new Form();
 //		form.setScore(score);
 //		score.setForm(form);
-		return score.getId();
-	}
-
-	@DeleteMapping("/{id}")
-	public void deleteScoreById(@PathVariable(value="id") int id) {
-		scoreService.deleteScoreById(id);
-	}
-
-	@GetMapping("/list")
-	public List<Score> getScoreList() {
-		return scoreService.getScoreList();
-	}
-	
-	@GetMapping("/{id}")
-	public Score getScoreById(@PathVariable(value="id") int id) {
-		return scoreService.getScoreById(id);
-	}
-
-	@PutMapping("/finish/{id}")
-	public void finishScore( @PathVariable("id") int id, @RequestBody int value) {
-		scoreService.updateScore(id, value, true);
-	}
-
-	@PutMapping("/{id}")
-	public void saveScore(@PathVariable("id") int id, @RequestBody int value) {
-		scoreService.updateScore(id, value, false);
-	}
+//		scoreService.addScore(score);
+////		form.setScore(score);
+////		score.setForm(form);
+//		return score.getId();
+//	}
+//
+//	@DeleteMapping("/{id}")
+//	public void deleteScoreById(@PathVariable(value="id") int id) {
+//		scoreService.deleteScoreById(id);
+//	}
+//
+//	@GetMapping("/list")
+//	public List<Score> getScoreList() {
+//		return scoreService.getScoreList();
+//	}
+//	
+//	@GetMapping("/{id}")
+//	public Score getScoreById(@PathVariable(value="id") int id) {
+//		return scoreService.getScoreById(id);
+//	}
+//
+//	@PutMapping("/finish/{id}")
+//	public void finishScore( @PathVariable("id") int id, @RequestBody int value) {
+//		scoreService.updateScore(id, value, true);
+//	}
+//
+//	@PutMapping("/{id}")
+//	public void saveScore(@PathVariable("id") int id, @RequestBody int value) {
+//		scoreService.updateScore(id, value, false);
+//	}
 
 	@GetMapping("/leaderboard")
 	public List<Score> getLeaderboard() {

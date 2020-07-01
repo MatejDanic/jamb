@@ -12,8 +12,8 @@
 	<groupId>matej.jamb</groupId>
 	<artifactId>JambOnline</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>OnlineGame</name>
-	<description>Demo project for Spring Boot</description>
+	<name>Jamb Online</name>
+	<description>Jamb Online project</description>
 
 	<properties>
 		<java.version>1.8</java.version>

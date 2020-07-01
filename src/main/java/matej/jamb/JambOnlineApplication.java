@@ -9,10 +9,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @SpringBootApplication
 @EnableScheduling
-public class OnlineGameApplication {
+public class JambOnlineApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(OnlineGameApplication.class, args);
+		SpringApplication.run(JambOnlineApplication.class, args);
 	}
 
 	@Bean

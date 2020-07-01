@@ -94,7 +94,7 @@ public class FormService {
 		for (int i = 0; i < JambConstants.NUM_OF_DICE; i++) {
 			Dice dice = new Dice();
 			dice.setForm(form);
-			dice.setOrdNum(i);
+			dice.setOrdinalNumber(i);
 			diceRepo.save(dice);
 		}
 	}
@@ -132,10 +132,10 @@ public class FormService {
 		}
 
 		for (Map.Entry<Integer, Boolean> entry : diceToThrow.entrySet()) {
-			Dice dice = form.getDiceByOrdNum(entry.getKey());
+			Dice dice = form.getDiceByOrdinalNumber(entry.getKey());
 			if (entry.getValue()) {
 				dice.setForm(form);
-				dice.setOrdNum(entry.getKey());
+				dice.setOrdinalNumber(entry.getKey());
 				dice.roll();
 				diceRepo.save(dice);
 			}
@@ -153,7 +153,8 @@ public class FormService {
 		return BoxType.fromOrdinal(announcementOrdinal);
 	}
 
-	public int update(int id, int columnTypeOrdinal, int boxTypeOrdinal) throws IllegalMoveException {
+	public Map<String, Integer> update(int id, int columnTypeOrdinal, int boxTypeOrdinal) throws IllegalMoveException {
+		Map<String, Integer> sums;
 		Form form = getFormById(id);
 		FormColumn column = form.getColumnByType(ColumnType.fromOrdinal(columnTypeOrdinal));
 		Box box = column.getBoxByType(BoxType.fromOrdinal(boxTypeOrdinal));
@@ -172,14 +173,14 @@ public class FormService {
 		boxRepo.save(box);
 		advance(form, column, boxTypeOrdinal);
 
-		column.updateSums();
+//		column.updateSums();
 		column.setForm(form);
 		columnRepo.save(column);
+//		
+		sums = form.calculateSums();
+//		formRepo.save(form);
 		
-		form.updateSums();
-		formRepo.save(form);
-		
-		score.setValue(form.getFinalSum());
+		score.setValue(sums.get("finalSum"));
 		
 		boolean end = form.isCompleted();
 		if (end) {
@@ -188,7 +189,7 @@ public class FormService {
 		}
 		scoreRepo.save(score);
 
-		return box.getValue();
+		return sums;
 	}
 
 	private void advance (Form form, FormColumn column, int boxTypeOrdinal) {

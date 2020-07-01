@@ -1,5 +1,7 @@
 package matej.jamb.models;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -38,14 +40,14 @@ public class FormColumn {
 	@OneToMany(mappedBy ="column", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Set<Box> boxes;
 	
-	@Column(name = "number_sum")
-	private int numberSum;
-	
-	@Column(name = "diff_sum")
-	private int diffSum;
-	
-	@Column(name = "label_sum")
-	private int labelSum;
+//	@Column(name = "number_sum")
+//	private int numberSum;
+//	
+//	@Column(name = "diff_sum")
+//	private int diffSum;
+//	
+//	@Column(name = "label_sum")
+//	private int labelSum;
 
 	public int getId() {
 		return id;
@@ -79,17 +81,17 @@ public class FormColumn {
 		this.boxes = boxes;
 	}
 
-	public int getNumberSum() {
-		return numberSum;
-	}
-
-	public int getDiffSum() {
-		return diffSum;
-	}
-
-	public int getLabelSum() {
-		return labelSum;
-	}
+//	public int getNumberSum() {
+//		return numberSum;
+//	}
+//
+//	public int getDiffSum() {
+//		return diffSum;
+//	}
+//
+//	public int getLabelSum() {
+//		return labelSum;
+//	}
 
 	public Box getBoxByType(BoxType boxType) {
 		Box box = new Box();
@@ -109,26 +111,28 @@ public class FormColumn {
 		return true;
 	}
 
-	public void updateSums() {
+	public Map<String, Integer> calculateSums() {
 		boolean diffReady = true;
-		numberSum = 0;
-		labelSum = 0;
-		diffSum = 0;
+		Map<String, Integer> sums = new HashMap<>();
+		sums.put("numberSum", 0);
+		sums.put("diffSum", 0);
+		sums.put("labelSum", 0);
 		for (Box box : boxes) {
-			if (box.getBoxType().ordinal() == 0 || box.getBoxType().ordinal() == 6 || box.getBoxType().ordinal() == 7) {
+			if (box.getBoxType() == BoxType.ONES || box.getBoxType() == BoxType.MAX || box.getBoxType() == BoxType.MIN) {
 				if (!box.isFilled()) {
 					diffReady = false;
 				}
 			}
 			if (box.getBoxType().ordinal() <= 5) {
-				numberSum += box.getValue();
+				sums.replace("numberSum", sums.get("numberSum") + box.getValue());
 			} else if (box.getBoxType().ordinal() >= 8) {
-				labelSum += box.getValue();
+				sums.replace("labelSum", sums.get("labelSum") + box.getValue());
 			}
 		}
 		if (diffReady) {
-			diffSum = (getBoxByType(BoxType.MAX).getValue() - getBoxByType(BoxType.MIN).getValue()) * getBoxByType(BoxType.ONES).getValue();
+			sums.replace("diffSum", (getBoxByType(BoxType.MAX).getValue() - getBoxByType(BoxType.MIN).getValue()) * getBoxByType(BoxType.ONES).getValue());
 		}
+		return sums;
 	}
 
 }
