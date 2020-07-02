@@ -47,16 +47,6 @@ public class FormService {
 		return form.getId();
 	}	
 
-	private Score createScore(String nickname) {
-		Score score = new Score();
-		score.setNickname(nickname);
-		score.setDate(LocalDate.now());
-		score.setValue(0);
-		score.setFinished(false);
-		scoreRepo.save(score);
-		return score;
-	}
-
 	private Form createForm(Score score) {
 		Form form = new Form();
 		form.setScore(score);
@@ -66,6 +56,16 @@ public class FormService {
 		createDice(form);
 
 		return form;
+	}
+	
+	private Score createScore(String nickname) {
+		Score score = new Score();
+		score.setNickname(nickname);
+		score.setDate(LocalDate.now());
+		score.setValue(0);
+		score.setFinished(false);
+		scoreRepo.save(score);
+		return score;
 	}
 
 	private void createColumns(Form form) {
@@ -158,6 +158,7 @@ public class FormService {
 		Form form = getFormById(id);
 		FormColumn column = form.getColumnByType(ColumnType.fromOrdinal(columnTypeOrdinal));
 		Box box = column.getBoxByType(BoxType.fromOrdinal(boxTypeOrdinal));
+
 		Score score = form.getScore();
 
 		if (box.isFilled()) throw new IllegalMoveException("Box already filled!");
@@ -167,18 +168,16 @@ public class FormService {
 			box.setBoxType(form.getAnnouncement());
 		}
 
-		box.update(form.getDiceSet());
+		int boxValue = box.update(form.getDiceSet());
 		box.setColumn(column);
 
 		boxRepo.save(box);
 		advance(form, column, boxTypeOrdinal);
 
-//		column.updateSums();
 		column.setForm(form);
 		columnRepo.save(column);
-//		
+		
 		sums = form.calculateSums();
-//		formRepo.save(form);
 		
 		score.setValue(sums.get("finalSum"));
 		
@@ -187,8 +186,8 @@ public class FormService {
 			score.setFinished(true);
 			formRepo.delete(form);
 		}
-		scoreRepo.save(score);
-
+		score.setValue(sums.get("finalSum"));scoreRepo.save(score);
+		sums.put("boxValue", boxValue);
 		return sums;
 	}
 

@@ -20,7 +20,7 @@ public class Score {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@Column(name = "nickname", nullable = false)
+	@Column(name = "nickname", nullable = true)
 	private String nickname;
 	
 	@Column(name = "value", nullable = false)

@@ -84,9 +84,9 @@ public class FormController {
 	}
 	
 	@PutMapping("/{id}/roll")
-	public ResponseEntity<Object> rollDice(@PathVariable(value="id") int id, @RequestBody Map<Integer, Boolean> diceHolding) {
+	public ResponseEntity<Object> rollDice(@PathVariable(value="id") int id, @RequestBody Map<Integer, Boolean> diceToThrow) {
 		try {
-			return new ResponseEntity<>(formService.rollDice(id, diceHolding), HttpStatus.OK);	
+			return new ResponseEntity<>(formService.rollDice(id, diceToThrow), HttpStatus.OK);	
 		} catch (IllegalMoveException e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}

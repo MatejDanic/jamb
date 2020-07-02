@@ -39,15 +39,6 @@ public class FormColumn {
 
 	@OneToMany(mappedBy ="column", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Set<Box> boxes;
-	
-//	@Column(name = "number_sum")
-//	private int numberSum;
-//	
-//	@Column(name = "diff_sum")
-//	private int diffSum;
-//	
-//	@Column(name = "label_sum")
-//	private int labelSum;
 
 	public int getId() {
 		return id;
@@ -80,18 +71,6 @@ public class FormColumn {
 	public void setBoxes(Set<Box> boxes) {
 		this.boxes = boxes;
 	}
-
-//	public int getNumberSum() {
-//		return numberSum;
-//	}
-//
-//	public int getDiffSum() {
-//		return diffSum;
-//	}
-//
-//	public int getLabelSum() {
-//		return labelSum;
-//	}
 
 	public Box getBoxByType(BoxType boxType) {
 		Box box = new Box();

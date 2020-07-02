@@ -42,19 +42,6 @@ public class Form {
 	
 	@Column(name = "announcement")
 	private BoxType announcement;
-//	
-//	@Column(name = "final_sum")
-//	private int finalSum;
-//
-//	@Column(name = "number_sum")
-//	private int numberSum;
-//
-//	@Column(name = "diff_sum")
-//	private int diffSum;
-//	
-//	@Column(name = "label_sum")
-//	private int labelSum;
-
 	public int getId() {
 		return id;
 	}
@@ -102,38 +89,6 @@ public class Form {
 	public void setAnnouncement(BoxType announcement) {
 		this.announcement = announcement;
 	}
-
-//	public int getFinalSum() {
-//		return finalSum;
-//	}
-//
-//	public void setFinalSum(int finalSum) {
-//		this.finalSum = finalSum;
-//	}
-//
-//	public int getNumberSum() {
-//		return numberSum;
-//	}
-//
-//	public void setNumberSum(int numberSum) {
-//		this.numberSum = numberSum;
-//	}
-//
-//	public int getDiffSum() {
-//		return diffSum;
-//	}
-//
-//	public void setDiffSum(int diffSum) {
-//		this.diffSum = diffSum;
-//	}
-//
-//	public int getLabelSum() {
-//		return labelSum;
-//	}
-//
-//	public void setLabelSum(int labelSum) {
-//		this.labelSum = labelSum;
-//	}
 	
 	public FormColumn getColumnByType(ColumnType columnType) {
 		FormColumn column = new FormColumn();

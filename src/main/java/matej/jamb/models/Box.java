@@ -80,10 +80,11 @@ public class Box {
 		this.available = available;
 	}
 
-	public void update(Set<Dice> diceSet) {
+	public int update(Set<Dice> diceSet) {
 		value = ScoreUtil.checkScore(diceSet, boxType);
 		filled = true;
 		available = false;
+		return value;
 	}
 	
 }
