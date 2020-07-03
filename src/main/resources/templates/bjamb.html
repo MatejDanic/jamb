@@ -14,12 +14,12 @@
 <head>
 
 <link rel="stylesheet" type="text/css" th:href="@{css/jamb.css?rndstr=<%= getRandomStr() %>}">
-<link rel="stylesheet" type="text/css" href="../static/css/jamb.css"/>
-<link rel="icon" th:href="@{/images/favicon.png}" />
+<!-- <link rel="stylesheet" type="text/css" href="../static/css/jamb.css"/>
+ --><link rel="icon" th:href="@{/images/favicon.png}" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script type="text/javascript" th:src="@{js/jamb.js?rndstr=<%= getRandomStr() %>}"></script>
-<script type="text/javascript" src="../static/js/jamb.js"></script>
-</head>
+<!-- <script type="text/javascript" src="../static/js/jamb.js"></script>
+ --></head>
 
 <header class="header">
 	<button class="dice-button" id="dice1" onClick="replyClick(this.id)"></button>
@@ -104,20 +104,20 @@
 	<div class="empty-item"></div>
 
 	<div class="label-gray">SUM</div>
-	<div class="sum" id="DOWNWARDS numberSum"></div>
-	<div class="sum" id="UPWARDS numberSum"></div>
-	<div class="sum" id="ANY_DIRECTION numberSum"></div>
-	<div class="sum" id="ANNOUNCEMENT numberSum"></div>
+	<div class="sum" id="DOWNWARDS-numberSum"></div>
+	<div class="sum" id="UPWARDS-numberSum"></div>
+	<div class="sum" id="ANY_DIRECTION-numberSum"></div>
+	<div class="sum" id="ANNOUNCEMENT-numberSum"></div>
 	<div class="sum" id="numberSum"></div>
 
-	<div class="label-white">max</div>
+	<div class="label-white">MAX</div>
 	<button class="form-box" id="6" onClick="fillBox(this.id)"></button>
 	<button class="form-box" id="19" onClick="fillBox(this.id)"></button>
 	<button class="form-box" id="32" onClick="fillBox(this.id)"></button>
 	<button class="form-box" id="45" onClick="fillBox(this.id)"></button>
 	<div class="empty-item"></div>
 
-	<div class="label-white">min</div>
+	<div class="label-white">MIN</div>
 	<button class="form-box" id="7" onClick="fillBox(this.id)"></button>
 	<button class="form-box" id="20" onClick="fillBox(this.id)"></button>
 	<button class="form-box" id="33" onClick="fillBox(this.id)"></button>
@@ -125,10 +125,10 @@
 	<div class="empty-item"></div>
 
 	<div class="label-gray">SUM</div>
-	<div class="sum" id="DOWNWARDS diffSum"></div>
-	<div class="sum" id="UPWARDS diffSum"></div>
-	<div class="sum" id="ANY_DIRECTION diffSum"></div>
-	<div class="sum" id="ANNOUNCEMENT diffSum"></div>
+	<div class="sum" id="DOWNWARDS-diffSum"></div>
+	<div class="sum" id="UPWARDS-diffSum"></div>
+	<div class="sum" id="ANY_DIRECTION-diffSum"></div>
+	<div class="sum" id="ANNOUNCEMENT-diffSum"></div>
 	<div class="sum" id="diffSum"></div>
 
 	<div class="label-white">TRIS</div>
@@ -167,10 +167,10 @@
 	<div class="empty-item"></div>
 
 	<div class="label-gray">SUM</div>
-	<div class="sum" id="DOWNWARDS labelSum"></div>
-	<div class="sum" id="UPWARDS labelSum"></div>
-	<div class="sum" id="ANY_DIRECTION labelSum"></div>
-	<div class="sum" id="ANNOUNCEMENT labelSum"></div>
+	<div class="sum" id="DOWNWARDS-labelSum"></div>
+	<div class="sum" id="UPWARDS-labelSum"></div>
+	<div class="sum" id="ANY_DIRECTION-labelSum"></div>
+	<div class="sum" id="ANNOUNCEMENT-labelSum"></div>
 	<div class="sum" id="labelSum"></div>
 
 	<div class="empty-item"></div>

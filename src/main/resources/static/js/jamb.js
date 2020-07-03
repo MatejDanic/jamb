@@ -2,7 +2,7 @@ var diceRolls;
 var diceButtons;
 var rollDiceButton;
 var gridItems;
-var scores;
+var sums;
 var announcement;
 var counter;
 var formId;
@@ -13,7 +13,7 @@ window.onload = function () {
 	diceButtons = document.querySelectorAll('button[class^=dice-button]');
 	rollDiceButton = document.getElementById('roll-dice');
 	gridItems = [];
-	scores = [];
+	sums = [];
 	announcement = -1;
 	counter = 0;
 
@@ -28,30 +28,53 @@ window.onload = function () {
 		for (var j = 0; j < 13; j++) {
 			gridItems.push(document.getElementById(i*13+j));
 			gridItems[i*13+j].disabled = true;
-			gridItems[i*13+j].written = false;
+			gridItems[i*13+j].filled = false;
 			gridItems[i*13+j].available = false;
-			gridItems[i*13+j].value = 0;
+//			gridItems[i*13+j].value = 0;
 		}
 	}
 
-	for (var i = 0; i < 3; i++) {
+	for (var i = 0; i < 4; i++) {
 		var name;
-		if (i == 0) {
-			name = 'upper';
-		} else if (i == 1) {
-			name = 'middle';
-		} else if (i == 2) {
-			name = 'lower';
+		switch(i) {
+		case 0:
+			name = 'DOWNWARDS';
+			break;
+		case 1:
+			name = 'UPWARDS';
+			break;
+		case 2:
+			name = 'ANY_DIRECTION';
+			break;
+		case 3:
+			name = 'ANNOUNCEMENT';
+			break;
 		}
-		for (var j = 0; j < 5; j ++) {
-//			console.log(name+j);
-			scores.push(document.getElementById(name+j))
-			scores[i*5+j].value = 0;
-//			console.log(i*5+j, scores[i*3+j].value)
+		for (var j = 0; j < 3; j ++) {
+			switch(j) {
+			case 0:
+				name += "-numberSum";
+				break;
+			case 1:
+				name += "-diffSum";
+				break;
+			case 2:
+				name += "-labelSum";
+				break;
+			}
+			sums.push(document.getElementById(name))
+			sums[i*3+j].innerText = 0;
+			name = name.split("-")[0];
 		}
 	}
-	scores.push(document.getElementById('final'));
-	scores[15].value = 0;
+	sums.push(document.getElementById('numberSum'));
+	sums.push(document.getElementById('diffSum'));
+	sums.push(document.getElementById('labelSum'));
+	sums.push(document.getElementById('finalSum'));
+	sums[12].innerText = 0;
+	sums[13].innerText = 0;
+	sums[14].innerText = 0;
+	sums[15].innerText = 0;
 	initializeGrid();
 	recordGame();
 }
@@ -64,7 +87,6 @@ function initializeGrid() {
 	for (var j = 0; j < 26; j++) {
 		gridItems[26+j].available = true;
 	}
-//	calculateSums();
 }
 
 function replyClick(id) {
@@ -94,7 +116,7 @@ function announce(id) {
 function toggleButtons() {
 	var onlyAnnouncementLeft=true;
 	for (var i = 0; i < 39; i++) {
-		if (!gridItems[i].written){
+		if (!gridItems[i].filled){
 			onlyAnnouncementLeft=false;
 			break;
 		}
@@ -110,7 +132,7 @@ function toggleButtons() {
 
 			}
 		}
-		
+
 	} else if (diceRolls == 1) {
 		for (var i = 0; i < gridItems.length; i++) {
 			if (gridItems[i].available == true) {
@@ -142,10 +164,8 @@ function fillBox(id) {
 	if (id <= 12) column = 0;
 	else if ( id >= 39) column = 3;
 	else if (id >= 26) column = 2;
-	console.log(column);
 	var box = id % 13;
-	console.log(box);
-	
+
 	var http = new XMLHttpRequest();
 //	var url = 'https://jamb-remote.herokuapp.com/forms/' + formId + '/roll';
 	var url = 'http://localhost:8080/forms/' + formId + '/columns/' + column + '/boxes/' + box + '/update';
@@ -155,13 +175,37 @@ function fillBox(id) {
 	http.onreadystatechange = function() {
 		if(http.readyState == 4 && http.status == 200) {
 			var response = JSON.parse(http.responseText);
-			console.log(response);
+//			console.log(response);
+			document.getElementById(id).innerText = response.boxValue;	
+			updateSums(response);
 			
-			document.getElementById(id).value = value;
-			document.getElementById(finalSum).style.border = response.finalSum;
+			gridItems[id].available = false;
+			gridItems[id].filled = true;
+			diceRolls = 0;
+			toggleButtons();
 		}
 	}
 	http.send();
+}
+
+function updateSums(json) {
+	console.log(json);
+	document.getElementById('DOWNWARDS-numberSum').innerText = json['DOWNWARDS-numberSum'];
+	document.getElementById('DOWNWARDS-diffSum').innerText = json['DOWNWARDS-diffSum'];
+	document.getElementById('DOWNWARDS-labelSum').innerText = json['DOWNWARDS-labelSum'];
+	document.getElementById('UPWARDS-numberSum').innerText = json['UPWARDS-numberSum'];
+	document.getElementById('UPWARDS-diffSum').innerText = json['UPWARDS-diffSum'];
+	document.getElementById('UPWARDS-labelSum').innerText = json['UPWARDS-labelSum'];
+	document.getElementById('ANY_DIRECTION-numberSum').innerText = json['ANY_DIRECTION-numberSum'];
+	document.getElementById('ANY_DIRECTION-diffSum').innerText = json['ANY_DIRECTION-diffSum'];
+	document.getElementById('ANY_DIRECTION-labelSum').innerText = json['ANY_DIRECTION-labelSum'];
+	document.getElementById('ANNOUNCEMENT-numberSum').innerText = json['ANNOUNCEMENT-numberSum'];
+	document.getElementById('ANNOUNCEMENT-diffSum').innerText = json['ANNOUNCEMENT-diffSum'];
+	document.getElementById('ANNOUNCEMENT-labelSum').innerText = json['ANNOUNCEMENT-labelSum'];
+	document.getElementById('numberSum').innerText = json['numberSum'];
+	document.getElementById('diffSum').innerText = json['diffSum'];
+	document.getElementById('labelSum').innerText = json['labelSum'];
+	document.getElementById('finalSum').innerText = json['finalSum'];
 }
 
 function rollDice() {
@@ -173,7 +217,7 @@ function rollDice() {
 	} else if (diceRolls == 3) {
 		rollDiceButton.className = 'roll-dice-button gradient_3';
 	}
-	
+
 	var text = '{';
 	for (var i = 0; i < diceButtons.length; i++) {
 		text += '"' + i + '"' + ':' + '"';
@@ -182,7 +226,7 @@ function rollDice() {
 	}
 	text = text.substring(0, text.length - 1) + '}';
 //	console.log(text);
-	
+
 	var http = new XMLHttpRequest();
 //	var url = 'https://jamb-remote.herokuapp.com/forms/' + formId + '/roll';
 	var url = 'http://localhost:8080/forms/' + formId + '/roll';
@@ -190,7 +234,7 @@ function rollDice() {
 	http.open('PUT', url, true);
 	http.setRequestHeader("Content-Type", "application/json");
 
-	
+
 	http.onreadystatechange = function() {
 		if(http.readyState == 4 && http.status == 200) {
 			var response = JSON.parse(http.responseText);

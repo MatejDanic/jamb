@@ -187,6 +187,8 @@ public class FormService {
 			formRepo.delete(form);
 		}
 		score.setValue(sums.get("finalSum"));scoreRepo.save(score);
+		form.setRollCount(0);
+		formRepo.save(form);
 		sums.put("boxValue", boxValue);
 		return sums;
 	}

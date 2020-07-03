@@ -134,7 +134,7 @@ public class Form {
 		sums.put("labelSum", 0);
 		for (FormColumn column : columns) {
 			columnSums = column.calculateSums();
-			columnSums.forEach((k, v) -> sums.put(column.getColumnType().toString() + " " + k, v));
+			columnSums.forEach((k, v) -> sums.put(column.getColumnType().toString() + "-" + k, v));
 			sums.replace("numberSum", sums.get("numberSum") + columnSums.get("numberSum"));
 			sums.replace("diffSum", sums.get("diffSum") + columnSums.get("diffSum"));
 			sums.replace("labelSum", sums.get("labelSum") + columnSums.get("labelSum"));
