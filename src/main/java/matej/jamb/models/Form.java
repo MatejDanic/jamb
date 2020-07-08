@@ -143,4 +143,15 @@ public class Form {
 		return sums;
 	}
 	
+	@Override
+	public String toString() {
+		String result = "";
+		for (FormColumn column : columns) {
+			for (Box box : column.getBoxes()) {
+				result += " " + box.getValue();
+			}
+			result += "\n";
+		}
+		return result;
+	}
 }

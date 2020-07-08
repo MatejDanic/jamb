@@ -18,6 +18,7 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import matej.jamb.constants.JambConstants;
 import matej.jamb.models.enums.BoxType;
 import matej.jamb.models.enums.ColumnType;
 
@@ -91,11 +92,12 @@ public class FormColumn {
 	}
 
 	public Map<String, Integer> calculateSums() {
-		boolean diffReady = true;
 		Map<String, Integer> sums = new HashMap<>();
 		sums.put("numberSum", 0);
 		sums.put("diffSum", 0);
 		sums.put("labelSum", 0);
+
+		boolean diffReady = true;
 		for (Box box : boxes) {
 			if (box.getBoxType() == BoxType.ONES || box.getBoxType() == BoxType.MAX || box.getBoxType() == BoxType.MIN) {
 				if (!box.isFilled()) {
@@ -108,6 +110,8 @@ public class FormColumn {
 				sums.replace("labelSum", sums.get("labelSum") + box.getValue());
 			}
 		}
+		if (sums.get("numberSum") >= JambConstants.NUMBERSUM_BONUS_THRESHOLD)
+			sums.replace("numberSum", sums.get("numberSum") + JambConstants.NUMBERSUM_BONUS);
 		if (diffReady) {
 			sums.replace("diffSum", (getBoxByType(BoxType.MAX).getValue() - getBoxByType(BoxType.MIN).getValue()) * getBoxByType(BoxType.ONES).getValue());
 		}

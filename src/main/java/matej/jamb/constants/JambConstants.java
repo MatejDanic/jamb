@@ -13,5 +13,8 @@ public class JambConstants {
 	public static final int BONUS_FULL = 30;
 	public static final int BONUS_POKER = 40;
 	public static final int BONUS_JAMB = 50;
+
+	public static final int NUMBERSUM_BONUS_THRESHOLD = 60;
+	public static final int NUMBERSUM_BONUS = 30;
 	
 }

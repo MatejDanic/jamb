@@ -101,11 +101,12 @@ public class FormController {
 		}
 	}
 	
-	@PutMapping("/{id}/columns/{columnTypeOrdinal}/boxes/{boxTypeOrdinal}/update")
-	public ResponseEntity<Object> update(@PathVariable(value="id") int id, @PathVariable(value="columnTypeOrdinal") int columnTypeOrdinal, @PathVariable(value="boxTypeOrdinal") int boxTypeOrdinal) {
+	@PutMapping("/{id}/columns/{columnTypeOrdinal}/boxes/{boxTypeOrdinal}/fill")
+	public ResponseEntity<Object> fillBox(@PathVariable(value="id") int id, @PathVariable(value="columnTypeOrdinal") int columnTypeOrdinal, @PathVariable(value="boxTypeOrdinal") int boxTypeOrdinal) {
 		try {
-			return new ResponseEntity<>(formService.update(id, columnTypeOrdinal, boxTypeOrdinal), HttpStatus.OK);
+			return new ResponseEntity<>(formService.fillBox(id, columnTypeOrdinal, boxTypeOrdinal), HttpStatus.OK);
 		} catch (IllegalMoveException e) {
+			e.printStackTrace();
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}

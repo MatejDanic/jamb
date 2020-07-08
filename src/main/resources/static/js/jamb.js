@@ -22,7 +22,6 @@ window.onload = function () {
 		diceButtons[i].innerHTML = "<img src='../images/dice/6.bmp'>";
 		diceButtons[i].value = 6;
 		diceButtons[i].disabled = true;
-		diceButtons[i].hold = false;
 	}
 	for (var i = 0; i < 4; i++) {
 		for (var j = 0; j < 13; j++) {
@@ -30,7 +29,6 @@ window.onload = function () {
 			gridItems[i*13+j].disabled = true;
 			gridItems[i*13+j].filled = false;
 			gridItems[i*13+j].available = false;
-//			gridItems[i*13+j].value = 0;
 		}
 	}
 
@@ -99,20 +97,6 @@ function replyClick(id) {
 	}
 }
 
-function announce(id) {
-	announcement = id;
-	document.getElementById(id).style.border = '2px solid red';
-	for (var i = 0; i < 4; i++) {
-		for (var j = 0; j < 13; j++) {
-			if (i*13+j == id) {
-				gridItems[i*13+j].disabled = false;
-			} else {
-				gridItems[i*13+j].disabled = true;
-			}
-		}
-	}
-}
-
 function toggleButtons() {
 	var onlyAnnouncementLeft=true;
 	for (var i = 0; i < 39; i++) {
@@ -121,18 +105,16 @@ function toggleButtons() {
 			break;
 		}
 	}
-
 	if (diceRolls == 0) {
 		rollDiceButton.disabled = false;
 		for (var i = 0; i < gridItems.length; i++) {
 			gridItems[i].disabled = true;
-			for (var j = 0; j < diceButtons.length; j++) {
-				diceButtons[j].disabled = true;
-				diceButtons[j].style.backgroundColor = 'rgb(220, 220, 220)';
-
-			}
 		}
-
+		for (var j = 0; j < diceButtons.length; j++) {
+			diceButtons[j].disabled = true;
+			diceButtons[j].style.backgroundColor = 'rgb(220, 220, 220)';
+			diceButtons[j].hold = false;
+		}
 	} else if (diceRolls == 1) {
 		for (var i = 0; i < gridItems.length; i++) {
 			if (gridItems[i].available == true) {
@@ -154,9 +136,28 @@ function toggleButtons() {
 	} else if (diceRolls == 3) {
 		for (var i = 0; i < diceButtons.length; i++) {
 			diceButtons[i].disabled = true;
-			rollDiceButton.disabled = true;
 		}
+		rollDiceButton.disabled = true;
 	} 
+}
+
+function boxClick (id) {
+	for (var i = 0; i < 4; i++) {
+		for (var j = 0; j < 13; j++) {
+			if (id == i*13+j && i == 3) {
+				if (announcement == -1) {
+					announce(id);
+					rollDiceButton.disabled = false;
+				} else {
+					document.getElementById(id).style.border = "1px solid black";
+					announcement = -1;
+				}
+			}
+		}
+	}
+	if (announcement == -1) {
+		fillBox(id);
+	}
 }
 
 function fillBox(id) {
@@ -168,28 +169,59 @@ function fillBox(id) {
 
 	var http = new XMLHttpRequest();
 //	var url = 'https://jamb-remote.herokuapp.com/forms/' + formId + '/roll';
-	var url = 'http://localhost:8080/forms/' + formId + '/columns/' + column + '/boxes/' + box + '/update';
+	var url = 'http://localhost:8080/forms/' + formId + '/columns/' + column + '/boxes/' + box + '/fill';
 
 	http.open('PUT', url, true);
+	http.setRequestHeader("Content-Type", "application/json");
 
 	http.onreadystatechange = function() {
 		if(http.readyState == 4 && http.status == 200) {
 			var response = JSON.parse(http.responseText);
-//			console.log(response);
 			document.getElementById(id).innerText = response.boxValue;	
 			updateSums(response);
-			
+
 			gridItems[id].available = false;
 			gridItems[id].filled = true;
+			if (id <= 11) {
+				gridItems[parseInt(id, 10)+1].available = true;
+			} else if (id >= 14 && id <= 25) {
+				gridItems[parseInt(id, 10)-1].available = true;
+			}
 			diceRolls = 0;
 			toggleButtons();
+			rollDiceButton.className = 'roll-dice-button';
 		}
 	}
 	http.send();
 }
 
+function announce(id) {
+	var http = new XMLHttpRequest();
+	announcement = id;
+	boxTypeOrdinal = announcement%13
+
+//	var url = 'https://jamb-remote.herokuapp.com/forms/' + formId + '/announce';
+	var url = 'http://localhost:8080/forms/' + formId + '/announce' ;
+
+	http.open('PUT', url, true);	
+	http.setRequestHeader("Content-Type", "application/json");
+
+	http.onreadystatechange = function() {
+		if(http.readyState == 4 && http.status == 200) {
+			document.getElementById(id).style.border = "2px solid red";
+			for (var i = 0; i < 4; i++) {
+				for (var j = 0; j < 13; j++) {
+					gridItems[i*13+j].disabled = true;
+				}
+			}
+			gridItems[id].disabled = false;
+		}
+	}
+	http.send(boxTypeOrdinal);
+}
+
 function updateSums(json) {
-	console.log(json);
+//	console.log(json);
 	document.getElementById('DOWNWARDS-numberSum').innerText = json['DOWNWARDS-numberSum'];
 	document.getElementById('DOWNWARDS-diffSum').innerText = json['DOWNWARDS-diffSum'];
 	document.getElementById('DOWNWARDS-labelSum').innerText = json['DOWNWARDS-labelSum'];
@@ -225,7 +257,6 @@ function rollDice() {
 		text += '",';
 	}
 	text = text.substring(0, text.length - 1) + '}';
-//	console.log(text);
 
 	var http = new XMLHttpRequest();
 //	var url = 'https://jamb-remote.herokuapp.com/forms/' + formId + '/roll';
@@ -238,7 +269,6 @@ function rollDice() {
 	http.onreadystatechange = function() {
 		if(http.readyState == 4 && http.status == 200) {
 			var response = JSON.parse(http.responseText);
-//			console.log(response)
 			for (var i = 0; i < response.length; i++){
 				var obj = response[i];
 				diceButtons[obj.ordinalNumber].value = obj.value;
@@ -253,7 +283,6 @@ function rollDice() {
 
 function startDiceAnimation() {
 	for (var i = 0; i < diceButtons.length; i++) {
-//		if (diceButtons[i].style.backgroundColor == 'rgb(220, 220, 220)') {
 		if (!diceButtons[i].hold) {
 			$(diceButtons[i]).animateRotate(360, {
 				duration: 700,
@@ -285,6 +314,7 @@ function recordGame() {
 	var http = new XMLHttpRequest();
 //	var url = 'https://jamb-remote.herokuapp.com/forms';
 	var url = 'http://localhost:8080/forms';
+	
 	http.open('POST', url, true);
 	http.setRequestHeader('Content-type', 'application/json');
 

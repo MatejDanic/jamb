@@ -54,7 +54,6 @@ public class FormService {
 
 		createColumns(form);
 		createDice(form);
-
 		return form;
 	}
 	
@@ -150,25 +149,22 @@ public class FormService {
 		if (form.getRollCount() >= 2) throw new IllegalMoveException("Announcement unavailable after second roll!");
 
 		form.setAnnouncement(BoxType.fromOrdinal(announcementOrdinal));
+		formRepo.save(form);
 		return BoxType.fromOrdinal(announcementOrdinal);
 	}
 
-	public Map<String, Integer> update(int id, int columnTypeOrdinal, int boxTypeOrdinal) throws IllegalMoveException {
-		Map<String, Integer> sums;
+	public Map<String, Integer> fillBox(int id, int columnTypeOrdinal, int boxTypeOrdinal) throws IllegalMoveException {
 		Form form = getFormById(id);
 		FormColumn column = form.getColumnByType(ColumnType.fromOrdinal(columnTypeOrdinal));
 		Box box = column.getBoxByType(BoxType.fromOrdinal(boxTypeOrdinal));
-
 		Score score = form.getScore();
 
 		if (box.isFilled()) throw new IllegalMoveException("Box already filled!");
 		else if (form.getRollCount() == 0) throw new IllegalMoveException("Cannot fill box without rolling dice!");
 		else if (!box.isAvailable() && form.getAnnouncement() == null) throw new IllegalMoveException("Box is currently not available!");
-		else if (form.getAnnouncement() != null) {
-			box.setBoxType(form.getAnnouncement());
-		}
+		else if (form.getAnnouncement() != null && form.getAnnouncement() != box.getBoxType()) throw new IllegalMoveException("Box is not the same as announcement!");
 
-		int boxValue = box.update(form.getDiceSet());
+		int boxValue = box.fill(form.getDiceSet());
 		box.setColumn(column);
 
 		boxRepo.save(box);
@@ -176,8 +172,7 @@ public class FormService {
 
 		column.setForm(form);
 		columnRepo.save(column);
-		
-		sums = form.calculateSums();
+		Map<String, Integer> sums = form.calculateSums();
 		
 		score.setValue(sums.get("finalSum"));
 		
@@ -188,6 +183,7 @@ public class FormService {
 		}
 		score.setValue(sums.get("finalSum"));scoreRepo.save(score);
 		form.setRollCount(0);
+		form.setAnnouncement(null);
 		formRepo.save(form);
 		sums.put("boxValue", boxValue);
 		return sums;
