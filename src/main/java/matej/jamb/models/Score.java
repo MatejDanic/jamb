@@ -35,6 +35,13 @@ public class Score {
 	@JsonIgnore
 	@OneToOne(mappedBy = "score")
 	private Form form;
+	
+	public Score (String nickname, int value, LocalDate date, boolean finished) {
+		this.nickname = nickname;
+		this.value = value;
+		this.date = date;
+		this.finished = finished;
+	}
 
 	public int getId() {
 		return id;

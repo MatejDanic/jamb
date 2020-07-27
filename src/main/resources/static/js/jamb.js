@@ -10,16 +10,17 @@ var nickname;
 
 window.onload = function () {
 	diceRolls = 0;
-	diceButtons = document.querySelectorAll('button[class^=dice-button]');
-	rollDiceButton = document.getElementById('roll-dice');
+	diceButtons = document.querySelectorAll("button[class^=button-dice]");
+	rollDiceButton = document.getElementById("roll-dice");
 	gridItems = [];
 	sums = [];
 	announcement = -1;
 	counter = 0;
 
 	for (var i = 0; i < diceButtons.length; i++) {
-		diceButtons[i].style.backgroundColor = 'rgb(220, 220, 220)';
-		diceButtons[i].innerHTML = "<img src='../images/dice/6.bmp'>";
+		diceButtons[i].style.border = "4px solid gray";
+		diceButtons[i].style.backgroundImage = 'url(../images/dice/6.bmp)';
+//		diceButtons[i].innerHTML = "<img src='../images/dice/6.bmp'>";
 		diceButtons[i].value = 6;
 		diceButtons[i].disabled = true;
 	}
@@ -87,13 +88,13 @@ function initializeGrid() {
 	}
 }
 
-function replyClick(id) {
+function toggleDiceHold(id) {
 	var elem = document.getElementById(id);
 	elem.hold = !elem.hold;
-	if (elem.style.backgroundColor == 'rgb(220, 220, 220)') {
-		elem.style.backgroundColor = 'rgb(105, 105, 105)';
+	if (elem.hold) {
+		elem.style.border = "4px solid red";
 	} else {
-		elem.style.backgroundColor = 'rgb(220, 220, 220)';
+		elem.style.border = "4px solid black";
 	}
 }
 
@@ -107,15 +108,19 @@ function toggleButtons() {
 	}
 	if (diceRolls == 0) {
 		rollDiceButton.disabled = false;
+		rollDiceButton.className = 'button-roll-dice';
 		for (var i = 0; i < gridItems.length; i++) {
 			gridItems[i].disabled = true;
 		}
-		for (var j = 0; j < diceButtons.length; j++) {
-			diceButtons[j].disabled = true;
-			diceButtons[j].style.backgroundColor = 'rgb(220, 220, 220)';
-			diceButtons[j].hold = false;
+		for (var i = 0; i < diceButtons.length; i++) {
+			diceButtons[i].disabled = true;
+			diceButtons[i].style.border = "4px solid gray";
+			diceButtons[i].hold = false;
 		}
 	} else if (diceRolls == 1) {
+		for (var i = 0; i < diceButtons.length; i++) {
+			diceButtons[i].style.border = "4px solid black";
+		}
 		for (var i = 0; i < gridItems.length; i++) {
 			if (gridItems[i].available == true) {
 				gridItems[i].disabled = false;
@@ -189,7 +194,6 @@ function fillBox(id) {
 			}
 			diceRolls = 0;
 			toggleButtons();
-			rollDiceButton.className = 'roll-dice-button';
 		}
 	}
 	http.send();
@@ -221,7 +225,6 @@ function announce(id) {
 }
 
 function updateSums(json) {
-//	console.log(json);
 	document.getElementById('DOWNWARDS-numberSum').innerText = json['DOWNWARDS-numberSum'];
 	document.getElementById('DOWNWARDS-diffSum').innerText = json['DOWNWARDS-diffSum'];
 	document.getElementById('DOWNWARDS-labelSum').innerText = json['DOWNWARDS-labelSum'];
@@ -243,11 +246,11 @@ function updateSums(json) {
 function rollDice() {
 	diceRolls++;
 	if (diceRolls == 1) {
-		rollDiceButton.className = 'roll-dice-button gradient_1';
+		rollDiceButton.className = 'button-roll-dice gradient-1';
 	} else if (diceRolls == 2) {
-		rollDiceButton.className = 'roll-dice-button gradient_2';
+		rollDiceButton.className = 'button-roll-dice gradient-2';
 	} else if (diceRolls == 3) {
-		rollDiceButton.className = 'roll-dice-button gradient_3';
+		rollDiceButton.className = 'button-roll-dice gradient-3';
 	}
 
 	var text = '{';
@@ -290,7 +293,7 @@ function startDiceAnimation() {
 				complete: function () {},
 				step: function () {}
 			});
-			$(diceButtons[i]).html("<img src='../images/dice/" + diceButtons[i].value + ".bmp'>");
+			diceButtons[i].style.backgroundImage="url('../images/dice/" + diceButtons[i].value + ".bmp')";
 		}
 	}
 	toggleButtons();
@@ -314,7 +317,7 @@ function recordGame() {
 	var http = new XMLHttpRequest();
 //	var url = 'https://jamb-remote.herokuapp.com/forms';
 	var url = 'http://localhost:8080/forms';
-	
+
 	http.open('POST', url, true);
 	http.setRequestHeader('Content-type', 'application/json');
 
@@ -355,12 +358,4 @@ function showLeaderboard() {
 		}
 	}
 	http.send();
-}
-
-function showAllScores() {
-	var r = confirm('Pregled rezultata resetira igru.\nZelite li nastaviti?');
-	if (r == true) {
-//		location.href='https://jamb-remote.herokuapp.com/scores';
-		location.href='http://localhost:8080/scores'
-	}
 }

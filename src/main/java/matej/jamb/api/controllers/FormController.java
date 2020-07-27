@@ -34,8 +34,8 @@ public class FormController {
 	FormService formService;
 	
 	@PostMapping("")
-	public int addForm(@RequestBody(required = false) String nickname) {
-		return formService.addForm(nickname);
+	public int initialize(@RequestBody(required = false) String nickname) {
+		return formService.initialize(nickname);
 	}
 	
 	@DeleteMapping("/{id}")

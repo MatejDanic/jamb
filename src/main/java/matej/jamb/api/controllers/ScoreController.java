@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import matej.jamb.api.services.FormService;
 import matej.jamb.api.services.ScoreService;
 import matej.jamb.models.Score;
 
@@ -19,9 +18,6 @@ public class ScoreController {
 	@Autowired
 	ScoreService scoreService;
 	
-	@Autowired
-	FormService formService;
-
 	@Scheduled(fixedRate = 86400000)
 	public void clearUnfinishedScores() {
 		scoreService.clearUnfinishedScores();

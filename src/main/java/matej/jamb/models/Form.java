@@ -42,6 +42,11 @@ public class Form {
 	
 	@Column(name = "announcement")
 	private BoxType announcement;
+	
+	public Form (Score score) {
+		this.score = score;
+	}
+	
 	public int getId() {
 		return id;
 	}

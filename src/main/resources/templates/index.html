@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+
+<html>
+<title>Jamb</title>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="viewport"
+	content="height=device-height, initial-scale=1, minimum-scale=1" />
+<meta http-equiv="cache-control" content="max-age=0" />
+<meta http-equiv="cache-control" content="no-store" />
+<meta http-equiv="expires" content="-1" />
+<meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
+<meta http-equiv="pragma" content="no-cache" />
+<head>
+
+<link rel="stylesheet" type="text/css"
+	th:href="@{css/jamb.css?rndstr=<%= getRandomStr() %>}">
+<!-- <link rel="stylesheet" type="text/css" href="../static/css/jamb.css"/>
+ -->
+<link rel="icon" th:href="@{/images/favicon.png}" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script type="text/javascript"
+	th:src="@{js/jamb.js?rndstr=<%= getRandomStr() %>}"></script>
+<!-- <script type="text/javascript" src="../static/js/jamb.js"></script>
+ -->
+</head>
+
+<div class="game">
+
+
+	<div class="dice-rack">
+		<button class="button-dice" id="dice1"
+			onClick="toggleDiceHold(this.id)"></button>
+		<button class="button-dice" id="dice2"
+			onClick="toggleDiceHold(this.id)"></button>
+		<button class="button-dice" id="dice3"
+			onClick="toggleDiceHold(this.id)"></button>
+		<button class="button-dice" id="dice4"
+			onClick="toggleDiceHold(this.id)"></button>
+		<button class="button-dice" id="dice5"
+			onClick="toggleDiceHold(this.id)"></button>
+	</div>
+
+	<div class="button-container">
+		<button class="button-roll-dice" id="roll-dice" onClick="rollDice()">BACI
+			KOCKICE</button>
+	</div>
+
+
+	<div class="form">
+		<div class="empty-item"></div>
+		<img class="label-image" th:src="@{/images/field/downwards.bmp}" /> <img
+			class="label-image" th:src="@{/images/field/upwards.bmp}" /> <img
+			class="label-image" th:src="@{/images/field/any_direction.bmp}" />
+		<div class="label">NAJAVA</div>
+		<div class="empty-item"></div>
+
+
+		<img class="label-image" th:src="@{/images/dice/1.bmp}">
+		<button class="box" id="0" onClick="boxClick(this.id)"></button>
+		<button class="box" id="13" onClick="boxClick(this.id)"></button>
+		<button class="box" id="26" onClick="boxClick(this.id)"></button>
+		<button class="box" id="39" onClick="boxClick(this.id)"></button>
+		<div class="empty-item"></div>
+
+		<img class="label-image" th:src="@{/images/dice/2.bmp}">
+		<button class="box" id="1" onClick="boxClick(this.id)"></button>
+		<button class="box" id="14" onClick="boxClick(this.id)"></button>
+		<button class="box" id="27" onClick="boxClick(this.id)"></button>
+		<button class="box" id="40" onClick="boxClick(this.id)"></button>
+		<div class="empty-item"></div>
+
+		<img class="label-image" th:src="@{/images/dice/3.bmp}">
+		<button class="box" id="2" onClick="boxClick(this.id)"></button>
+		<button class="box" id="15" onClick="boxClick(this.id)"></button>
+		<button class="box" id="28" onClick="boxClick(this.id)"></button>
+		<button class="box" id="41" onClick="boxClick(this.id)"></button>
+		<div class="empty-item"></div>
+
+		<img class="label-image" th:src="@{/images/dice/4.bmp}">
+		<button class="box" id="3" onClick="boxClick(this.id)"></button>
+		<button class="box" id="16" onClick="boxClick(this.id)"></button>
+		<button class="box" id="29" onClick="boxClick(this.id)"></button>
+		<button class="box" id="42" onClick="boxClick(this.id)"></button>
+		<div class="empty-item"></div>
+
+		<img class="label-image" th:src="@{/images/dice/5.bmp}">
+		<button class="box" id="4" onClick="boxClick(this.id)"></button>
+		<button class="box" id="17" onClick="boxClick(this.id)"></button>
+		<button class="box" id="30" onClick="boxClick(this.id)"></button>
+		<button class="box" id="43" onClick="boxClick(this.id)"></button>
+		<div class="empty-item"></div>
+
+		<img class="label-image" th:src="@{/images/dice/6.bmp}">
+		<button class="box" id="5" onClick="boxClick(this.id)"></button>
+		<button class="box" id="18" onClick="boxClick(this.id)"></button>
+		<button class="box" id="31" onClick="boxClick(this.id)"></button>
+		<button class="box" id="44" onClick="boxClick(this.id)"></button>
+		<div class="empty-item"></div>
+
+		<div class="label-sum">SUM</div>
+		<div class="label-number" id="DOWNWARDS-numberSum"></div>
+		<div class="label-number" id="UPWARDS-numberSum"></div>
+		<div class="label-number" id="ANY_DIRECTION-numberSum"></div>
+		<div class="label-number" id="ANNOUNCEMENT-numberSum"></div>
+		<div class="label-number" id="numberSum"></div>
+
+		<div class="label">MAX</div>
+		<button class="box" id="6" onClick="boxClick(this.id)"></button>
+		<button class="box" id="19" onClick="boxClick(this.id)"></button>
+		<button class="box" id="32" onClick="boxClick(this.id)"></button>
+		<button class="box" id="45" onClick="boxClick(this.id)"></button>
+		<div class="empty-item"></div>
+
+		<div class="label">MIN</div>
+		<button class="box" id="7" onClick="boxClick(this.id)"></button>
+		<button class="box" id="20" onClick="boxClick(this.id)"></button>
+		<button class="box" id="33" onClick="boxClick(this.id)"></button>
+		<button class="box" id="46" onClick="boxClick(this.id)"></button>
+		<div class="empty-item"></div>
+
+		<div class="label-sum">SUM</div>
+		<div class="label-number" id="DOWNWARDS-diffSum"></div>
+		<div class="label-number" id="UPWARDS-diffSum"></div>
+		<div class="label-number" id="ANY_DIRECTION-diffSum"></div>
+		<div class="label-number" id="ANNOUNCEMENT-diffSum"></div>
+		<div class="label-number" id="diffSum"></div>
+
+		<div class="label">TRIS</div>
+		<button class="box" id="8" onClick="boxClick(this.id)"></button>
+		<button class="box" id="21" onClick="boxClick(this.id)"></button>
+		<button class="box" id="34" onClick="boxClick(this.id)"></button>
+		<button class="box" id="47" onClick="boxClick(this.id)"></button>
+		<div class="empty-item"></div>
+
+		<div class="label">SKALA</div>
+		<button class="box" id="9" onClick="boxClick(this.id)"></button>
+		<button class="box" id="22" onClick="boxClick(this.id)"></button>
+		<button class="box" id="35" onClick="boxClick(this.id)"></button>
+		<button class="box" id="48" onClick="boxClick(this.id)"></button>
+		<div class="empty-item"></div>
+
+		<div class="label">FULL</div>
+		<button class="box" id="10" onClick="boxClick(this.id)"></button>
+		<button class="box" id="23" onClick="boxClick(this.id)"></button>
+		<button class="box" id="36" onClick="boxClick(this.id)"></button>
+		<button class="box" id="49" onClick="boxClick(this.id)"></button>
+		<div class="empty-item"></div>
+
+		<div class="label">POKER</div>
+		<button class="box" id="11" onClick="boxClick(this.id)"></button>
+		<button class="box" id="24" onClick="boxClick(this.id)"></button>
+		<button class="box" id="37" onClick="boxClick(this.id)"></button>
+		<button class="box" id="50" onClick="boxClick(this.id)"></button>
+		<div class="empty-item"></div>
+
+		<div class="label">JAMB</div>
+		<button class="box" id="12" onClick="boxClick(this.id)"></button>
+		<button class="box" id="25" onClick="boxClick(this.id)"></button>
+		<button class="box" id="38" onClick="boxClick(this.id)"></button>
+		<button class="box" id="51" onClick="boxClick(this.id)"></button>
+		<div class="empty-item"></div>
+
+		<div class="label-sum">SUM</div>
+		<div class="label-number" id="DOWNWARDS-labelSum"></div>
+		<div class="label-number" id="UPWARDS-labelSum"></div>
+		<div class="label-number" id="ANY_DIRECTION-labelSum"></div>
+		<div class="label-number" id="ANNOUNCEMENT-labelSum"></div>
+		<div class="label-number" id="labelSum"></div>
+
+		<button class="button-rules" onClick="showRules()">Pravila</button>
+		<button class="button-leaderboard" onClick="showLeaderboard()">TOP</button>
+		<div class="label-sum-final" id="finalSum"></div>
+	</div>
+</div>
+
+</html>

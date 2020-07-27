@@ -3,9 +3,6 @@ package matej.jamb.api.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import matej.jamb.api.services.ScoreService;
 import matej.jamb.caching.CachingService;
@@ -18,16 +15,10 @@ public class MainController {
 	@Autowired
 	ScoreService scoreService;
     
-    @RequestMapping("/bjamb")
-    public String bjamb() {
-        return "bjamb";
-    }
-
-	@GetMapping("/scores")
-	public String showAll(Model model) {
-		model.addAttribute("scores", scoreService.getScoreList());
-		return "scorePage";
-	}
+//    @RequestMapping("")
+//    public String index() {
+//        return "index";
+//    }
     
     @Scheduled(fixedRate = 86400000)
     public void evictAllCaches() {

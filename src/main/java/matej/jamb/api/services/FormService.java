@@ -1,6 +1,5 @@
 package matej.jamb.api.services;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -15,6 +14,8 @@ import matej.jamb.api.repos.FormRepository;
 import matej.jamb.api.repos.ScoreRepository;
 import matej.jamb.constants.JambConstants;
 import matej.jamb.exceptions.IllegalMoveException;
+import matej.jamb.factories.FormFactory;
+import matej.jamb.factories.ScoreFactory;
 import matej.jamb.models.Box;
 import matej.jamb.models.Dice;
 import matej.jamb.models.Form;
@@ -41,31 +42,14 @@ public class FormService {
 	@Autowired
 	DiceRepository diceRepo;
 
-	public int addForm(String nickname) {
-		Score score = createScore(nickname);
-		Form form = createForm(score);
-		return form.getId();
-	}	
-
-	private Form createForm(Score score) {
-		Form form = new Form();
-		form.setScore(score);
-		formRepo.save(form);
-
+	public int initialize(String nickname) {
+		Score score = ScoreFactory.newInstance(nickname);
+//		Score score = createScore(nickname);
+		Form form = FormFactory.newInstance(score);
 		createColumns(form);
 		createDice(form);
-		return form;
-	}
-	
-	private Score createScore(String nickname) {
-		Score score = new Score();
-		score.setNickname(nickname);
-		score.setDate(LocalDate.now());
-		score.setValue(0);
-		score.setFinished(false);
-		scoreRepo.save(score);
-		return score;
-	}
+		return form.getId();
+	}	
 
 	private void createColumns(Form form) {
 		for (ColumnType columnTypeOrdinal : ColumnType.values()) {
