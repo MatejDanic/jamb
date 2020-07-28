@@ -9,7 +9,7 @@
 		<version>2.2.5.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>matej.jamb</groupId>
+	<groupId>matej</groupId>
 	<artifactId>JambOnline</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Jamb Online</name>
