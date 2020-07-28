@@ -110,7 +110,7 @@ public class Form {
 		return dice;
 	}
 
-	public boolean isAnnouncementMandatory() {
+	public boolean isAnnouncementRequired() {
 		for (Column column : columns) {
 			if (column.getColumnType() != ColumnType.ANNOUNCEMENT) {
 				if (!column.isCompleted()) return false;

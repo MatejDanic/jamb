@@ -41,7 +41,7 @@ public class FormService {
 	@Autowired
 	DiceRepository diceRepo;
 
-	public int addForm(String nickname) {
+	public int initialize(String nickname) {
 		Score score = JambFactory.createScore(nickname);
 		scoreRepo.save(score);
 		
@@ -54,15 +54,18 @@ public class FormService {
 			Set<Box> boxes = JambFactory.createBoxes(column);
 			boxRepo.saveAll(boxes);
 		}
-
+		
 		diceRepo.saveAll(JambFactory.createDice(form));
-		//		FormFactory.createColumns(form);
-		//		createColumns(form);
-		//		createDice(form);
 		return form.getId();
 	}	
 
 	public void deleteFormById(int id) {
+//		Form form = formRepo.findById(id).get();
+//		if (form.isCompleted()) {
+//			Score score = new Score();
+////			score.setValue(sums.get("finalSum"));
+//			scoreRepo.save(score);
+//		}
 		formRepo.deleteById(id);
 	}
 
@@ -87,7 +90,7 @@ public class FormService {
 
 		if (form.getRollCount() == 0) diceToThrow.replaceAll((k,v) -> v = true);
 		else if (form.getRollCount() == JambConstants.NUM_OF_ROLLS) throw new IllegalMoveException("Dice roll limit reached!");
-		else if (form.isAnnouncementMandatory()) throw new IllegalMoveException("Announcement is mandatory!");
+		else if (form.isAnnouncementRequired() && form.getAnnouncement() == null) throw new IllegalMoveException("Announcement is required!");
 
 		if (form.getRollCount() < JambConstants.NUM_OF_ROLLS) {
 			form.setRollCount(form.getRollCount() + 1);
@@ -136,15 +139,13 @@ public class FormService {
 		column.setForm(form);
 		columnRepo.save(column);
 
-		boolean end = form.isCompleted();
-		if (end) {
-//			score.setFinished(true);
+		if (form.isCompleted()) {
+			System.out.println("Deleting form...");
 			formRepo.delete(form);
 		}
 
 		Map<String, Integer> sums = form.calculateSums();
-		score.setValue(sums.get("finalSum"));
-		scoreRepo.save(score);
+		
 		
 		form.setRollCount(0);
 		form.setAnnouncement(null);
@@ -154,7 +155,7 @@ public class FormService {
 		return sums;
 	}
 	
-	public void advanceColumn (Form form, int columnTypeOrdinal, int boxTypeOrdinal) {
+	public void advanceColumn(Form form, int columnTypeOrdinal, int boxTypeOrdinal) {
 		Box nextBox = new Box();
 		Column column = form.getColumnByType(ColumnType.fromOrdinal(columnTypeOrdinal));
 		if (column.getColumnType() == ColumnType.DOWNWARDS) {

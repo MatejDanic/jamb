@@ -14,21 +14,19 @@
 <head>
 
 <link rel="stylesheet" type="text/css"
-	th:href="@{css/jamb.css?rndstr=<%= getRandomStr() %>}">
-<!-- <link rel="stylesheet" type="text/css" href="../static/css/jamb.css"/>
+	th:href="@{css/index.css?rndstr=<%= getRandomStr() %>}">
+<!-- <link rel="stylesheet" type="text/css" href="../static/css/index.css"/>
  -->
 <link rel="icon" th:href="@{/images/favicon.png}" />
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script type="text/javascript"
-	th:src="@{js/jamb.js?rndstr=<%= getRandomStr() %>}"></script>
-<!-- <script type="text/javascript" src="../static/js/jamb.js"></script>
+	th:src="@{js/index.js?rndstr=<%= getRandomStr() %>}"></script>
+<!-- <script type="text/javascript" src="../static/js/index.js"></script>
  -->
 </head>
 
 <div class="game">
-
-
 	<div class="dice-rack">
 		<button class="button-dice" id="dice1"
 			onClick="toggleDiceHold(this.id)"></button>
