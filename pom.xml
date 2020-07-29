@@ -10,7 +10,7 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>matej</groupId>
-	<artifactId>JambOnline</artifactId>
+	<artifactId>Jamb</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Jamb</name>
 	<description>Online implementation of the game jamb</description>
