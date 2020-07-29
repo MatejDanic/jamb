@@ -1,182 +1,176 @@
 <!DOCTYPE html>
 
 <html>
+<title>Jamb</title>
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="viewport"
 	content="height=device-height, initial-scale=1, minimum-scale=1" />
-
-
+<meta http-equiv="cache-control" content="max-age=0" />
+<meta http-equiv="cache-control" content="no-store" />
+<meta http-equiv="expires" content="-1" />
+<meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
+<meta http-equiv="pragma" content="no-cache" />
 <head>
-<link rel="stylesheet" type="text/css" th:href="@{css/jamb.css}">
-<!-- <link rel="stylesheet" type="text/css" href="../static/css/jamb.css"/> -->
+
+<link rel="stylesheet" type="text/css"
+	th:href="@{css/index.css?rndstr=<%= getRandomStr() %>}">
+<!-- <link rel="stylesheet" type="text/css" href="../static/css/index.css"/>
+ -->
 <link rel="icon" th:href="@{/images/favicon.png}" />
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script type="text/javascript" th:src="@{js/jamb.js}"></script>
-<!-- <script type="text/javascript" src="../static/js/jamb.js"></script> -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script type="text/javascript"
+	th:src="@{js/index.js?rndstr=<%= getRandomStr() %>}"></script>
+<!-- <script type="text/javascript" src="../static/js/index.js"></script>
+ -->
 </head>
 
-<header class="header">
-	<button class="dice-button" id="dice1" onClick="replyClick(this.id)"></button>
-	<button class="dice-button" id="dice2" onClick="replyClick(this.id)"></button>
-	<button class="dice-button" id="dice3" onClick="replyClick(this.id)"></button>
-	<button class="dice-button" id="dice4" onClick="replyClick(this.id)"></button>
-	<button class="dice-button" id="dice5" onClick="replyClick(this.id)"></button>
-</header>
+<div class="game">
+	<div class="dice-rack">
+		<button class="button-dice" id="dice1"
+			onClick="toggleDiceHold(this.id)"></button>
+		<button class="button-dice" id="dice2"
+			onClick="toggleDiceHold(this.id)"></button>
+		<button class="button-dice" id="dice3"
+			onClick="toggleDiceHold(this.id)"></button>
+		<button class="button-dice" id="dice4"
+			onClick="toggleDiceHold(this.id)"></button>
+		<button class="button-dice" id="dice5"
+			onClick="toggleDiceHold(this.id)"></button>
+	</div>
 
-<div class="button-container">
-	<button class="roll-dice-button" id="roll-dice" onClick="rollDice(0)">BACI
-		KOCKE</button>
+	<div class="button-container">
+		<button class="button-roll-dice" id="roll-dice" onClick="rollDice()">BACI
+			KOCKICE</button>
+	</div>
 
+
+	<div class="form">
+		<div class="empty-item"></div>
+		<img class="label-image" th:src="@{/images/field/downwards.bmp}" /> <img
+			class="label-image" th:src="@{/images/field/upwards.bmp}" /> <img
+			class="label-image" th:src="@{/images/field/any_direction.bmp}" />
+		<div class="label">NAJAVA</div>
+		<div class="empty-item"></div>
+
+
+		<img class="label-image" th:src="@{/images/dice/1.bmp}">
+		<button class="box" id="0" onClick="boxClick(this.id)"></button>
+		<button class="box" id="13" onClick="boxClick(this.id)"></button>
+		<button class="box" id="26" onClick="boxClick(this.id)"></button>
+		<button class="box" id="39" onClick="boxClick(this.id)"></button>
+		<div class="empty-item"></div>
+
+		<img class="label-image" th:src="@{/images/dice/2.bmp}">
+		<button class="box" id="1" onClick="boxClick(this.id)"></button>
+		<button class="box" id="14" onClick="boxClick(this.id)"></button>
+		<button class="box" id="27" onClick="boxClick(this.id)"></button>
+		<button class="box" id="40" onClick="boxClick(this.id)"></button>
+		<div class="empty-item"></div>
+
+		<img class="label-image" th:src="@{/images/dice/3.bmp}">
+		<button class="box" id="2" onClick="boxClick(this.id)"></button>
+		<button class="box" id="15" onClick="boxClick(this.id)"></button>
+		<button class="box" id="28" onClick="boxClick(this.id)"></button>
+		<button class="box" id="41" onClick="boxClick(this.id)"></button>
+		<div class="empty-item"></div>
+
+		<img class="label-image" th:src="@{/images/dice/4.bmp}">
+		<button class="box" id="3" onClick="boxClick(this.id)"></button>
+		<button class="box" id="16" onClick="boxClick(this.id)"></button>
+		<button class="box" id="29" onClick="boxClick(this.id)"></button>
+		<button class="box" id="42" onClick="boxClick(this.id)"></button>
+		<div class="empty-item"></div>
+
+		<img class="label-image" th:src="@{/images/dice/5.bmp}">
+		<button class="box" id="4" onClick="boxClick(this.id)"></button>
+		<button class="box" id="17" onClick="boxClick(this.id)"></button>
+		<button class="box" id="30" onClick="boxClick(this.id)"></button>
+		<button class="box" id="43" onClick="boxClick(this.id)"></button>
+		<div class="empty-item"></div>
+
+		<img class="label-image" th:src="@{/images/dice/6.bmp}">
+		<button class="box" id="5" onClick="boxClick(this.id)"></button>
+		<button class="box" id="18" onClick="boxClick(this.id)"></button>
+		<button class="box" id="31" onClick="boxClick(this.id)"></button>
+		<button class="box" id="44" onClick="boxClick(this.id)"></button>
+		<div class="empty-item"></div>
+
+		<div class="label-sum">SUM</div>
+		<div class="label-number" id="DOWNWARDS-numberSum"></div>
+		<div class="label-number" id="UPWARDS-numberSum"></div>
+		<div class="label-number" id="ANY_DIRECTION-numberSum"></div>
+		<div class="label-number" id="ANNOUNCEMENT-numberSum"></div>
+		<div class="label-number" id="numberSum"></div>
+
+		<div class="label">MAX</div>
+		<button class="box" id="6" onClick="boxClick(this.id)"></button>
+		<button class="box" id="19" onClick="boxClick(this.id)"></button>
+		<button class="box" id="32" onClick="boxClick(this.id)"></button>
+		<button class="box" id="45" onClick="boxClick(this.id)"></button>
+		<div class="empty-item"></div>
+
+		<div class="label">MIN</div>
+		<button class="box" id="7" onClick="boxClick(this.id)"></button>
+		<button class="box" id="20" onClick="boxClick(this.id)"></button>
+		<button class="box" id="33" onClick="boxClick(this.id)"></button>
+		<button class="box" id="46" onClick="boxClick(this.id)"></button>
+		<div class="empty-item"></div>
+
+		<div class="label-sum">SUM</div>
+		<div class="label-number" id="DOWNWARDS-diffSum"></div>
+		<div class="label-number" id="UPWARDS-diffSum"></div>
+		<div class="label-number" id="ANY_DIRECTION-diffSum"></div>
+		<div class="label-number" id="ANNOUNCEMENT-diffSum"></div>
+		<div class="label-number" id="diffSum"></div>
+
+		<div class="label">TRIS</div>
+		<button class="box" id="8" onClick="boxClick(this.id)"></button>
+		<button class="box" id="21" onClick="boxClick(this.id)"></button>
+		<button class="box" id="34" onClick="boxClick(this.id)"></button>
+		<button class="box" id="47" onClick="boxClick(this.id)"></button>
+		<div class="empty-item"></div>
+
+		<div class="label">SKALA</div>
+		<button class="box" id="9" onClick="boxClick(this.id)"></button>
+		<button class="box" id="22" onClick="boxClick(this.id)"></button>
+		<button class="box" id="35" onClick="boxClick(this.id)"></button>
+		<button class="box" id="48" onClick="boxClick(this.id)"></button>
+		<div class="empty-item"></div>
+
+		<div class="label">FULL</div>
+		<button class="box" id="10" onClick="boxClick(this.id)"></button>
+		<button class="box" id="23" onClick="boxClick(this.id)"></button>
+		<button class="box" id="36" onClick="boxClick(this.id)"></button>
+		<button class="box" id="49" onClick="boxClick(this.id)"></button>
+		<div class="empty-item"></div>
+
+		<div class="label">POKER</div>
+		<button class="box" id="11" onClick="boxClick(this.id)"></button>
+		<button class="box" id="24" onClick="boxClick(this.id)"></button>
+		<button class="box" id="37" onClick="boxClick(this.id)"></button>
+		<button class="box" id="50" onClick="boxClick(this.id)"></button>
+		<div class="empty-item"></div>
+
+		<div class="label">JAMB</div>
+		<button class="box" id="12" onClick="boxClick(this.id)"></button>
+		<button class="box" id="25" onClick="boxClick(this.id)"></button>
+		<button class="box" id="38" onClick="boxClick(this.id)"></button>
+		<button class="box" id="51" onClick="boxClick(this.id)"></button>
+		<div class="empty-item"></div>
+
+		<div class="label-sum">SUM</div>
+		<div class="label-number" id="DOWNWARDS-labelSum"></div>
+		<div class="label-number" id="UPWARDS-labelSum"></div>
+		<div class="label-number" id="ANY_DIRECTION-labelSum"></div>
+		<div class="label-number" id="ANNOUNCEMENT-labelSum"></div>
+		<div class="label-number" id="labelSum"></div>
+
+		<button class="button-rules" onClick="showRules()">Pravila</button>
+		<button class="button-leaderboard" onClick="showLeaderboard()">TOP</button>
+		<div class="label-sum-final" id="finalSum"></div>
+	</div>
 </div>
 
-<div class="grid-container">
-	<div class="empty-item"></div>
-	<div>
-		<img class="image" th:src="@{/images/box/7.bmp}">
-	</div>
-	<div>
-		<img class="image" th:src="@{/images/box/8.bmp}">
-	</div>
-	<div>
-		<img class="image" th:src="@{/images/box/9.bmp}">
-	</div>
-	<button class="label-ann">NAJAVA</button>
-	<div class="empty-item"></div>
-
-	<div>
-		<img class="image" th:src="@{/images/box/1.bmp}">
-	</div>
-	<button class="grid-item" id="0" onClick="writeDown(this.id)"></button>
-	<button class="grid-item" id="13" onClick="writeDown(this.id)"></button>
-	<button class="grid-item" id="26" onClick="writeDown(this.id)"></button>
-	<button class="grid-item" id="39" onClick="writeDown(this.id)"></button>
-	<div class="empty-item"></div>
-
-	<div>
-		<img class="image" th:src="@{/images/box/2.bmp}">
-	</div>
-	<button class="grid-item" id="1" onClick="writeDown(this.id)"></button>
-	<button class="grid-item" id="14" onClick="writeDown(this.id)"></button>
-	<button class="grid-item" id="27" onClick="writeDown(this.id)"></button>
-	<button class="grid-item" id="40" onClick="writeDown(this.id)"></button>
-	<div class="empty-item"></div>
-
-	<div>
-		<img class="image" th:src="@{/images/box/3.bmp}">
-	</div>
-	<button class="grid-item" id="2" onClick="writeDown(this.id)"></button>
-	<button class="grid-item" id="15" onClick="writeDown(this.id)"></button>
-	<button class="grid-item" id="28" onClick="writeDown(this.id)"></button>
-	<button class="grid-item" id="41" onClick="writeDown(this.id)"></button>
-	<div class="empty-item"></div>
-
-	<div>
-		<img class="image" th:src="@{/images/box/4.bmp}">
-	</div>
-	<button class="grid-item" id="3" onClick="writeDown(this.id)"></button>
-	<button class="grid-item" id="16" onClick="writeDown(this.id)"></button>
-	<button class="grid-item" id="29" onClick="writeDown(this.id)"></button>
-	<button class="grid-item" id="42" onClick="writeDown(this.id)"></button>
-	<div class="empty-item"></div>
-
-	<div>
-		<img class="image" th:src="@{/images/box/5.bmp}">
-	</div>
-	<button class="grid-item" id="4" onClick="writeDown(this.id)"></button>
-	<button class="grid-item" id="17" onClick="writeDown(this.id)"></button>
-	<button class="grid-item" id="30" onClick="writeDown(this.id)"></button>
-	<button class="grid-item" id="43" onClick="writeDown(this.id)"></button>
-	<div class="empty-item"></div>
-
-	<div>
-		<img class="image" th:src="@{/images/box/6.bmp}">
-	</div>
-	<button class="grid-item" id="5" onClick="writeDown(this.id)"></button>
-	<button class="grid-item" id="18" onClick="writeDown(this.id)"></button>
-	<button class="grid-item" id="31" onClick="writeDown(this.id)"></button>
-	<button class="grid-item" id="44" onClick="writeDown(this.id)"></button>
-	<div class="empty-item"></div>
-
-	<div class="label-gray">SUM</div>
-	<div class="score" id="upper0"></div>
-	<div class="score" id="upper1"></div>
-	<div class="score" id="upper2"></div>
-	<div class="score" id="upper3"></div>
-	<div class="score" id="upper4"></div>
-
-	<div class="label-white">max</div>
-	<button class="grid-item" id="6" onClick="writeDown(this.id)"></button>
-	<button class="grid-item" id="19" onClick="writeDown(this.id)"></button>
-	<button class="grid-item" id="32" onClick="writeDown(this.id)"></button>
-	<button class="grid-item" id="45" onClick="writeDown(this.id)"></button>
-	<div class="empty-item"></div>
-
-	<div class="label-white">min</div>
-	<button class="grid-item" id="7" onClick="writeDown(this.id)"></button>
-	<button class="grid-item" id="20" onClick="writeDown(this.id)"></button>
-	<button class="grid-item" id="33" onClick="writeDown(this.id)"></button>
-	<button class="grid-item" id="46" onClick="writeDown(this.id)"></button>
-	<div class="empty-item"></div>
-
-	<div class="label-gray">SUM</div>
-	<div class="score" id="middle0"></div>
-	<div class="score" id="middle1"></div>
-	<div class="score" id="middle2"></div>
-	<div class="score" id="middle3"></div>
-	<div class="score" id="middle4"></div>
-
-	<div class="label-white">TRIS</div>
-	<button class="grid-item" id="8" onClick="writeDown(this.id)"></button>
-	<button class="grid-item" id="21" onClick="writeDown(this.id)"></button>
-	<button class="grid-item" id="34" onClick="writeDown(this.id)"></button>
-	<button class="grid-item" id="47" onClick="writeDown(this.id)"></button>
-	<div class="empty-item"></div>
-
-	<div class="label-white">SKALA</div>
-	<button class="grid-item" id="9" onClick="writeDown(this.id)"></button>
-	<button class="grid-item" id="22" onClick="writeDown(this.id)"></button>
-	<button class="grid-item" id="35" onClick="writeDown(this.id)"></button>
-	<button class="grid-item" id="48" onClick="writeDown(this.id)"></button>
-	<div class="empty-item"></div>
-
-	<div class="label-white">FULL</div>
-	<button class="grid-item" id="10" onClick="writeDown(this.id)"></button>
-	<button class="grid-item" id="23" onClick="writeDown(this.id)"></button>
-	<button class="grid-item" id="36" onClick="writeDown(this.id)"></button>
-	<button class="grid-item" id="49" onClick="writeDown(this.id)"></button>
-	<div class="empty-item"></div>
-
-	<div class="label-white">POKER</div>
-	<button class="grid-item" id="11" onClick="writeDown(this.id)"></button>
-	<button class="grid-item" id="24" onClick="writeDown(this.id)"></button>
-	<button class="grid-item" id="37" onClick="writeDown(this.id)"></button>
-	<button class="grid-item" id="50" onClick="writeDown(this.id)"></button>
-	<div class="empty-item"></div>
-
-	<div class="label-white">JAMB</div>
-	<button class="grid-item" id="12" onClick="writeDown(this.id)"></button>
-	<button class="grid-item" id="25" onClick="writeDown(this.id)"></button>
-	<button class="grid-item" id="38" onClick="writeDown(this.id)"></button>
-	<button class="grid-item" id="51" onClick="writeDown(this.id)"></button>
-	<div class="empty-item"></div>
-
-	<div class="label-gray">SUM</div>
-	<div class="score" id="lower0"></div>
-	<div class="score" id="lower1"></div>
-	<div class="score" id="lower2"></div>
-	<div class="score" id="lower3"></div>
-	<div class="score" id="lower4"></div>
-
-	<div class="empty-item"></div>
-	<div class="empty-item"></div>
-	<div class="empty-item"></div>
-	<div class="empty-item"></div>
-	<div class="score-final" id="final"></div>
-</div>
-<div class="button-container">
-	<button class="button-bottom" onClick="showRules()">Pravila</button>
-	<button class="button-bottom" onClick="showLeaderboard()">TOP</button>
-	<button class="button-bottom" onClick="showAllScores()">Rezultati</button>
-</div>
 </html>
