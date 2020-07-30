@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import matej.models.composite.DiceId;
 
 @Entity
-@Table(name="DICE")
+@Table(name="dice")
 @IdClass(DiceId.class)
 public class Dice {
 

@@ -7,7 +7,6 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,7 +23,7 @@ import matej.models.Box;
 import matej.models.Dice;
 import matej.models.Form;
 import matej.models.Column;
-import matej.models.Score;
+import matej.models.User;
 import matej.models.enums.BoxType;
 import matej.models.enums.ColumnType;
 
@@ -38,15 +37,10 @@ public class FormController {
 	private final RateLimiter rateLimiter = RateLimiter.create(0.2);
 
 	@PostMapping("")
-	public int initialize(@RequestBody(required = false) String nickname) {
+	public int initialize(@RequestBody(required = false) User user) {
 		if (!rateLimiter.tryAcquire(1)) return 0;
-		return formService.initialize(nickname);
+		return formService.initialize(user);
 	}
-
-//	@DeleteMapping("/{id}")
-//	public void deleteFormById(@PathVariable(value="id") int id) {
-//		formService.deleteFormById(id);
-//	}
 
 	@GetMapping("")
 	public List<Form> getFormList() {
@@ -81,11 +75,6 @@ public class FormController {
 	@GetMapping("/{id}/dice")
 	public Set<Dice> getFormDice(@PathVariable(value="id") int id) {
 		return formService.getFormById(id).getDiceSet();
-	}
-
-	@GetMapping("/{id}/score")
-	public Score getFormScore(@PathVariable(value="id") int id) {
-		return formService.getFormById(id).getScore();
 	}
 
 	@PutMapping("/{id}/roll")

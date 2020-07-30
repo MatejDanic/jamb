@@ -9,7 +9,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -19,16 +18,15 @@ import matej.models.enums.ColumnType;
 
 
 @Entity
-@Table(name="FORM")
+@Table(name="form")
 public class Form {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	@OneToOne
-	@JoinColumn(name = "score_id", referencedColumnName = "id", nullable = true)
-	private Score score;
+	@OneToOne(mappedBy="form")
+	private User user;
 	
 	@OneToMany(mappedBy ="form", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Set<Column> columns;
@@ -41,7 +39,7 @@ public class Form {
 	
 	@javax.persistence.Column(name = "announcement")
 	private BoxType announcement;
-	
+
 	public int getId() {
 		return id;
 	}
@@ -50,12 +48,12 @@ public class Form {
 		this.id = id;
 	}
 
-	public Score getScore() {
-		return score;
+	public User getUser() {
+		return user;
 	}
 
-	public void setScore(Score score) {
-		this.score = score;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public Set<Column> getColumns() {

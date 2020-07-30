@@ -16,7 +16,7 @@ import matej.models.enums.BoxType;
 import matej.utils.ScoreUtil;
 
 @Entity
-@Table(name="BOX")
+@Table(name="box")
 @IdClass(BoxId.class)
 public class Box {
 

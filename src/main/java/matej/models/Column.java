@@ -22,7 +22,7 @@ import matej.models.enums.BoxType;
 import matej.models.enums.ColumnType;
 
 @Entity
-@Table(name="\"Column\"")
+@Table(name="\"column\"")
 public class Column {
 	
 	@Id

@@ -10,23 +10,23 @@ import matej.models.Dice;
 import matej.models.Form;
 import matej.models.Column;
 import matej.models.Score;
+import matej.models.User;
 import matej.models.enums.BoxType;
 import matej.models.enums.ColumnType;
 
 public class JambFactory {
 
-	public static Form createForm(Score score) {
+	public static Form createForm(User user) {
 		Form form = new Form();
-		form.setScore(score);
+		form.setUser(user);
 		return form;
 	}
 
-	public static Score createScore(String nickname) {
+	public static Score createScore(User user, int finalSum) {
 		Score score = new Score();
-		score.setNickname(nickname);
-		score.setValue(0);
+		score.setUser(user);
+		score.setValue(finalSum);
 		score.setDate(LocalDate.now());
-		score.setFinished(false);
 		return score;
 	}
 

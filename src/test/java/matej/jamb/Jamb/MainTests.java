@@ -1,10 +1,10 @@
-package matej.jamb.OnlineGame;
+package matej.jamb.Jamb;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class OnlineGameApplicationTests {
+class MainTests {
 
 	@Test
 	void contextLoads() {
