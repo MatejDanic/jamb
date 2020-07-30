@@ -6,8 +6,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import matej.models.enums.RoleLabel;
-
 @Entity
 @Table(name = "auth_role")
 public class Role {
@@ -17,10 +15,18 @@ public class Role {
 	private int id;
 
 	@javax.persistence.Column(name = "label")
-	private RoleLabel roleLabel;
+	private String label;
 
 	@javax.persistence.Column(name = "description")
     private String description;
+
+    public Role() {
+        
+    }
+
+    public Role(String label) {
+        this.label = label;
+    }
 
     public int getId() {
         return id;
@@ -30,12 +36,12 @@ public class Role {
         this.id = id;
     }
 
-    public RoleLabel getRoleLabel() {
-        return roleLabel;
+    public String getRoleLabel() {
+        return label;
     }
 
-    public void setRoleLabel(RoleLabel roleLabel) {
-        this.roleLabel = roleLabel;
+    public void setRoleLabel(String label) {
+        this.label = label;
     }
 
     public String getdescription() {

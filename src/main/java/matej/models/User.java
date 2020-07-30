@@ -13,8 +13,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import matej.models.enums.UserStatus;
-
 @Entity
 @Table(name="auth_user")
 public class User {
@@ -36,7 +34,7 @@ public class User {
     private String password;
     
 	@javax.persistence.Column(name = "status")
-    private UserStatus userStatus;
+    private String status;
     
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "auth_user_role")
@@ -65,12 +63,12 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-    public UserStatus getUserStatus() {
-        return userStatus;
+    public String getStatus() {
+        return status;
     }
 
-    public void setUserStatus(UserStatus userStatus) {
-        this.userStatus = userStatus;
+    public void setStatus(String status) {
+        this.status = status;
     }
         
     public Set<Role> getRoles() {
