@@ -6,7 +6,7 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
-import matej.api.repos.RoleRepository;
+import matej.api.repositories.RoleRepository;
 import matej.models.Role;
 
 @Component

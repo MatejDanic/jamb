@@ -7,11 +7,11 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import matej.api.repos.BoxRepository;
-import matej.api.repos.DiceRepository;
-import matej.api.repos.ColumnRepository;
-import matej.api.repos.FormRepository;
-import matej.api.repos.ScoreRepository;
+import matej.api.repositories.BoxRepository;
+import matej.api.repositories.ColumnRepository;
+import matej.api.repositories.DiceRepository;
+import matej.api.repositories.FormRepository;
+import matej.api.repositories.ScoreRepository;
 import matej.constants.JambConstants;
 import matej.exceptions.IllegalMoveException;
 import matej.factories.JambFactory;

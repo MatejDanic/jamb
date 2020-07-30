@@ -4,17 +4,20 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 @Entity
-@Table(name="auth_user")
+@Table(	name = "auth_user")
 public class User {
     
     @Id
@@ -27,18 +30,27 @@ public class User {
     @OneToOne
     private Form form;
     
-    @javax.persistence.Column(name="username", nullable=false)
+    @javax.persistence.Column(name="username", nullable=false, unique=true)
+    @Size(max = 15)
     private String username;
     
     @javax.persistence.Column(name="password", nullable=false)
     private String password;
     
-	@javax.persistence.Column(name = "status")
-    private String status;
-    
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "auth_user_role")
+    @ManyToMany(cascade = CascadeType.ALL, fetch=FetchType.LAZY)
+    @JoinTable(	name = "auth_user_role", 
+				joinColumns = @JoinColumn(name = "user_id"), 
+				inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
+
+    public User() {
+        
+    }
+
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
     
     public int getId() {
         return id;
@@ -62,13 +74,6 @@ public class User {
     
     public void setPassword(String password) {
         this.password = password;
-    }
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
         
     public Set<Role> getRoles() {

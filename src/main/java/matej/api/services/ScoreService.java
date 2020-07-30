@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import matej.api.repos.ScoreRepository;
+import matej.api.repositories.ScoreRepository;
 import matej.models.Score;
 import matej.utils.DateUtil;
 
