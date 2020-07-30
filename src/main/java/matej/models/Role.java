@@ -36,11 +36,11 @@ public class Role {
         this.id = id;
     }
 
-    public String getRoleLabel() {
+    public String getLabel() {
         return label;
     }
 
-    public void setRoleLabel(String label) {
+    public void setLabel(String label) {
         this.label = label;
     }
 
