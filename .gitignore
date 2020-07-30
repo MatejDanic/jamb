@@ -253,6 +253,9 @@ logs
 node_modules
 bower_components
 
+node_modules/
+jspm_packages/
+
 *.sublime*
 
 psd

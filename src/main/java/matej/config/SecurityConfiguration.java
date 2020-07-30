@@ -1,4 +1,4 @@
-package matej.configurations;
+package matej.config;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;

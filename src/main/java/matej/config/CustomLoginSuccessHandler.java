@@ -1,4 +1,4 @@
-package matej.configurations;
+package matej.config;
 
 import java.io.IOException;
 import java.util.ArrayList;

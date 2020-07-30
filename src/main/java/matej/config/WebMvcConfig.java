@@ -1,4 +1,4 @@
-package matej.configurations;
+package matej.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
