@@ -31,10 +31,11 @@ import matej.api.repositories.UserRepository;
 import matej.security.jwt.JwtUtils;
 import matej.security.services.UserDetailsImpl;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
+@CrossOrigin(origins="*")
 @RequestMapping("/auth")
 public class AuthController {
+	
 	@Autowired
 	AuthenticationManager authenticationManager;
 	

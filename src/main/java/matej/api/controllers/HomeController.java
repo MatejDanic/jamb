@@ -9,13 +9,14 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import matej.api.services.ScoreService;
 import matej.models.Score;
 
 
-@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
+@CrossOrigin(origins="*")
 @RequestMapping("")
 public class HomeController {
 	
@@ -27,21 +28,28 @@ public class HomeController {
 		scoreService.clearUnfinishedScores();
 	}
 	
+	@RequestMapping("")
+	public ModelAndView index () {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("index");
+		return modelAndView;
+	}
+
 	@GetMapping("/scores")
 	public List<Score> getLeaderboard() {
 		return scoreService.getLeaderboard(10);
 	}
 	
-	@GetMapping("/user")
-	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-	public String userAccess() {
-		return "User Content.";
+	@GetMapping("/play")
+	@PreAuthorize("hasAuthority('USER') or hasAuthority('ADMIN')")
+	public String play() {
+		return "index";
 	}
 	
 	@GetMapping("/admin")
-	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public String adminAccess() {
-		return "Admin Board.";
+		return "You are an admin";
 	}
 }
 
