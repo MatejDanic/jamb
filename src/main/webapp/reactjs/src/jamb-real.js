@@ -1,12 +1,5 @@
-var diceRolls;
-var buttonDice;
-var buttonRollDice;
-var gridItems;
-var sums;
-var announcement;
-var counter;
-var formId;
-var nickname;
+
+var diceRolls, buttonDice, buttonRollDice, gridItems, sums, announcement, counter;
 
 window.onload = function () {
 	diceRolls = 0;
@@ -25,43 +18,43 @@ window.onload = function () {
 	}
 	for (var i = 0; i < 4; i++) {
 		for (var j = 0; j < 13; j++) {
-			gridItems.push(document.getElementById(i*13+j));
-			gridItems[i*13+j].disabled = true;
-			gridItems[i*13+j].filled = false;
-			gridItems[i*13+j].available = false;
+			gridItems.push(document.getElementById(i * 13 + j));
+			gridItems[i * 13 + j].disabled = true;
+			gridItems[i * 13 + j].filled = false;
+			gridItems[i * 13 + j].available = false;
 		}
 	}
 
 	for (var i = 0; i < 4; i++) {
 		var name;
-		switch(i) {
-		case 0:
-			name = 'DOWNWARDS';
-			break;
-		case 1:
-			name = 'UPWARDS';
-			break;
-		case 2:
-			name = 'ANY_DIRECTION';
-			break;
-		case 3:
-			name = 'ANNOUNCEMENT';
-			break;
-		}
-		for (var j = 0; j < 3; j ++) {
-			switch(j) {
+		switch (i) {
 			case 0:
-				name += "-numberSum";
+				name = 'DOWNWARDS';
 				break;
 			case 1:
-				name += "-diffSum";
+				name = 'UPWARDS';
 				break;
 			case 2:
-				name += "-labelSum";
+				name = 'ANY_DIRECTION';
 				break;
+			case 3:
+				name = 'ANNOUNCEMENT';
+				break;
+		}
+		for (var j = 0; j < 3; j++) {
+			switch (j) {
+				case 0:
+					name += "-numberSum";
+					break;
+				case 1:
+					name += "-diffSum";
+					break;
+				case 2:
+					name += "-labelSum";
+					break;
 			}
 			sums.push(document.getElementById(name))
-			sums[i*3+j].innerText = 0;
+			sums[i * 3 + j].innerText = 0;
 			name = name.split("-")[0];
 		}
 	}
@@ -83,7 +76,7 @@ function initializeGrid() {
 	gridItems[25].available = true;
 
 	for (var j = 0; j < 26; j++) {
-		gridItems[26+j].available = true;
+		gridItems[26 + j].available = true;
 	}
 }
 
@@ -98,10 +91,10 @@ function toggleDiceHold(id) {
 }
 
 function toggleButtons() {
-	var isAnnouncementRequired=true;
+	var isAnnouncementRequired = true;
 	for (var i = 0; i < 39; i++) {
-		if (!gridItems[i].filled){
-			isAnnouncementRequired=false;
+		if (!gridItems[i].filled) {
+			isAnnouncementRequired = false;
 			break;
 		}
 	}
@@ -132,7 +125,7 @@ function toggleButtons() {
 			buttonRollDice.disabled = true;
 		}
 	} else if (diceRolls == 2) {
-		for(var i = 39; i < 52; i++) {
+		for (var i = 39; i < 52; i++) {
 			if (i != announcement) {
 				gridItems[i].disabled = true;
 			}
@@ -142,19 +135,20 @@ function toggleButtons() {
 			buttonDice[i].disabled = true;
 		}
 		buttonRollDice.disabled = true;
-	} 
+	}
 }
 
-function boxClick (id) {
+function boxClick(id) {
 	for (var i = 0; i < 4; i++) {
 		for (var j = 0; j < 13; j++) {
-			if (id == i*13+j && i == 3) {
+			if (id == i * 13 + j && i == 3) {
 				if (announcement == -1) {
 					announce(id);
 					buttonRollDice.disabled = false;
 				} else {
 					document.getElementById(id).style.border = "1px solid black";
 					announcement = -1;
+					break;
 				}
 			}
 		}
@@ -167,32 +161,38 @@ function boxClick (id) {
 function fillBox(id) {
 	var column = 1
 	if (id <= 12) column = 0;
-	else if ( id >= 39) column = 3;
+	else if (id >= 39) column = 3;
 	else if (id >= 26) column = 2;
 	var box = id % 13;
 
 	var http = new XMLHttpRequest();
-//	var url = 'https://jamb-remote.herokuapp.com/forms/' + formId + '/roll';
+	//	var url = 'https://jamb-remote.herokuapp.com/forms/' + formId + '/roll';
 	var url = 'http://localhost:8080/forms/' + formId + '/columns/' + column + '/boxes/' + box + '/fill';
 
 	http.open('PUT', url, true);
 	http.setRequestHeader("Content-Type", "application/json");
 
-	http.onreadystatechange = function() {
-		if(http.readyState == 4 && http.status == 200) {
+	http.onreadystatechange = function () {
+		if (http.readyState == 4 && http.status == 200) {
 			var response = JSON.parse(http.responseText);
-			document.getElementById(id).innerText = response.boxValue;	
+			document.getElementById(id).innerText = response.boxValue;
 			updateSums(response);
-
+			
 			gridItems[id].available = false;
 			gridItems[id].filled = true;
 			if (id <= 11) {
-				gridItems[parseInt(id, 10)+1].available = true;
+				gridItems[parseInt(id, 10) + 1].available = true;
 			} else if (id >= 14 && id <= 25) {
-				gridItems[parseInt(id, 10)-1].available = true;
+				gridItems[parseInt(id, 10) - 1].available = true;
 			}
 			diceRolls = 0;
 			toggleButtons();
+			counter++;
+			if (counter == 52) {
+				setTimeout(function () {
+					endGame();
+				}, 1000);
+			}
 		}
 	}
 	http.send();
@@ -201,20 +201,20 @@ function fillBox(id) {
 function announce(id) {
 	var http = new XMLHttpRequest();
 	announcement = id;
-	boxTypeOrdinal = announcement%13
+	boxTypeOrdinal = announcement % 13
 
-//	var url = 'https://jamb-remote.herokuapp.com/forms/' + formId + '/announce';
-	var url = 'http://localhost:8080/forms/' + formId + '/announce' ;
+	//	var url = 'https://jamb-remote.herokuapp.com/forms/' + formId + '/announce';
+	var url = 'http://localhost:8080/forms/' + formId + '/announce';
 
-	http.open('PUT', url, true);	
+	http.open('PUT', url, true);
 	http.setRequestHeader("Content-Type", "application/json");
 
-	http.onreadystatechange = function() {
-		if(http.readyState == 4 && http.status == 200) {
+	http.onreadystatechange = function () {
+		if (http.readyState == 4 && http.status == 200) {
 			document.getElementById(id).style.border = "2px solid red";
 			for (var i = 0; i < 4; i++) {
 				for (var j = 0; j < 13; j++) {
-					gridItems[i*13+j].disabled = true;
+					gridItems[i * 13 + j].disabled = true;
 				}
 			}
 			gridItems[id].disabled = false;
@@ -261,17 +261,17 @@ function rollDice() {
 	text = text.substring(0, text.length - 1) + '}';
 
 	var http = new XMLHttpRequest();
-//	var url = 'https://jamb-remote.herokuapp.com/forms/' + formId + '/roll';
+	//	var url = 'https://jamb-remote.herokuapp.com/forms/' + formId + '/roll';
 	var url = 'http://localhost:8080/forms/' + formId + '/roll';
 
 	http.open('PUT', url, true);
 	http.setRequestHeader("Content-Type", "application/json");
 
 
-	http.onreadystatechange = function() {
-		if(http.readyState == 4 && http.status == 200) {
+	http.onreadystatechange = function () {
+		if (http.readyState == 4 && http.status == 200) {
 			var response = JSON.parse(http.responseText);
-			for (var i = 0; i < response.length; i++){
+			for (var i = 0; i < response.length; i++) {
 				var obj = response[i];
 				buttonDice[obj.ordinalNumber].value = obj.value;
 			}
@@ -289,39 +289,38 @@ function startDiceAnimation() {
 			$(buttonDice[i]).animateRotate(360, {
 				duration: 700,
 				easing: 'linear',
-				complete: function () {},
-				step: function () {}
+				complete: function () { },
+				step: function () { }
 			});
-			buttonDice[i].style.backgroundImage="url('../images/dice/" + buttonDice[i].value + ".bmp')";
+			buttonDice[i].style.backgroundImage = "url('../images/dice/" + buttonDice[i].value + ".bmp')";
 		}
 	}
-	toggleButtons();
 }
 
-$.fn.animateRotate = function(angle, duration, easing, complete) {
+$.fn.animateRotate = function (angle, duration, easing, complete) {
 	var args = $.speed(duration, easing, complete);
 	var step = args.step;
-	return this.each(function(i, e) {
+	return this.each(function (i, e) {
 		args.complete = $.proxy(args.complete, e);
-		args.step = function(now) {
+		args.step = function (now) {
 			$.style(e, 'transform', 'rotate(' + now + 'deg)');
 			if (step) return step.apply(e, arguments);
 		};
-		$({deg: 0}).animate({deg: angle}, args);
+		$({ deg: 0 }).animate({ deg: angle }, args);
 	});
 };
 
 function recordGame() {
 	nickname = prompt('Molimo unesite nadimak:');
 	var http = new XMLHttpRequest();
-//	var url = 'https://jamb-remote.herokuapp.com/forms';
+	//	var url = 'https://jamb-remote.herokuapp.com/forms';
 	var url = 'http://localhost:8080/forms';
 
 	http.open('POST', url, true);
 	http.setRequestHeader('Content-type', 'application/json');
 
-	http.onreadystatechange = function() {
-		if(http.readyState == 4 && http.status == 200) {
+	http.onreadystatechange = function () {
+		if (http.readyState == 4 && http.status == 200) {
 			formId = http.responseText;
 		}
 	}
@@ -330,28 +329,28 @@ function recordGame() {
 
 function showRules() {
 	alert('Bacanjem kockica postižu se odredeni rezultati koji se upisuju u obrazac. Na kraju igre postignuti se rezultati zbrajaju.\n' +
-			'Nakon prvog bacanja, igrac gleda u obrazac i odlucuje hoce li nešto odmah upisati ili ce igrati dalje.\n' +
-			'U jednom potezu igrac može kockice (sve ili samo one koje izabere) bacati tri puta\n' +
-			'Prvi stupac obrasca upisuje se odozgo prema dolje, a drugom obrnuto. U treci stupac rezultati se upisuju bez odredenog redosljeda.\n' +
-			'Cetvrti stupac mora se popunjavati tako da se nakon prvog bacanja najavljuje igra za odredeni rezultat.\n' +
-			'Igrac je obavezan u to polje upisati ostvareni rezultat bez obzira da li mu to nakon tri bacanja odgovara ili ne.\n' +
-	'Rezultat se može, ali ne mora upisati u cetvrti stupac nakon prvog bacanja.');
+		'Nakon prvog bacanja, igrac gleda u obrazac i odlucuje hoce li nešto odmah upisati ili ce igrati dalje.\n' +
+		'U jednom potezu igrac može kockice (sve ili samo one koje izabere) bacati tri puta\n' +
+		'Prvi stupac obrasca upisuje se odozgo prema dolje, a drugom obrnuto. U treci stupac rezultati se upisuju bez odredenog redosljeda.\n' +
+		'Cetvrti stupac mora se popunjavati tako da se nakon prvog bacanja najavljuje igra za odredeni rezultat.\n' +
+		'Igrac je obavezan u to polje upisati ostvareni rezultat bez obzira da li mu to nakon tri bacanja odgovara ili ne.\n' +
+		'Rezultat se može, ali ne mora upisati u cetvrti stupac nakon prvog bacanja.');
 }
 
 function showLeaderboard() {
 	var http = new XMLHttpRequest();
-//	var url = 'https://jamb-remote.herokuapp.com/scores';
+	//	var url = 'https://jamb-remote.herokuapp.com/scores';
 	var url = 'http://localhost:8080/scores';
 	http.open('GET', url, true);
 
-	http.onreadystatechange = function() {
-		if(http.readyState == 4 && http.status == 200) {
+	http.onreadystatechange = function () {
+		if (http.readyState == 4 && http.status == 200) {
 
 			var response = JSON.parse(http.responseText);
 			var text = '';
-			for (var i = 0; i < response.length; i++){
+			for (var i = 0; i < response.length; i++) {
 				var obj = response[i];
-				text += (i+1) + '. ' + obj.value + ' - ' + obj.name + '\n';
+				text += (i + 1) + '. ' + obj.value + ' - ' + obj.name + '\n';
 			}
 			alert('Najbolji rezultati ovaj tjedan:\n' + text);
 		}

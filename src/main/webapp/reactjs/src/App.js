@@ -9,12 +9,14 @@ import Login from "./components/login.component";
 import Register from "./components/register.component";
 import Profile from "./components/profile.component";
 import BoardAdmin from "./components/board-admin.component";
-import Jamb from "./components/jamb.component";
+import JambReal from "./components/jamb-real.component";
+import JambFake from "./components/jamb-fake.component";
+
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.logOut = this.logOut.bind(this);
+    this.logout = this.logout.bind(this);
 
     this.state = {
       showAdminBoard: false,
@@ -33,7 +35,7 @@ class App extends Component {
     }
   }
 
-  logOut() {
+  logout() {
     AuthService.logout();
   }
 
@@ -44,25 +46,22 @@ class App extends Component {
       <Router>
         <div>
           <nav className="navbar navbar-expand navbar-dark bg-dark">
-            
+
             <div className="navbar-nav mr-auto">
 
               {showAdminBoard && (
                 <li className="nav-item">
                   <Link to={"/admin"} className="nav-link">
                     Admin Board
-                  </Link>
+        </Link>
                 </li>
               )}
 
             </div>
 
             {currentUser ? (
-              <div className="navbar-nav mr-auto">
+              <div className="navbar-nav ml-auto">
                 <li className="nav-item">
-                  <Link to={"/jamb"} className="nav-link">
-                    PLAY
-                  </Link>
                 </li>
                 <li className="nav-item">
                   <Link to={"/profile"} className="nav-link">
@@ -70,34 +69,45 @@ class App extends Component {
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <a href="/login" className="nav-link" onClick={this.logOut}>
+                  <a href="/login" className="nav-link" onClick={this.logout}>
                     Logout
-                  </a>
+                 </a>
                 </li>
               </div>
             ) : (
-              <div className="navbar-nav ml-auto">
-                <li className="nav-item">
-                  <Link to={"/login"} className="nav-link">
-                    Login
-                  </Link>
-                </li>
+                <div className="navbar-nav ml-auto">
+                  <li className="nav-item">
+                    <Link to={"/login"} className="nav-link">
+                      Login
+            </Link>
+                  </li>
 
-                <li className="nav-item">
-                  <Link to={"/register"} className="nav-link">
-                    Register
-                  </Link>
-                </li>
-              </div>
-            )}
+                  <li className="nav-item">
+                    <Link to={"/register"} className="nav-link">
+                      Register
+            </Link>
+                  </li>
+                </div>
+              )}
           </nav>
+
+          <div>
+            {currentUser ? (
+              <div>
+                <JambReal />
+              </div>
+            ) : (
+                <div>
+                  <JambFake />
+                </div>
+              )}
+          </div>
 
           <div className="container mt-3">
             <Switch>
               <Route exact path="/login" component={Login} />
               <Route exact path="/register" component={Register} />
               <Route exact path="/profile" component={Profile} />
-              <Route exact path="/jamb" component={Jamb} />
               <Route path="/admin" component={BoardAdmin} />
             </Switch>
           </div>
