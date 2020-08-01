@@ -9,6 +9,7 @@ import Login from "./components/login.component";
 import Register from "./components/register.component";
 import Profile from "./components/profile.component";
 import BoardAdmin from "./components/board-admin.component";
+import Jamb from "./components/jamb.component";
 
 class App extends Component {
   constructor(props) {
@@ -43,9 +44,7 @@ class App extends Component {
       <Router>
         <div>
           <nav className="navbar navbar-expand navbar-dark bg-dark">
-            <Link to={"/"} className="navbar-brand">
-              Jamb
-            </Link>
+            
             <div className="navbar-nav mr-auto">
 
               {showAdminBoard && (
@@ -59,7 +58,12 @@ class App extends Component {
             </div>
 
             {currentUser ? (
-              <div className="navbar-nav ml-auto">
+              <div className="navbar-nav mr-auto">
+                <li className="nav-item">
+                  <Link to={"/jamb"} className="nav-link">
+                    PLAY
+                  </Link>
+                </li>
                 <li className="nav-item">
                   <Link to={"/profile"} className="nav-link">
                     {currentUser.username}
@@ -93,6 +97,7 @@ class App extends Component {
               <Route exact path="/login" component={Login} />
               <Route exact path="/register" component={Register} />
               <Route exact path="/profile" component={Profile} />
+              <Route exact path="/jamb" component={Jamb} />
               <Route path="/admin" component={BoardAdmin} />
             </Switch>
           </div>

@@ -2,6 +2,8 @@ package matej.api.controllers;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -9,9 +11,9 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
 import matej.api.services.ScoreService;
+import matej.constants.JambConstants;
 import matej.models.Score;
 
 
@@ -28,22 +30,21 @@ public class HomeController {
 		scoreService.clearUnfinishedScores();
 	}
 	
-	@RequestMapping("")
-	public ModelAndView index () {
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("index");
-		return modelAndView;
+	@GetMapping("")
+	public void handleGet(HttpServletResponse response) {
+		response.setHeader("Location", "http://localhost:3000");
+		response.setStatus(302);
 	}
-
+	
 	@GetMapping("/scores")
 	public List<Score> getLeaderboard() {
-		return scoreService.getLeaderboard(10);
+		return scoreService.getLeaderboard(JambConstants.LEADERBOARD_LIMIT);
 	}
 	
 	@GetMapping("/play")
-	@PreAuthorize("hasAuthority('USER') or hasAuthority('ADMIN')")
-	public String play() {
-		return "index";
+	// @PreAuthorize("hasAuthority('USER') or hasAuthority('ADMIN')")
+	public String test() {
+		return "play";
 	}
 	
 	@GetMapping("/admin")
