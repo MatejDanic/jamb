@@ -33,6 +33,7 @@ class App extends Component {
         showAdminBoard: user.roles.includes("ADMIN")
       });
     }
+    console.log(user);
   }
 
   logout() {

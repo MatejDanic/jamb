@@ -1,21 +1,34 @@
 import React, { Component } from "react";
 import Jamb from './jamb.component';
+import AuthService from "../services/auth.service";
 var diceRolls, buttonDice, buttonRollDice, gridItems, sums, announcement, counter;
-
+var formId, currentUser;
 export default class JambReal extends Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            currentUser: AuthService.getCurrentUser()
+        };
+    }
     componentDidMount() {
         console.log("JambReal - componentDidMount");
         start();
     }
 
     render() {
+        const { currentUser } = this.state;
         return (
+            <div>
             <Jamb />
+            { currentUser.accessToken }
+            </div>
         )
     }
 }
-function start () {
-    console.log("JambReal - onload");
+function start() {
+    console.log("JambReal - start");
     diceRolls = 0;
     buttonDice = document.querySelectorAll("button[class^=button-dice]");
     buttonRollDice = document.getElementById("roll-dice");
@@ -23,15 +36,15 @@ function start () {
     sums = [];
     announcement = -1;
     counter = 0;
-
-    for (var i = 0; i < buttonDice.length; i++) {
+    var i, j;
+    for (i = 0; i < buttonDice.length; i++) {
         buttonDice[i].style.border = "4px solid gray";
         buttonDice[i].style.backgroundImage = 'url(../images/dice/6.bmp)';
         buttonDice[i].value = 6;
         buttonDice[i].disabled = true;
     }
-    for (var i = 0; i < 4; i++) {
-        for (var j = 0; j < 13; j++) {
+    for (i = 0; i < 4; i++) {
+        for (j = 0; j < 13; j++) {
             gridItems.push(document.getElementById(i * 13 + j));
             gridItems[i * 13 + j].disabled = true;
             gridItems[i * 13 + j].filled = false;
@@ -39,8 +52,8 @@ function start () {
         }
     }
 
-    for (var i = 0; i < 4; i++) {
-        var name;
+    var name;
+    for (i = 0; i < 4; i++) {
         switch (i) {
             case 0:
                 name = 'DOWNWARDS';
@@ -54,8 +67,10 @@ function start () {
             case 3:
                 name = 'ANNOUNCEMENT';
                 break;
+            default:
+                name = 'DOWNWARDS';
         }
-        for (var j = 0; j < 3; j++) {
+        for (j = 0; j < 3; j++) {
             switch (j) {
                 case 0:
                     name += "-numberSum";
@@ -66,6 +81,8 @@ function start () {
                 case 2:
                     name += "-labelSum";
                     break;
+                default:
+                    name += "-numberSum";
             }
             sums.push(document.getElementById(name))
             sums[i * 3 + j].innerText = 0;
@@ -89,12 +106,12 @@ function initializeGrid() {
 
     gridItems[25].available = true;
 
-    for (var j = 0; j < 26; j++) {
-        gridItems[26 + j].available = true;
+    for (var i = 0; i < 26; i++) {
+        gridItems[26 + i].available = true;
     }
 }
 
-function toggleDiceHold(id) {
+export function toggleDiceHold(id) {
     var elem = document.getElementById(id);
     elem.hold = !elem.hold;
     if (elem.hold) {
@@ -106,57 +123,59 @@ function toggleDiceHold(id) {
 
 function toggleButtons() {
     var isAnnouncementRequired = true;
-    for (var i = 0; i < 39; i++) {
+    var i;
+    for (i = 0; i < 39; i++) {
         if (!gridItems[i].filled) {
             isAnnouncementRequired = false;
             break;
         }
     }
-    if (diceRolls == 0) {
+    if (diceRolls === 0) {
         buttonRollDice.disabled = false;
         buttonRollDice.className = 'button-roll-dice';
-        for (var i = 0; i < gridItems.length; i++) {
+        for (i = 0; i < gridItems.length; i++) {
             gridItems[i].disabled = true;
         }
-        for (var i = 0; i < buttonDice.length; i++) {
+        for (i = 0; i < buttonDice.length; i++) {
             buttonDice[i].disabled = true;
             buttonDice[i].style.border = "4px solid gray";
             buttonDice[i].hold = false;
         }
-    } else if (diceRolls == 1) {
-        for (var i = 0; i < buttonDice.length; i++) {
+    } else if (diceRolls === 1) {
+        for (i = 0; i < buttonDice.length; i++) {
             buttonDice[i].style.border = "4px solid black";
         }
-        for (var i = 0; i < gridItems.length; i++) {
-            if (gridItems[i].available == true) {
+        for (i = 0; i < gridItems.length; i++) {
+            if (gridItems[i].available === true) {
                 gridItems[i].disabled = false;
             }
         }
-        for (var i = 0; i < buttonDice.length; i++) {
+        for (i = 0; i < buttonDice.length; i++) {
             buttonDice[i].disabled = false;
         }
         if (isAnnouncementRequired) {
             buttonRollDice.disabled = true;
         }
-    } else if (diceRolls == 2) {
-        for (var i = 39; i < 52; i++) {
-            if (i != announcement) {
+    } else if (diceRolls === 2) {
+        for (i = 39; i < 52; i++) {
+            if (i !== announcement) {
                 gridItems[i].disabled = true;
             }
         }
-    } else if (diceRolls == 3) {
-        for (var i = 0; i < buttonDice.length; i++) {
+    } else if (diceRolls === 3) {
+        for (i = 0; i < buttonDice.length; i++) {
             buttonDice[i].disabled = true;
         }
         buttonRollDice.disabled = true;
     }
 }
 
-function boxClick(id) {
-    for (var i = 0; i < 4; i++) {
-        for (var j = 0; j < 13; j++) {
-            if (id == i * 13 + j && i == 3) {
-                if (announcement == -1) {
+export function boxClick(id) {
+    var i, j;
+    for (i = 0; i < 4; i++) {
+        for (j = 0; j < 13; j++) {
+            if (id === i * 13 + j && i === 3) {
+                if (announcement === -1) {
                     announce(id);
                     buttonRollDice.disabled = false;
                 } else {
@@ -167,7 +186,7 @@ function boxClick(id) {
             }
         }
     }
-    if (announcement == -1) {
+    if (announcement === -1) {
         fillBox(id);
     }
 }
@@ -187,7 +206,7 @@ function fillBox(id) {
     http.setRequestHeader("Content-Type", "application/json");
 
     http.onreadystatechange = function () {
-        if (http.readyState == 4 && http.status == 200) {
+        if (http.readyState === 4 && http.status === 200) {
             var response = JSON.parse(http.responseText);
             document.getElementById(id).innerText = response.boxValue;
             updateSums(response);
@@ -202,7 +221,7 @@ function fillBox(id) {
             diceRolls = 0;
             toggleButtons();
             counter++;
-            if (counter == 52) {
+            if (counter === 52) {
                 setTimeout(function () {
                     endGame();
                 }, 1000);
@@ -224,7 +243,7 @@ function announce(id) {
     http.setRequestHeader("Content-Type", "application/json");
 
     http.onreadystatechange = function () {
-        if (http.readyState == 4 && http.status == 200) {
+        if (http.readyState === 4 && http.status === 200) {
             document.getElementById(id).style.border = "2px solid red";
             for (var i = 0; i < 4; i++) {
                 for (var j = 0; j < 13; j++) {
@@ -256,19 +275,19 @@ function updateSums(json) {
     document.getElementById('finalSum').innerText = json['finalSum'];
 }
 
-function rollDice() {
+export function rollDice() {
     diceRolls++;
-    if (diceRolls == 1) {
+    if (diceRolls === 1) {
         buttonRollDice.className = 'button-roll-dice gradient-1';
-    } else if (diceRolls == 2) {
+    } else if (diceRolls === 2) {
         buttonRollDice.className = 'button-roll-dice gradient-2';
-    } else if (diceRolls == 3) {
+    } else if (diceRolls === 3) {
         buttonRollDice.className = 'button-roll-dice gradient-3';
     }
 
     var text = '{';
     for (var i = 0; i < buttonDice.length; i++) {
-        text += '"' + i + '"' + ':' + '"';
+        text += '"' + i + '" : "';
         text += !buttonDice[i].hold;
         text += '",';
     }
@@ -283,7 +302,7 @@ function rollDice() {
 
 
     http.onreadystatechange = function () {
-        if (http.readyState == 4 && http.status == 200) {
+        if (http.readyState === 4 && http.status === 200) {
             var response = JSON.parse(http.responseText);
             for (var i = 0; i < response.length; i++) {
                 var obj = response[i];
@@ -300,45 +319,44 @@ function rollDice() {
 function startDiceAnimation() {
     for (var i = 0; i < buttonDice.length; i++) {
         if (!buttonDice[i].hold) {
-            $(buttonDice[i]).animateRotate(360, {
-                duration: 700,
-                easing: 'linear',
-                complete: function () { },
-                step: function () { }
-            });
+            // document(buttonDice[i]).animateRotate(360, {
+            //     duration: 700,
+            //     easing: 'linear',
+            //     complete: function () { },
+            //     step: function () { }
+            // });
             buttonDice[i].style.backgroundImage = "url('../images/dice/" + buttonDice[i].value + ".bmp')";
         }
     }
 }
 
-$.fn.animateRotate = function (angle, duration, easing, complete) {
-    var args = $.speed(duration, easing, complete);
-    var step = args.step;
-    return this.each(function (i, e) {
-        args.complete = $.proxy(args.complete, e);
-        args.step = function (now) {
-            $.style(e, 'transform', 'rotate(' + now + 'deg)');
-            if (step) return step.apply(e, arguments);
-        };
-        $({ deg: 0 }).animate({ deg: angle }, args);
-    });
-};
+// document.fn.animateRotate = function (angle, duration, easing, complete) {
+//     var args = document.speed(duration, easing, complete);
+//     var step = args.step;
+//     return this.each(function (i, e) {
+//         args.complete = document.proxy(args.complete, e);
+//         args.step = function (now) {
+//             document.style(e, 'transform', 'rotate(' + now + 'deg)');
+//             if (step) return step.apply(e, arguments);
+//         };
+//         document({ deg: 0 }).animate({ deg: angle }, args);
+//     });
+// };
 
 function recordGame() {
-    nickname = prompt('Molimo unesite nadimak:');
     var http = new XMLHttpRequest();
     //	var url = 'https://jamb-remote.herokuapp.com/forms';
-    var url = 'http://localhost:8080/forms';
+    var url = 'http://localhost:8080/forms/username';
 
     http.open('POST', url, true);
     http.setRequestHeader('Content-type', 'application/json');
-
+    // http.setRequestHeader('Authorization', currentUser.accessToken);
     http.onreadystatechange = function () {
-        if (http.readyState == 4 && http.status == 200) {
+        if (http.readyState === 4 && http.status === 200) {
             formId = http.responseText;
         }
     }
-    http.send(nickname);
+    http.send();
 }
 
 function endGame() {
@@ -348,7 +366,7 @@ function endGame() {
     // }
 }
 
-function showRules() {
+export function showRules() {
     alert('Bacanjem kockica postižu se odredeni rezultati koji se upisuju u obrazac. Na kraju igre postignuti se rezultati zbrajaju.\n' +
         'Nakon prvog bacanja, igrac gleda u obrazac i odlucuje hoce li nešto odmah upisati ili ce igrati dalje.\n' +
         'U jednom potezu igrac može kockice (sve ili samo one koje izabere) bacati tri puta\n' +
@@ -358,14 +376,14 @@ function showRules() {
         'Rezultat se može, ali ne mora upisati u cetvrti stupac nakon prvog bacanja.');
 }
 
-function showLeaderboard() {
+export function showLeaderboard() {
     var http = new XMLHttpRequest();
     //	var url = 'https://jamb-remote.herokuapp.com/scores';
     var url = 'http://localhost:8080/scores';
     http.open('GET', url, true);
 
     http.onreadystatechange = function () {
-        if (http.readyState == 4 && http.status == 200) {
+        if (http.readyState === 4 && http.status === 200) {
 
             var response = JSON.parse(http.responseText);
             var text = '';

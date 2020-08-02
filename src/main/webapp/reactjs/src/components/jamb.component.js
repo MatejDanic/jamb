@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "../jamb/jamb.css"
+import "../jamb.css"
 
 function toggleDiceHold() {} 
 function rollDice() {}

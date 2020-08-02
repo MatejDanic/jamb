@@ -13,7 +13,7 @@ export default class JambFake extends Component {
     }
 }
 function start () {
-    console.log("JambFake - onload")
+    console.log("JambFake - start")
     
     diceRolls = 0;
     buttonDice = document.querySelectorAll('button[class^=button-dice]');
@@ -101,7 +101,7 @@ function initializeGrid() {
     updateSums();
 }
 
-function toggleDiceHold(id) {
+export function toggleDiceHold(id) {
     var elem = document.getElementById(id);
     elem.hold = !elem.hold;
     if (elem.hold) {
@@ -160,7 +160,7 @@ function toggleButtons() {
     }
 }
 
-function boxClick(id) {
+export function boxClick(id) {
     var i, j;
     for (i = 0; i < 4; i++) {
         for (j = 0; j < 13; j++) {
@@ -243,7 +243,7 @@ function updateSums() {
     }
 }
 
-function rollDice() {
+export function rollDice() {
     var number;
     diceRolls++;
     if (diceRolls === 1) {
@@ -410,7 +410,7 @@ function endGame() {
     // }
 }
 
-function showRules() {
+export function showRules() {
     alert("Bacanjem kockica postižu se odredeni rezultati koji se upisuju u obrazac. Na kraju igre postignuti se rezultati zbrajaju.\n" +
         "Nakon prvog bacanja, igrac gleda u obrazac i odlucuje hoce li nešto odmah upisati ili ce igrati dalje.\n" +
         "U jednom potezu igrac može kockice (sve ili samo one koje izabere) bacati tri puta\n" +
@@ -420,7 +420,7 @@ function showRules() {
         "Rezultat se može, ali ne mora upisati u cetvrti stupac nakon prvog bacanja.");
 }
 
-function showLeaderboard() {
+export function showLeaderboard() {
     var http = new XMLHttpRequest();
     //	var url = 'https://jamb-remote.herokuapp.com/sums';
     var url = 'http://localhost:8080/sums';

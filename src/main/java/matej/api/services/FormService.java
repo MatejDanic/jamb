@@ -42,7 +42,7 @@ public class FormService {
 	@Autowired
 	DiceRepository diceRepo;
 	
-	public int initialize(User user) {
+	public int initializeForm(User user) {
 		Form form = JambFactory.createForm(user);
 		formRepo.save(form);
 		

@@ -41,11 +41,11 @@ public class HomeController {
 		return scoreService.getLeaderboard(JambConstants.LEADERBOARD_LIMIT);
 	}
 	
-	@GetMapping("/play")
+	// @GetMapping("/play")
 	// @PreAuthorize("hasAuthority('USER') or hasAuthority('ADMIN')")
-	public String test() {
-		return "play";
-	}
+	// public String test() {
+	// 	return "play";
+	// }
 	
 	@GetMapping("/admin")
 	@PreAuthorize("hasAuthority('ADMIN')")
