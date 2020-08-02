@@ -1,14 +1,20 @@
 import React, { Component } from "react";
-import { toggleDiceHold, rollDice, boxClick, showRules, showLeaderboard } from "../jamb-fake.js"
+import "../jamb/jamb.css"
+
+function toggleDiceHold() {} 
+function rollDice() {}
+function boxClick() {} 
+function showRules() {} 
+function showLeaderboard() {}
 
 export default class Jamb extends Component {
+
     render() {
         return (
             <div>
                 <title>Jamb</title>
                 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
                 <meta name="viewport" content="height=device-height, initial-scale=1, minimum-scale=1" />
-                <link rel="stylesheet" type="text/css" href="../jamb.css" />
                 <link rel="icon" href="../images/favicon.png" />
                 <div className="game">
                     <div className="dice-rack">

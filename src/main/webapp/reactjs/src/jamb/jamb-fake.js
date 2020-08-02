@@ -1,6 +1,6 @@
-var diceRolls, buttonDice, buttonRollDice, gridItems, sums, announcement, counter;
-
-document.onload = function () {
+onload = () => {
+    console.log("jamb.fake.js")
+    var diceRolls, buttonDice, buttonRollDice, gridItems, sums, announcement, counter;
     diceRolls = 0;
     buttonDice = document.querySelectorAll('button[class^=button-dice]');
     buttonRollDice = document.getElementById("roll-dice");
@@ -15,6 +15,7 @@ document.onload = function () {
         buttonDice[i].style.backgroundImage = 'url(../images/dice/6.bmp)';
         buttonDice[i].value = 6;
         buttonDice[i].disabled = true;
+        buttonDice[i].hold = false;
     }
     for (i = 0; i < 4; i++) {
         for (j = 0; j < 13; j++) {

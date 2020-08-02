@@ -1,7 +1,6 @@
-
-var diceRolls, buttonDice, buttonRollDice, gridItems, sums, announcement, counter;
-
 window.onload = function () {
+	console.log("jamb-real.js");
+	var diceRolls, buttonDice, buttonRollDice, gridItems, sums, announcement, counter;
 	diceRolls = 0;
 	buttonDice = document.querySelectorAll("button[class^=button-dice]");
 	buttonRollDice = document.getElementById("roll-dice");
