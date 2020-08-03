@@ -1,0 +1,36 @@
+.roll-dice-button {
+  width: 160px;
+  height: 32px;
+  border-radius: 5px;
+  background-color: #f1b2b2;
+  border: 1px solid black;
+  font-size: 16px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.two-left {
+  background-image: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0) 66.6%,
+    rgba(255, 255, 255, 1) 66.6%
+  );
+}
+
+.one-left {
+  background-image: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0) 33.3%,
+    rgba(255, 255, 255, 1) 33.3%
+  );
+}
+
+.none-left {
+  background-image: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 1) 0%
+  );
+}

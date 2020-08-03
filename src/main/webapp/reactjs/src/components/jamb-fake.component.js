@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-import "../jamb.css"
+
 
 var diceRolls, buttonDice, buttonRollDice, gridItems, sums, announcement, counter;
-
 export default class JambFake extends Component {
 
     componentDidMount() {

@@ -49,6 +49,7 @@ public class FormService {
 	
 	public int initializeForm(String username) {
 		User user = userRepo.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
+		if (user.getForm() != null) return user.getForm().getId();
 		Form form = JambFactory.createForm(user);
 		formRepo.save(form);
 		

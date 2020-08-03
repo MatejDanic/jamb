@@ -40,11 +40,11 @@ public class User {
     @ManyToMany(cascade = CascadeType.ALL, fetch=FetchType.LAZY)
     @JoinTable(	name = "auth_user_role", 
 				joinColumns = @JoinColumn(name = "user_id"), 
-				inverseJoinColumns = @JoinColumn(name = "role_id"))
+                inverseJoinColumns = @JoinColumn(name = "role_id"))
+                
     private Set<Role> roles;
 
     public User() {
-        
     }
 
     public User(String username, String password) {
@@ -58,6 +58,22 @@ public class User {
     
     public void setId(int id) {
         this.id = id;
+    }
+    
+    public Set<Score> getScores() {
+        return scores;
+    }
+
+    public void setScores(Set<Score> scores) {
+        this.scores = scores;
+    }
+
+    public Form getForm() {
+        return form;
+    }
+
+    public void setForm(Form form) {
+        this.form = form;
     }
     
     public String getUsername() {
