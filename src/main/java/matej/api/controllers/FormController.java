@@ -25,13 +25,12 @@ import matej.models.Box;
 import matej.models.Dice;
 import matej.models.Form;
 import matej.models.Column;
-import matej.models.User;
 import matej.models.enums.BoxType;
 import matej.models.enums.ColumnType;
 import matej.security.jwt.JwtUtils;
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins="*")
 @RequestMapping("/forms")
 public class FormController {
 
@@ -43,23 +42,15 @@ public class FormController {
 
 	private final RateLimiter rateLimiter = RateLimiter.create(0.2);
 
-	@GetMapping("/username")
-	protected String getUsername(@RequestHeader String token) {
-		String username = "";
-		try {
-			if (token != null && jwtUtils.validateJwtToken(token)) {
-				username = jwtUtils.getUserNameFromJwtToken(token);
-			} 
-		} catch (Exception e) {
-		}
-		return username;
-	}
+	// public String getUsername(@RequestHeader(value="Authorization") String headerAuth) {
+	// 	return jwtUtils.getUsernameFromHeader(headerAuth);
+	// }
 
 	@PostMapping("")
-	public int initializeForm(@RequestBody User user) {
+	public int initializeForm(@RequestHeader(value="Authorization") String headerAuth) {
 		if (!rateLimiter.tryAcquire(1))
 			return 0;
-		return formService.initializeForm(user);
+		return formService.initializeForm(jwtUtils.getUsernameFromHeader(headerAuth));
 	}
 
 	@GetMapping("")

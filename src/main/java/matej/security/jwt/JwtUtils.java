@@ -38,11 +38,21 @@ public class JwtUtils {
 				.compact();
 	}
 
-	public String getUserNameFromJwtToken(String token) {
+	protected String getUsernameFromJwtToken(String token) {
 		return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
 	}
 
-	public boolean validateJwtToken(String authToken) {
+	public String getUsernameFromHeader(String headerAuth) {
+        if (headerAuth.startsWith("Bearer ")) {
+			String token = headerAuth.substring(7, headerAuth.length());
+			if (token != null && validateJwtToken(token)) {
+				return getUsernameFromJwtToken(token);
+			} 
+		}
+		return null;
+    }
+
+	protected boolean validateJwtToken(String authToken) {
 		try {
 			Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);
 			return true;
@@ -60,4 +70,6 @@ public class JwtUtils {
 
 		return false;
 	}
+
+	
 }

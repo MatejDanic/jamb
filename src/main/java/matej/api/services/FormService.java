@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import matej.api.repositories.BoxRepository;
@@ -12,6 +13,7 @@ import matej.api.repositories.ColumnRepository;
 import matej.api.repositories.DiceRepository;
 import matej.api.repositories.FormRepository;
 import matej.api.repositories.ScoreRepository;
+import matej.api.repositories.UserRepository;
 import matej.constants.JambConstants;
 import matej.exceptions.IllegalMoveException;
 import matej.factories.JambFactory;
@@ -41,8 +43,12 @@ public class FormService {
 	
 	@Autowired
 	DiceRepository diceRepo;
+
+	@Autowired
+	UserRepository userRepo;
 	
-	public int initializeForm(User user) {
+	public int initializeForm(String username) {
+		User user = userRepo.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
 		Form form = JambFactory.createForm(user);
 		formRepo.save(form);
 		
