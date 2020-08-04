@@ -1,3 +1,14 @@
+.game {
+	text-align: center;
+	background-color: aliceblue;
+	margin: 0px;
+	padding: 0px;
+}
+.dice-rack {
+	padding-top: 2px;
+	padding-bottom: 0px;
+	margin-bottom: 0px;
+}
 .form {
     display: inline-grid;
 	text-align: center;

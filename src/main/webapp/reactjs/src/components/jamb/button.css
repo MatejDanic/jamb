@@ -9,6 +9,11 @@
   margin-left: 1px;
   background-color: white;
 }
+
+.gray-border {
+  border: 4px solid gray;
+}
+
 .black-border {
   border: 4px solid black;
 }
