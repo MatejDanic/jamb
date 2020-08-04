@@ -1,24 +1,30 @@
 import React, { Component } from "react";
-import "./dice-button.css"
+import "./button.css"
 
 export default class DiceButton extends Component {
     constructor() {
         super();
 
         this.state = {
-            black: true
+            hold: false
         }
     }
+
+    componentDidUpdate() {
+        console.log(this.state);
+    }
+
     toggleDice() {
-        console.log("toggle");
         this.setState({
-            black: !this.state.black
+            hold: !this.state.hold
         })
     }
+    
     render() {
-        let btnClass = this.state.black ? "black-border" : "red-border";
+        let btnClass = this.state.hold ? "red-border" : "black-border";
+        let imgUrl = 'url(images/dice/' + this.props.value + '.bmp)';
         return (
-            <button className={"dice-button " + btnClass} onClick={this.toggleDice.bind(this)} />
+            <button className={"dice-button " + btnClass} onClick={this.toggleDice.bind(this)} style={{ backgroundImage: imgUrl }} />
         )
     }
 }

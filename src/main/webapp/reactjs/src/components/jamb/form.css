@@ -1,7 +1,9 @@
 .form {
     display: inline-grid;
-    text-align: center;
+	text-align: center;
 	grid-template-columns: repeat(6, 64px);
 	grid-template-rows: repeat(18, 32px);
-	padding: 5px;
+	margin-top: 5px;
+	margin-bottom: 0px;
+	padding-bottom: 0px;
 }

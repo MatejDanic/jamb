@@ -1,36 +1,37 @@
 .label {
-  border-radius: 5px;
-  border: 1px solid black;
-  display: inline-block;
-  vertical-align: middle;
-  line-height: normal;
-  font-size: 16px;
-  font-family: Arial, Helvetica, sans-serif;
-  flex: 1;
-  justify-content: "center";
-  align-items: "center";
-}
-.label-image {
   height: 32px;
   width: 64px;
   border-radius: 5px;
   border: 1px solid black;
-  border-radius: 5px;
-  flex: 1;
-  justify-content: "center";
-  align-items: "center";
-}
-.label-number {
-  border-radius: 5px;
-  background-color: #a9deff;
-  border: 1px solid rgba(0, 0, 0, 0.8);
-  font-size: 25px;
+  line-height: normal;
+  font-size: 16px;
   font-family: Arial, Helvetica, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
 }
+
+.label-image {
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
 .label-sum {
-	border-radius: 5px;
-	background-color: #a9deff;
-	border: 1px solid black;
-	font-size: 16px;
-	font-family: Arial, Helvetica, sans-serif;
+  background-color: lightskyblue;
+  font-size: 16px;
+}
+
+.label-sum-number {
+  background-color: lightskyblue;
+  font-size: 25px;
+}
+
+.label-sum-number-final {
+  background-color: lightskyblue;
+  font-size: 25px;
+  grid-column-start: 5;
+  grid-column-end: 7;
+  width: auto;
 }

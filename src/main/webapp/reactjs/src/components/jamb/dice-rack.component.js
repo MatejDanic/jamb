@@ -4,17 +4,21 @@ import RollDiceButton from "./roll-dice-button.component";
 import "./dice-rack.css"
 
 export default class DiceRack extends Component {
-      render(){
-          return (
-               <div class="dice-rack">
-                   <DiceButton />                   
-                   <DiceButton />                   
-                   <DiceButton />                   
-                   <DiceButton />                  
-                   <DiceButton />
-                   <div><RollDiceButton/></div>
-               </div>
-          )
-      }
-  }
-  
+    render() {
+        return (
+            <div className="dice-rack">
+                <DiceButton value={6} />
+                <DiceButton value={6} />
+                <DiceButton value={6} />
+                <DiceButton value={6} />
+                <DiceButton value={6} />
+                <div><RollDiceButton onRollDice={this.rollDice.bind(this)} /></div>
+            </div>
+        )
+    }
+
+    rollDice() {
+        console.log("rolling dice");
+    }
+
+}

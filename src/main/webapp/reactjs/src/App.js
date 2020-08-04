@@ -9,8 +9,6 @@ import Login from "./components/login.component";
 import Register from "./components/register.component";
 import Profile from "./components/profile.component";
 import BoardAdmin from "./components/board-admin.component";
-import JambReal from "./components/jamb-real.component";
-import JambFake from "./components/jamb-fake.component";
 import Game from "./components/game.component";
 
 
@@ -46,8 +44,7 @@ class App extends Component {
     return (
       <Router>
         <div>
-          <Game />
-          <nav className="navbar navbar-expand navbar-dark bg-dark">
+          <nav className="navbar navbar-expand navbar-dark bg-dark" style={{height: '20px'}}>
 
             <div className="navbar-nav mr-auto">
 
@@ -93,7 +90,7 @@ class App extends Component {
               )}
           </nav>
 
-          <div>
+          {/* <div>
             {currentUser ? (
               <div>
                 <JambReal />
@@ -103,8 +100,9 @@ class App extends Component {
                   <JambFake />
                 </div>
               )}
-          </div>
+          </div> */}
 
+          <Game />
           <div className="container mt-3">
             <Switch>
               <Route exact path="/login" component={Login} />
