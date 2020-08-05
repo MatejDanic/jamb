@@ -3,9 +3,10 @@
 	background-color: aliceblue;
 	margin: 0px;
 	padding: 0px;
+	padding-bottom: 2px;
+	padding-top: 2px;
 }
 .dice-rack {
-	padding-top: 2px;
 	padding-bottom: 0px;
 	margin-bottom: 0px;
 }
