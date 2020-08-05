@@ -72,13 +72,14 @@
 
 .rules {
   grid-column-start: 1;
-  grid-column-end: 5;
+  grid-column-end: 3;
 }
 
 .leaderboard {
   padding-left: 24px;
   padding-right: 24px;
-  grid-column-start: 6;
-  grid-row-start: 1;
-  grid-row-end: 8;
+  grid-column-start: 3;
+  grid-column-end: 5;
+  /* grid-row-start: 1;
+  grid-row-end: 8; */
 }

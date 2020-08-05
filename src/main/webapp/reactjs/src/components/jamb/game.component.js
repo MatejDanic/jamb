@@ -27,60 +27,59 @@ export default class Game extends Component {
             rollDisabled: false,
             diceDisabled: true,
             boxes: [
-                { disabled: false, value: 0, filled: false, label: 0 },
-                { disabled: true, value: 0, filled: false, label: 1 },
-                { disabled: true, value: 0, filled: false, label: 2 },
-                { disabled: true, value: 0, filled: false, label: 3 },
-                { disabled: true, value: 0, filled: false, label: 4 },
-                { disabled: true, value: 0, filled: false, label: 5 },
-                { disabled: true, value: 0, filled: false, label: 6 },
-                { disabled: true, value: 0, filled: false, label: 7 },
-                { disabled: true, value: 0, filled: false, label: 8 },
-                { disabled: true, value: 0, filled: false, label: 9 },
-                { disabled: true, value: 0, filled: false, label: 10 },
-                { disabled: true, value: 0, filled: false, label: 11 },
-                { disabled: true, value: 0, filled: false, label: 12 },
-                { disabled: true, value: 0, filled: false, label: 13 },
-                { disabled: true, value: 0, filled: false, label: 14 },
-                { disabled: true, value: 0, filled: false, label: 15 },
-                { disabled: true, value: 0, filled: false, label: 16 },
-                { disabled: true, value: 0, filled: false, label: 17 },
-                { disabled: true, value: 0, filled: false, label: 18 },
-                { disabled: true, value: 0, filled: false, label: 19 },
-                { disabled: true, value: 0, filled: false, label: 20 },
-                { disabled: true, value: 0, filled: false, label: 21 },
-                { disabled: true, value: 0, filled: false, label: 22 },
-                { disabled: true, value: 0, filled: false, label: 23 },
-                { disabled: true, value: 0, filled: false, label: 24 },
-                { disabled: false, value: 0, filled: false, label: 25 },
-                { disabled: false, value: 0, filled: false, label: 25 },
-                { disabled: false, value: 0, filled: false, label: 27 },
-                { disabled: false, value: 0, filled: false, label: 28 },
-                { disabled: false, value: 0, filled: false, label: 29 },
-                { disabled: false, value: 0, filled: false, label: 30 },
-                { disabled: false, value: 0, filled: false, label: 31 },
-                { disabled: false, value: 0, filled: false, label: 32 },
-                { disabled: false, value: 0, filled: false, label: 33 },
-                { disabled: false, value: 0, filled: false, label: 34 },
-                { disabled: false, value: 0, filled: false, label: 35 },
-                { disabled: false, value: 0, filled: false, label: 36 },
-                { disabled: false, value: 0, filled: false, label: 37 },
-                { disabled: false, value: 0, filled: false, label: 38 },
-                { disabled: false, value: 0, filled: false, label: 39 },
-                { disabled: false, value: 0, filled: false, label: 40 },
-                { disabled: false, value: 0, filled: false, label: 41 },
-                { disabled: false, value: 0, filled: false, label: 42 },
-                { disabled: false, value: 0, filled: false, label: 43 },
-                { disabled: false, value: 0, filled: false, label: 44 },
-                { disabled: false, value: 0, filled: false, label: 45 },
-                { disabled: false, value: 0, filled: false, label: 46 },
-                { disabled: false, value: 0, filled: false, label: 47 },
-                { disabled: false, value: 0, filled: false, label: 48 },
-                { disabled: false, value: 0, filled: false, label: 49 },
-                { disabled: false, value: 0, filled: false, label: 50 },
-                { disabled: false, value: 0, filled: false, label: 51 }
+                { available: false, value: 0, filled: false, label: 0 },
+                { available: true, value: 0, filled: false, label: 1 },
+                { available: true, value: 0, filled: false, label: 2 },
+                { available: true, value: 0, filled: false, label: 3 },
+                { available: true, value: 0, filled: false, label: 4 },
+                { available: true, value: 0, filled: false, label: 5 },
+                { available: true, value: 0, filled: false, label: 6 },
+                { available: true, value: 0, filled: false, label: 7 },
+                { available: true, value: 0, filled: false, label: 8 },
+                { available: true, value: 0, filled: false, label: 9 },
+                { available: true, value: 0, filled: false, label: 10 },
+                { available: true, value: 0, filled: false, label: 11 },
+                { available: true, value: 0, filled: false, label: 12 },
+                { available: true, value: 0, filled: false, label: 13 },
+                { available: true, value: 0, filled: false, label: 14 },
+                { available: true, value: 0, filled: false, label: 15 },
+                { available: true, value: 0, filled: false, label: 16 },
+                { available: true, value: 0, filled: false, label: 17 },
+                { available: true, value: 0, filled: false, label: 18 },
+                { available: true, value: 0, filled: false, label: 19 },
+                { available: true, value: 0, filled: false, label: 20 },
+                { available: true, value: 0, filled: false, label: 21 },
+                { available: true, value: 0, filled: false, label: 22 },
+                { available: true, value: 0, filled: false, label: 23 },
+                { available: true, value: 0, filled: false, label: 24 },
+                { available: false, value: 0, filled: false, label: 25 },
+                { available: false, value: 0, filled: false, label: 26 },
+                { available: false, value: 0, filled: false, label: 27 },
+                { available: false, value: 0, filled: false, label: 28 },
+                { available: false, value: 0, filled: false, label: 29 },
+                { available: false, value: 0, filled: false, label: 30 },
+                { available: false, value: 0, filled: false, label: 31 },
+                { available: false, value: 0, filled: false, label: 32 },
+                { available: false, value: 0, filled: false, label: 33 },
+                { available: false, value: 0, filled: false, label: 34 },
+                { available: false, value: 0, filled: false, label: 35 },
+                { available: false, value: 0, filled: false, label: 36 },
+                { available: false, value: 0, filled: false, label: 37 },
+                { available: false, value: 0, filled: false, label: 38 },
+                { available: false, value: 0, filled: false, label: 39 },
+                { available: false, value: 0, filled: false, label: 40 },
+                { available: false, value: 0, filled: false, label: 41 },
+                { available: false, value: 0, filled: false, label: 42 },
+                { available: false, value: 0, filled: false, label: 43 },
+                { available: false, value: 0, filled: false, label: 44 },
+                { available: false, value: 0, filled: false, label: 45 },
+                { available: false, value: 0, filled: false, label: 46 },
+                { available: false, value: 0, filled: false, label: 47 },
+                { available: false, value: 0, filled: false, label: 48 },
+                { available: false, value: 0, filled: false, label: 49 },
+                { available: false, value: 0, filled: false, label: 50 },
+                { available: false, value: 0, filled: false, label: 51 }
             ]
-
         }
         this.rollDice = this.rollDice.bind(this);
         this.toggleDice = this.toggleDice.bind(this);
@@ -105,6 +104,7 @@ export default class Game extends Component {
     }
 
     boxClick(label) {
+        console.log(label);
         this.fillBox(label);
     }
 
@@ -115,9 +115,9 @@ export default class Game extends Component {
             state.boxes[label].available = false;
             state.boxes[label].filled = true;
             state.boxes[label].disabled = true;
-            if (state.boxes[label].column === 0 && state.boxes[label].box < 12) {
+            if (label <= 11) {
                 state.boxes[label + 1].disabled = false;
-            } else if (state.boxes[label] === 1 && state.boxes[label].box > 0) {
+            } else if (label >= 14 && label <=25) {
                 state.boxes[label - 1].disabled = false;
             }
             for (var i = 0; i < state.dice.length; i++) {
@@ -143,37 +143,43 @@ export default class Game extends Component {
                     <Label labelClass={"label label-image"} imgUrl={"../images/field/upwards.bmp"} />
                     <Label labelClass={"label label-image"} imgUrl={"../images/field/any_direction.bmp"} />
                     <Label labelClass={"label"} name={"NAJAVA"} />
-                    <button className="show-button leaderboard" onClick={showLeaderboard}>Lj E S T V I C A</button>
+                    <div />
                     <Label labelClass={"label label-image"} imgUrl={"../images/dice/1.bmp"} />
-                    <Box variables={this.state.boxes[0]} onBoxClick={this.boxClick} />
+                    <Box boxesDisabled={this.state.boxesDisabled} variables={this.state.boxes[0]} onBoxClick={this.boxClick} />
                     <Box variables={this.state.boxes[13]} onBoxClick={this.boxClick} />
                     <Box variables={this.state.boxes[26]} onBoxClick={this.boxClick} />
                     <Box variables={this.state.boxes[39]} onBoxClick={this.boxClick} />
+                    <div />
                     <Label labelClass={"label label-image"} imgUrl={"../images/dice/2.bmp"} />
                     <Box variables={this.state.boxes[1]} onBoxClick={this.boxClick} />
                     <Box variables={this.state.boxes[14]} onBoxClick={this.boxClick} />
                     <Box variables={this.state.boxes[27]} onBoxClick={this.boxClick} />
                     <Box variables={this.state.boxes[40]} onBoxClick={this.boxClick} />
+                    <div />
                     <Label labelClass={"label label-image"} imgUrl={"../images/dice/3.bmp"} />
                     <Box variables={this.state.boxes[2]} onBoxClick={this.boxClick} />
                     <Box variables={this.state.boxes[15]} onBoxClick={this.boxClick} />
                     <Box variables={this.state.boxes[28]} onBoxClick={this.boxClick} />
                     <Box variables={this.state.boxes[41]} onBoxClick={this.boxClick} />
+                    <div />
                     <Label labelClass={"label label-image"} imgUrl={"../images/dice/4.bmp"} />
                     <Box variables={this.state.boxes[3]} onBoxClick={this.boxClick} />
                     <Box variables={this.state.boxes[16]} onBoxClick={this.boxClick} />
                     <Box variables={this.state.boxes[29]} onBoxClick={this.boxClick} />
                     <Box variables={this.state.boxes[42]} onBoxClick={this.boxClick} />
+                    <div />
                     <Label labelClass={"label label-image"} imgUrl={"../images/dice/5.bmp"} />
                     <Box variables={this.state.boxes[4]} onBoxClick={this.boxClick} />
                     <Box variables={this.state.boxes[17]} onBoxClick={this.boxClick} />
                     <Box variables={this.state.boxes[30]} onBoxClick={this.boxClick} />
                     <Box variables={this.state.boxes[43]} onBoxClick={this.boxClick} />
+                    <div />
                     <Label labelClass={"label label-image"} imgUrl={"../images/dice/6.bmp"} />
                     <Box variables={this.state.boxes[5]} onBoxClick={this.boxClick} />
                     <Box variables={this.state.boxes[18]} onBoxClick={this.boxClick} />
                     <Box variables={this.state.boxes[31]} onBoxClick={this.boxClick} />
                     <Box variables={this.state.boxes[44]} onBoxClick={this.boxClick} />
+                    <div />
                     <Label labelClass={"label label-sum"} name={"SUM"} />
                     <Label labelClass={"label label-sum-number"} id="DOWNWARDS-numberSum" />
                     <Label labelClass={"label label-sum-number"} id="UPWARDS-numberSum" />
@@ -235,6 +241,7 @@ export default class Game extends Component {
                     <Label labelClass={"label label-sum-number"} id="ANNOUNCEMENT-labelSum" />
                     <Label labelClass={"label label-sum-number"} id="labelSum" />
                     <button className="show-button rules" onClick={showRules}>Pravila</button>
+                    <button className="show-button leaderboard" onClick={showLeaderboard}>Ljestvica</button>
                     <Label labelClass={"label label-sum-number-final"} id="labelSum" />
                 </div>
             </div>
