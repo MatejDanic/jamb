@@ -82,6 +82,12 @@ export default class Register extends Component {
             message: response.data.message,
             successful: true
           });
+          setTimeout(
+            () => {
+              this.props.history.push("/login");
+              window.location.reload();
+            }, 1000
+          );
         },
         error => {
           const resMessage =
@@ -104,11 +110,11 @@ export default class Register extends Component {
     return (
       <div className="col-md-12">
         <div className="card card-container">
-          <img
+          {/* <img
             src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
             alt="profile-img"
             className="profile-img-card"
-          />
+          /> */}
 
           <Form
             onSubmit={this.handleRegister}

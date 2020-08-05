@@ -10,52 +10,50 @@ export default class Box extends Component {
             available: true,
             value: ""
         }
+        this.boxClick = this.boxClick.bind(this);
     }
 
     render() {
+        let disabled = this.props.variables.disabled;
+        let value = this.props.variables.value;
         return (
-            <button disabled={this.props.disabled} className="box" onClick={this.boxClick.bind(this)} >{this.state.value}</button>
+            <button disabled={disabled} className="box" onClick={this.boxClick} >{value}</button>
         )
     }
 
     boxClick() {
-        console.log("clicked: (" + this.props.column + ", " + this.props.box + ")");
+        console.log("clicked: (" + this.props.variables.column + ", " + this.props.variables.box + ")");
         this.fillBox();
     }
 
     fillBox() {
-        this.setState({ filled: true, availabe: false }, () => {
-            var score = this.checkScore();
-            this.setState({ value: score });
-        })
+        this.props.onFillBox(this.props.variables.column*13+this.props.variables.box, this.checkScore());
     }
 
     checkScore() {
-        console.log("checking score");
-        var box = this.props.box;
-        var diceValues = this.props.diceValues;
-        console.log(diceValues);
+        var box = this.props.variables.box;
+        var dice = this.props.dice;
         var score = 0;
         var i, j, num, result;
         if (box <= 5) {
-            box += 1;
-            for (i = 0; i < diceValues.length; i++) {
-                if (box.toString() === diceValues[i].value) {
-                    score += parseInt(diceValues[i].value, 10);
+            box = box + 1;
+            for (i = 0; i < dice.length; i++) {
+                if (box === dice[i].value) {
+                    score += dice[i].value;
                 }
             }
         } else if (box === 6 || box === 7) {
-            for (i = 0; i < diceValues.length; i++) {
-                score += parseInt(diceValues[i].value, 10);
+            for (i = 0; i < dice.length; i++) {
+                score += dice[i].value;
             }
         } else if (box === 8) {
-            for (i = 0; i < diceValues.length; i++) {
+            for (i = 0; i < dice.length; i++) {
                 num = 1;
-                result = parseInt(diceValues[i].value, 10);
-                for (j = 0; j < diceValues.length; j++) {
-                    if (diceValues[i] !== diceValues[j] && diceValues[i].value === diceValues[j].value) {
+                result = dice[i].value;
+                for (j = 0; j < dice.length; j++) {
+                    if (dice[i].value !== dice[j].value && dice[i].value === dice[j].value) {
                         num++;
-                        if (num <= 3) result += parseInt(diceValues[j].value, 10);
+                        if (num <= 3) result += dice[j].value;
                     }
                 }
                 if (num >= 3) {
@@ -67,8 +65,8 @@ export default class Box extends Component {
             var straight = [2, 3, 4, 5];
             var hasStraight = true;
             var diceResults = [];
-            for (i = 0; i < diceValues.length; i++) {
-                diceResults.push(parseInt(diceValues[i].value, 10));
+            for (i = 0; i < dice.length; i++) {
+                diceResults.push(dice[i].value);
             }
 
             for (i = 0; i < straight.length; i++) {
@@ -88,13 +86,13 @@ export default class Box extends Component {
         } else if (box === 10) {
             var hasPair = false;
             var hasTrips = false;
-            for (i = 0; i < diceValues.length; i++) {
+            for (i = 0; i < dice.length; i++) {
                 num = 1;
-                result = parseInt(diceValues[i].value, 10);
-                for (j = 0; j < diceValues.length; j++) {
-                    if (diceValues[i] !== diceValues[j] && diceValues[i].value === diceValues[j].value) {
+                result = dice[i].value;
+                for (j = 0; j < dice.length; j++) {
+                    if (dice[i].value !== dice[j].value && dice[i].value === dice[j].value) {
                         num++;
-                        if (num <= 3) result += parseInt(diceValues[j].value, 10);
+                        if (num <= 3) result += dice[j].value;
                     }
                 }
                 if (num === 2 && !hasPair) {
@@ -113,13 +111,13 @@ export default class Box extends Component {
             }
 
         } else if (box === 11) {
-            for (i = 0; i < diceValues.length; i++) {
+            for (i = 0; i < dice.length; i++) {
                 num = 1;
-                result = parseInt(diceValues[i].value, 10);
-                for (j = 0; j < diceValues.length; j++) {
-                    if (diceValues[i] !== diceValues[j] && diceValues[i].value === diceValues[j].value) {
+                result = dice[i].value;
+                for (j = 0; j < dice.length; j++) {
+                    if (dice[i].value !== dice[j].value && dice[i].value === dice[j].value) {
                         num++;
-                        if (num <= 4) result += parseInt(diceValues[j].value, 10);
+                        if (num <= 4) result += dice[j].value;
                     }
                 }
                 if (num >= 4) {
@@ -128,13 +126,13 @@ export default class Box extends Component {
                 }
             }
         } else if (box === 12) {
-            for (i = 0; i < diceValues.length; i++) {
+            for (i = 0; i < dice.length; i++) {
                 num = 1;
-                result = parseInt(diceValues[i].value, 10);
-                for (j = 0; j < diceValues.length; j++) {
-                    if (diceValues[i] !== diceValues[j] && diceValues[i].value === diceValues[j].value) {
+                result = dice[i].value;
+                for (j = 0; j < dice.length; j++) {
+                    if (dice[i].value !== dice[j].value && dice[i].value === dice[j].value) {
                         num++;
-                        result += parseInt(diceValues[j].value, 10);
+                        result += dice[j].value;
                     }
                 }
                 if (num === 5) {

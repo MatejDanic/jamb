@@ -4,9 +4,10 @@ import "./button.css"
 export default class RollDiceButton extends Component {
 
   render() {
+    let disabled = this.props.disabled;
     let btnClass = this.getBtnClass(this.props.rollsLeft);
     return (
-      <button disabled={this.props.disabled} className={"roll-dice-button " + btnClass} onClick={this.props.onRollDice}>BACI KOCKICE</button>
+      <button disabled={disabled} className={"roll-dice-button " + btnClass} onClick={this.props.onRollDice}>BACI KOCKICE</button>
     )
   }
 
@@ -24,7 +25,6 @@ export default class RollDiceButton extends Component {
         break;
       default:
         btnClass = "";
-
     }
     return btnClass;
   }

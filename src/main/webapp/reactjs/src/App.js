@@ -44,10 +44,13 @@ class App extends Component {
     return (
       <Router>
         <div>
-          <nav className="navbar navbar-expand navbar-dark bg-dark" style={{height: '20px'}}>
+          <title>Jamb</title>
+          <nav className="navbar navbar-expand navbar-dark bg-dark" style={{ height: '32px' }}>
 
             <div className="navbar-nav mr-auto">
-
+            <Link to={"/"} className="nav-link">
+                    Jamb
+        </Link>
               {showAdminBoard && (
                 <li className="nav-item">
                   <Link to={"/admin"} className="nav-link">
@@ -102,9 +105,9 @@ class App extends Component {
               )}
           </div> */}
 
-          <Game />
-          <div className="container mt-3">
+          <div>
             <Switch>
+              <Route exact path="/" component={Game} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/register" component={Register} />
               <Route exact path="/profile" component={Profile} />

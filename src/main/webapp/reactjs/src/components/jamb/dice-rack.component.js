@@ -10,30 +10,34 @@ export default class DiceRack extends Component {
 
         this.state = {
             dice: [
-                { value: 6, hold: false },
-                { value: 6, hold: false },
-                { value: 6, hold: false },
-                { value: 6, hold: false },
-                { value: 6, hold: false }
+                { value: 6, hold: false, name: 0 },
+                { value: 6, hold: false, name: 1 },
+                { value: 6, hold: false, name: 2 },
+                { value: 6, hold: false, name: 3 },
+                { value: 6, hold: false, name: 4 },
             ],
             rollDisabled: false,
             diceDisabled: true,
             rollsLeft: 3
         }
+
+        this.rollDice = this.rollDice.bind(this);
+        this.toggleDice = this.toggleDice.bind(this)
     }
 
     render() {
         return (
             <div className="dice-rack">
-                <DiceButton disabled={this.state.diceDisabled} value={this.state.dice[0].value} hold={this.state.dice[0].hold} onToggleDice={(e) => this.toggleDice.bind(this)(0)} />
-                <DiceButton disabled={this.state.diceDisabled} value={this.state.dice[1].value} hold={this.state.dice[1].hold} onToggleDice={(e) => this.toggleDice.bind(this)(1)} />
-                <DiceButton disabled={this.state.diceDisabled} value={this.state.dice[2].value} hold={this.state.dice[2].hold} onToggleDice={(e) => this.toggleDice.bind(this)(2)} />
-                <DiceButton disabled={this.state.diceDisabled} value={this.state.dice[3].value} hold={this.state.dice[3].hold} onToggleDice={(e) => this.toggleDice.bind(this)(3)} />
-                <DiceButton disabled={this.state.diceDisabled} value={this.state.dice[4].value} hold={this.state.dice[4].hold} onToggleDice={(e) => this.toggleDice.bind(this)(4)} />
+                <DiceButton disabled={this.state.diceDisabled} variables={this.state.dice[0]} onToggleDice={(e) => this.toggleDice(e.target.name)} />
+                <DiceButton disabled={this.state.diceDisabled} variables={this.state.dice[1]} onToggleDice={(e) => this.toggleDice(e.target.name)} />
+                <DiceButton disabled={this.state.diceDisabled} variables={this.state.dice[2]} onToggleDice={(e) => this.toggleDice(e.target.name)} />
+                <DiceButton disabled={this.state.diceDisabled} variables={this.state.dice[3]} onToggleDice={(e) => this.toggleDice(e.target.name)} />
+                <DiceButton disabled={this.state.diceDisabled} variables={this.state.dice[4]} onToggleDice={(e) => this.toggleDice(e.target.name)} />
+
                 <div>
                     <RollDiceButton rollsLeft={this.state.rollsLeft}
                         disabled={this.state.rollDisabled}
-                        onRollDice={this.rollDice.bind(this)} />
+                        onRollDice={this.rollDice} />
                 </div>
             </div>
         )
@@ -54,6 +58,7 @@ export default class DiceRack extends Component {
         }
         this.props.onRollDice(this.state.dice);
     }
+
     toggleDice(diceNumber) {
         this.setState(state => {
             state.dice[diceNumber].hold = !state.dice[diceNumber].hold;
