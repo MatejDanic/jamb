@@ -5,6 +5,7 @@ import Label from "./label.component";
 import DiceRack from "./dice-rack.component";
 import "./game.css"
 import "./button.css"
+import ScoreUtil from "../../utils/score.util";
 
 export default class Game extends Component {
 
@@ -12,131 +13,167 @@ export default class Game extends Component {
         super();
 
         this.state = {
-            counter: 0,
-            dice: null,
+            boxesLeft: 52,
+            dice: [
+                { value: 6, hold: false, name: 0 },
+                { value: 6, hold: false, name: 1 },
+                { value: 6, hold: false, name: 2 },
+                { value: 6, hold: false, name: 3 },
+                { value: 6, hold: false, name: 4 },
+            ],
+            annoucement: null,
+            announcementMandatory: false,
+            rollsLeft: 3,
+            rollDisabled: false,
+            diceDisabled: true,
             boxes: [
-                { disabled: false, value: null, column:0, box:0 },
-                { disabled: true, value: null, column:1, box:0 },
-                { disabled: true, value: null, column:2, box:0 },
-                { disabled: true, value: null, column:3, box:0 },
-                { disabled: true, value: null, column:0, box:1 },
-                { disabled: true, value: null, column:1, box:1 },
-                { disabled: true, value: null, column:2, box:1 },
-                { disabled: true, value: null, column:3, box:1 },
-                { disabled: true, value: null, column:0, box:2 },
-                { disabled: true, value: null, column:1, box:2 },
-                { disabled: true, value: null, column:2, box:2 },
-                { disabled: true, value: null, column:3, box:2 },
-                { disabled: true, value: null, column:0, box:3 },
-                { disabled: true, value: null, column:1, box:3 },
-                { disabled: true, value: null, column:2, box:3 },
-                { disabled: true, value: null, column:3, box:3 }, 
-                { disabled: true, value: null, column:0, box:4 }, 
-                { disabled: false, value: null, column:1, box:4 }, 
-                { disabled: false, value: null, column:2, box:4 },
-                { disabled: false, value: null, column:3, box:4 },
-                { disabled: false, value: null, column:0, box:5 },
-                { disabled: false, value: null, column:1, box:5 },
-                { disabled: false, value: null, column:2, box:5 },
-                { disabled: false, value: null, column:3, box:5 },
-                { disabled: false, value: null, column:0, box:6 },
-                { disabled: false, value: null, column:1, box:6 },
-                { disabled: false, value: null, column:2, box:6 },
-                { disabled: false, value: null, column:3, box:6 },
-                { disabled: false, value: null, column:0, box:7 },
-                { disabled: false, value: null, column:1, box:7 },
-                { disabled: false, value: null, column:2, box:7 },
-                { disabled: false, value: null, column:3, box:7 },
-                { disabled: false, value: null, column:0, box:8 },
-                { disabled: false, value: null, column:1, box:8 },
-                { disabled: false, value: null, column:2, box:8 },
-                { disabled: false, value: null, column:3, box:8 },
-                { disabled: false, value: null, column:0, box:9 },
-                { disabled: false, value: null, column:1, box:9 },
-                { disabled: false, value: null, column:2, box:9 },
-                { disabled: false, value: null, column:3, box:9 },
-                { disabled: false, value: null, column:0, box:10 },
-                { disabled: false, value: null, column:1, box:10 },
-                { disabled: false, value: null, column:2, box:10 },
-                { disabled: false, value: null, column:3, box:10 },
-                { disabled: false, value: null, column:0, box:11 }, 
-                { disabled: false, value: null, column:1, box:11 },
-                { disabled: false, value: null, column:2, box:11 },
-                { disabled: false, value: null, column:3, box:11 },
-                { disabled: false, value: null, column:0, box:12 }, 
-                { disabled: false, value: null, column:1, box:12 },
-                { disabled: false, value: null, column:2, box:12 },
-                { disabled: false, value: null, column:3, box:12 }
+                { disabled: false, value: 0, filled: false, label: 0 },
+                { disabled: true, value: 0, filled: false, label: 1 },
+                { disabled: true, value: 0, filled: false, label: 2 },
+                { disabled: true, value: 0, filled: false, label: 3 },
+                { disabled: true, value: 0, filled: false, label: 4 },
+                { disabled: true, value: 0, filled: false, label: 5 },
+                { disabled: true, value: 0, filled: false, label: 6 },
+                { disabled: true, value: 0, filled: false, label: 7 },
+                { disabled: true, value: 0, filled: false, label: 8 },
+                { disabled: true, value: 0, filled: false, label: 9 },
+                { disabled: true, value: 0, filled: false, label: 10 },
+                { disabled: true, value: 0, filled: false, label: 11 },
+                { disabled: true, value: 0, filled: false, label: 12 },
+                { disabled: true, value: 0, filled: false, label: 13 },
+                { disabled: true, value: 0, filled: false, label: 14 },
+                { disabled: true, value: 0, filled: false, label: 15 },
+                { disabled: true, value: 0, filled: false, label: 16 },
+                { disabled: true, value: 0, filled: false, label: 17 },
+                { disabled: true, value: 0, filled: false, label: 18 },
+                { disabled: true, value: 0, filled: false, label: 19 },
+                { disabled: true, value: 0, filled: false, label: 20 },
+                { disabled: true, value: 0, filled: false, label: 21 },
+                { disabled: true, value: 0, filled: false, label: 22 },
+                { disabled: true, value: 0, filled: false, label: 23 },
+                { disabled: true, value: 0, filled: false, label: 24 },
+                { disabled: false, value: 0, filled: false, label: 25 },
+                { disabled: false, value: 0, filled: false, label: 25 },
+                { disabled: false, value: 0, filled: false, label: 27 },
+                { disabled: false, value: 0, filled: false, label: 28 },
+                { disabled: false, value: 0, filled: false, label: 29 },
+                { disabled: false, value: 0, filled: false, label: 30 },
+                { disabled: false, value: 0, filled: false, label: 31 },
+                { disabled: false, value: 0, filled: false, label: 32 },
+                { disabled: false, value: 0, filled: false, label: 33 },
+                { disabled: false, value: 0, filled: false, label: 34 },
+                { disabled: false, value: 0, filled: false, label: 35 },
+                { disabled: false, value: 0, filled: false, label: 36 },
+                { disabled: false, value: 0, filled: false, label: 37 },
+                { disabled: false, value: 0, filled: false, label: 38 },
+                { disabled: false, value: 0, filled: false, label: 39 },
+                { disabled: false, value: 0, filled: false, label: 40 },
+                { disabled: false, value: 0, filled: false, label: 41 },
+                { disabled: false, value: 0, filled: false, label: 42 },
+                { disabled: false, value: 0, filled: false, label: 43 },
+                { disabled: false, value: 0, filled: false, label: 44 },
+                { disabled: false, value: 0, filled: false, label: 45 },
+                { disabled: false, value: 0, filled: false, label: 46 },
+                { disabled: false, value: 0, filled: false, label: 47 },
+                { disabled: false, value: 0, filled: false, label: 48 },
+                { disabled: false, value: 0, filled: false, label: 49 },
+                { disabled: false, value: 0, filled: false, label: 50 },
+                { disabled: false, value: 0, filled: false, label: 51 }
             ]
+
         }
-        this.handleBoxFill = this.handleBoxFill.bind(this);
-        this.handleDiceUpdate = this.handleDiceUpdate.bind(this);
+        this.rollDice = this.rollDice.bind(this);
+        this.toggleDice = this.toggleDice.bind(this);
+        this.boxClick = this.boxClick.bind(this);
+        this.fillBox = this.fillBox.bind(this);
     }
 
-    handleDiceUpdate(dice) {
-        this.setState({ dice: dice })
+    rollDice() {
+        this.setState(state => {
+            for (var i = 0; i < state.dice.length; i++) {
+                if (!state.dice[i].hold) state.dice[i].value = Math.round(1 + Math.random() * 5);
+            }
+        });
+        this.setState({ rollsLeft: this.state.rollsLeft - 1, rollDisabled: this.state.rollsLeft === 1, diceDisabled: false })
     }
 
-    handleBoxFill(index, value) {
-        this.setState((state) => {
-            state.boxes[index].value = value;
-            state.boxes[index].available = false;
-            state.boxes[index].filled = true;
-            state.boxes[index].disabled = true;
-        })
+    toggleDice(diceNumber) {
+        this.setState(state => {
+            state.dice[diceNumber].hold = !state.dice[diceNumber].hold;
+        });
         this.setState({});
-        this.setState({counter: this.state.counter + 1}, () => {
-            if (this.state.counter === 52) {
+    }
+
+    boxClick(label) {
+        this.fillBox(label);
+    }
+
+    fillBox(label) {
+        var score = ScoreUtil.checkScore(label % 13, this.state.dice);
+        this.setState((state) => {
+            state.boxes[label].value = score;
+            state.boxes[label].available = false;
+            state.boxes[label].filled = true;
+            state.boxes[label].disabled = true;
+            if (state.boxes[label].column === 0 && state.boxes[label].box < 12) {
+                state.boxes[label + 1].disabled = false;
+            } else if (state.boxes[label] === 1 && state.boxes[label].box > 0) {
+                state.boxes[label - 1].disabled = false;
+            }
+            for (var i = 0; i < state.dice.length; i++) {
+                state.dice[i].hold = false;
+            }
+        });
+        this.setState({ rollsLeft: 3, rollDisabled: false, diceDisabled: true, boxesLeft: this.state.boxesLeft - 1 }, () => {
+            if (this.state.boxesLeft === 0) {
                 this.endGame();
             }
         });
-        
+        this.setState({});
     }
 
     render() {
         return (
             <div className="game">
-                <DiceRack onRollDice={this.handleDiceUpdate} />
-
+                <DiceRack onToggleDice={this.toggleDice} onRollDice={this.rollDice} rollsDisabled={this.state.rollDisabled}
+                    rollsLeft={this.state.rollsLeft} diceDisabled={this.state.diceDisabled} dice={this.state.dice} />
                 <div className="form">
-
                     <div />
                     <Label labelClass={"label label-image"} imgUrl={"../images/field/downwards.bmp"} />
                     <Label labelClass={"label label-image"} imgUrl={"../images/field/upwards.bmp"} />
                     <Label labelClass={"label label-image"} imgUrl={"../images/field/any_direction.bmp"} />
                     <Label labelClass={"label"} name={"NAJAVA"} />
                     <button className="show-button leaderboard" onClick={showLeaderboard}>Lj E S T V I C A</button>
-
                     <Label labelClass={"label label-image"} imgUrl={"../images/dice/1.bmp"} />
-                    <Box dice={this.state.dice} variables={this.state.boxes[0]} onFillBox={this.handleBoxFill} />
-                    <Box dice={this.state.dice} variables={this.state.boxes[13]} />
-                    <Box dice={this.state.dice} variables={this.state.boxes[26]} />
-                    <Box dice={this.state.dice} variables={this.state.boxes[39]} />
+                    <Box variables={this.state.boxes[0]} onBoxClick={this.boxClick} />
+                    <Box variables={this.state.boxes[13]} onBoxClick={this.boxClick} />
+                    <Box variables={this.state.boxes[26]} onBoxClick={this.boxClick} />
+                    <Box variables={this.state.boxes[39]} onBoxClick={this.boxClick} />
                     <Label labelClass={"label label-image"} imgUrl={"../images/dice/2.bmp"} />
-                    <Box dice={this.state.dice} variables={this.state.boxes[1]} />
-                    <Box dice={this.state.dice} variables={this.state.boxes[14]} />
-                    <Box dice={this.state.dice} variables={this.state.boxes[27]} />
-                    <Box dice={this.state.dice} variables={this.state.boxes[40]} />
+                    <Box variables={this.state.boxes[1]} onBoxClick={this.boxClick} />
+                    <Box variables={this.state.boxes[14]} onBoxClick={this.boxClick} />
+                    <Box variables={this.state.boxes[27]} onBoxClick={this.boxClick} />
+                    <Box variables={this.state.boxes[40]} onBoxClick={this.boxClick} />
                     <Label labelClass={"label label-image"} imgUrl={"../images/dice/3.bmp"} />
-                    <Box dice={this.state.dice} variables={this.state.boxes[2]} />
-                    <Box dice={this.state.dice} variables={this.state.boxes[15]} />
-                    <Box dice={this.state.dice} variables={this.state.boxes[28]} />
-                    <Box dice={this.state.dice} variables={this.state.boxes[41]} />
+                    <Box variables={this.state.boxes[2]} onBoxClick={this.boxClick} />
+                    <Box variables={this.state.boxes[15]} onBoxClick={this.boxClick} />
+                    <Box variables={this.state.boxes[28]} onBoxClick={this.boxClick} />
+                    <Box variables={this.state.boxes[41]} onBoxClick={this.boxClick} />
                     <Label labelClass={"label label-image"} imgUrl={"../images/dice/4.bmp"} />
-                    <Box dice={this.state.dice} variables={this.state.boxes[3]} />
-                    <Box dice={this.state.dice} variables={this.state.boxes[16]} />
-                    <Box dice={this.state.dice} variables={this.state.boxes[29]} />
-                    <Box dice={this.state.dice} variables={this.state.boxes[42]} />
+                    <Box variables={this.state.boxes[3]} onBoxClick={this.boxClick} />
+                    <Box variables={this.state.boxes[16]} onBoxClick={this.boxClick} />
+                    <Box variables={this.state.boxes[29]} onBoxClick={this.boxClick} />
+                    <Box variables={this.state.boxes[42]} onBoxClick={this.boxClick} />
                     <Label labelClass={"label label-image"} imgUrl={"../images/dice/5.bmp"} />
-                    <Box dice={this.state.dice} variables={this.state.boxes[4]} />
-                    <Box dice={this.state.dice} variables={this.state.boxes[17]} />
-                    <Box dice={this.state.dice} variables={this.state.boxes[30]} />
-                    <Box dice={this.state.dice} variables={this.state.boxes[43]} />
+                    <Box variables={this.state.boxes[4]} onBoxClick={this.boxClick} />
+                    <Box variables={this.state.boxes[17]} onBoxClick={this.boxClick} />
+                    <Box variables={this.state.boxes[30]} onBoxClick={this.boxClick} />
+                    <Box variables={this.state.boxes[43]} onBoxClick={this.boxClick} />
                     <Label labelClass={"label label-image"} imgUrl={"../images/dice/6.bmp"} />
-                    <Box dice={this.state.dice} variables={this.state.boxes[5]} />
-                    <Box dice={this.state.dice} variables={this.state.boxes[18]} />
-                    <Box dice={this.state.dice} variables={this.state.boxes[31]} />
-                    <Box dice={this.state.dice} variables={this.state.boxes[44]} />
+                    <Box variables={this.state.boxes[5]} onBoxClick={this.boxClick} />
+                    <Box variables={this.state.boxes[18]} onBoxClick={this.boxClick} />
+                    <Box variables={this.state.boxes[31]} onBoxClick={this.boxClick} />
+                    <Box variables={this.state.boxes[44]} onBoxClick={this.boxClick} />
                     <Label labelClass={"label label-sum"} name={"SUM"} />
                     <Label labelClass={"label label-sum-number"} id="DOWNWARDS-numberSum" />
                     <Label labelClass={"label label-sum-number"} id="UPWARDS-numberSum" />
@@ -144,16 +181,16 @@ export default class Game extends Component {
                     <Label labelClass={"label label-sum-number"} id="ANNOUNCEMENT-numberSum" />
                     <Label labelClass={"label label-sum-number"} id="numberSum" />
                     <Label labelClass={"label"} name={"MAX"} />
-                    <Box dice={this.state.dice} variables={this.state.boxes[6]} />
-                    <Box dice={this.state.dice} variables={this.state.boxes[19]} />
-                    <Box dice={this.state.dice} variables={this.state.boxes[32]} />
-                    <Box dice={this.state.dice} variables={this.state.boxes[45]} />
+                    <Box variables={this.state.boxes[6]} onBoxClick={this.boxClick} />
+                    <Box variables={this.state.boxes[19]} onBoxClick={this.boxClick} />
+                    <Box variables={this.state.boxes[32]} onBoxClick={this.boxClick} />
+                    <Box variables={this.state.boxes[45]} onBoxClick={this.boxClick} />
                     <div />
                     <Label labelClass={"label"} name={"MIN"} />
-                    <Box dice={this.state.dice} variables={this.state.boxes[7]} />
-                    <Box dice={this.state.dice} variables={this.state.boxes[20]} />
-                    <Box dice={this.state.dice} variables={this.state.boxes[33]} />
-                    <Box dice={this.state.dice} variables={this.state.boxes[46]} />
+                    <Box variables={this.state.boxes[7]} onBoxClick={this.boxClick} />
+                    <Box variables={this.state.boxes[20]} onBoxClick={this.boxClick} />
+                    <Box variables={this.state.boxes[33]} onBoxClick={this.boxClick} />
+                    <Box variables={this.state.boxes[46]} onBoxClick={this.boxClick} />
                     <div />
                     <Label labelClass={"label label-sum"} name={"SUM"} />
                     <Label labelClass={"label label-sum-number"} id="DOWNWARDS-diffSum" />
@@ -162,34 +199,34 @@ export default class Game extends Component {
                     <Label labelClass={"label label-sum-number"} id="ANNOUNCEMENT-diffSum" />
                     <Label labelClass={"label label-sum-number"} id="diffSum" />
                     <Label labelClass={"label"} name={"TRIS"} />
-                    <Box dice={this.state.dice} variables={this.state.boxes[8]} />
-                    <Box dice={this.state.dice} variables={this.state.boxes[21]} />
-                    <Box dice={this.state.dice} variables={this.state.boxes[34]} />
-                    <Box dice={this.state.dice} variables={this.state.boxes[47]} />
+                    <Box variables={this.state.boxes[8]} onBoxClick={this.boxClick} />
+                    <Box variables={this.state.boxes[21]} onBoxClick={this.boxClick} />
+                    <Box variables={this.state.boxes[34]} onBoxClick={this.boxClick} />
+                    <Box variables={this.state.boxes[47]} onBoxClick={this.boxClick} />
                     <div />
                     <Label labelClass={"label"} name={"SKALA"} />
-                    <Box dice={this.state.dice} variables={this.state.boxes[9]} />
-                    <Box dice={this.state.dice} variables={this.state.boxes[22]} />
-                    <Box dice={this.state.dice} variables={this.state.boxes[35]} />
-                    <Box dice={this.state.dice} variables={this.state.boxes[48]} />
+                    <Box variables={this.state.boxes[9]} onBoxClick={this.boxClick} />
+                    <Box variables={this.state.boxes[22]} onBoxClick={this.boxClick} />
+                    <Box variables={this.state.boxes[35]} onBoxClick={this.boxClick} />
+                    <Box variables={this.state.boxes[48]} onBoxClick={this.boxClick} />
                     <div />
                     <Label labelClass={"label"} name={"FULL"} />
-                    <Box dice={this.state.dice} variables={this.state.boxes[10]} />
-                    <Box dice={this.state.dice} variables={this.state.boxes[23]} />
-                    <Box dice={this.state.dice} variables={this.state.boxes[36]} />
-                    <Box dice={this.state.dice} variables={this.state.boxes[49]} />
+                    <Box variables={this.state.boxes[10]} onBoxClick={this.boxClick} />
+                    <Box variables={this.state.boxes[23]} onBoxClick={this.boxClick} />
+                    <Box variables={this.state.boxes[36]} onBoxClick={this.boxClick} />
+                    <Box variables={this.state.boxes[49]} onBoxClick={this.boxClick} />
                     <div />
                     <Label labelClass={"label"} name={"POKER"} />
-                    <Box dice={this.state.dice} variables={this.state.boxes[11]} />
-                    <Box dice={this.state.dice} variables={this.state.boxes[24]} />
-                    <Box dice={this.state.dice} variables={this.state.boxes[37]} />
-                    <Box dice={this.state.dice} variables={this.state.boxes[50]} />
+                    <Box variables={this.state.boxes[11]} onBoxClick={this.boxClick} />
+                    <Box variables={this.state.boxes[24]} onBoxClick={this.boxClick} />
+                    <Box variables={this.state.boxes[37]} onBoxClick={this.boxClick} />
+                    <Box variables={this.state.boxes[50]} onBoxClick={this.boxClick} />
                     <div />
                     <Label labelClass={"label"} name={"JAMB"} />
-                    <Box dice={this.state.dice} variables={this.state.boxes[12]} />
-                    <Box dice={this.state.dice} variables={this.state.boxes[25]} />
-                    <Box dice={this.state.dice} variables={this.state.boxes[38]} />
-                    <Box dice={this.state.dice} variables={this.state.boxes[51]} />
+                    <Box variables={this.state.boxes[12]} onBoxClick={this.boxClick} />
+                    <Box variables={this.state.boxes[25]} onBoxClick={this.boxClick} />
+                    <Box variables={this.state.boxes[38]} onBoxClick={this.boxClick} />
+                    <Box variables={this.state.boxes[51]} onBoxClick={this.boxClick} />
                     <div />
                     <Label labelClass={"label label-sum"} name={"SUM"} />
                     <Label labelClass={"label label-sum-number"} id="DOWNWARDS-labelSum" />
@@ -203,7 +240,7 @@ export default class Game extends Component {
             </div>
         )
     }
-    
+
     endGame() {
         console.log("END");
     }
