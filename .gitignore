@@ -297,4 +297,3 @@ yarn-error.log*
 .history
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,eclipse,react,java,java-web,maven,intellij
-src/main/resources/application.properties

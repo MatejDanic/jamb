@@ -11,16 +11,13 @@ export default class DiceRack extends Component {
         let diceDisabled = this.props.diceDisabled;
         return (
             <div className="dice-rack">
-                <DiceButton disabled={diceDisabled} variables={dice[0]} onToggleDice={(e) => this.props.onToggleDice(e.target.name)} />
-                <DiceButton disabled={diceDisabled} variables={dice[1]} onToggleDice={(e) => this.props.onToggleDice(e.target.name)} />
-                <DiceButton disabled={diceDisabled} variables={dice[2]} onToggleDice={(e) => this.props.onToggleDice(e.target.name)} />
-                <DiceButton disabled={diceDisabled} variables={dice[3]} onToggleDice={(e) => this.props.onToggleDice(e.target.name)} />
-                <DiceButton disabled={diceDisabled} variables={dice[4]} onToggleDice={(e) => this.props.onToggleDice(e.target.name)} />
-
+                <DiceButton disabled={diceDisabled} variables={dice[0]} onToggleDice={this.props.onToggleDice} />
+                <DiceButton disabled={diceDisabled} variables={dice[1]} onToggleDice={this.props.onToggleDice} />
+                <DiceButton disabled={diceDisabled} variables={dice[2]} onToggleDice={this.props.onToggleDice} />
+                <DiceButton disabled={diceDisabled} variables={dice[3]} onToggleDice={this.props.onToggleDice} />
+                <DiceButton disabled={diceDisabled} variables={dice[4]} onToggleDice={this.props.onToggleDice} />
                 <div>
-                    <RollDiceButton rollsLeft={this.props.rollsLeft}
-                        disabled={rollDisabled}
-                        onRollDice={this.props.onRollDice} />
+                    <RollDiceButton rollsLeft={this.props.rollsLeft} disabled={rollDisabled} onRollDice={this.props.onRollDice} />
                 </div>
             </div>
         )

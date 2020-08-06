@@ -18,7 +18,7 @@ class ScoreUtil {
                 num = 1;
                 result = dice[i].value;
                 for (j = 0; j < dice.length; j++) {
-                    if (dice[i].name !== dice[j].name && dice[i].value === dice[j].value) {
+                    if (dice[i].label !== dice[j].label && dice[i].value === dice[j].value) {
                         num++;
                         if (num <= 3) result += dice[j].value;
                     }
@@ -57,7 +57,7 @@ class ScoreUtil {
                 num = 1;
                 result = dice[i].value;
                 for (j = 0; j < dice.length; j++) {
-                    if (dice[i].name !== dice[j].name && dice[i].value === dice[j].value) {
+                    if (dice[i].label !== dice[j].label && dice[i].value === dice[j].value) {
                         num++;
                         if (num <= 3) result += dice[j].value;
                     }
@@ -82,7 +82,7 @@ class ScoreUtil {
                 num = 1;
                 result = dice[i].value;
                 for (j = 0; j < dice.length; j++) {
-                    if (dice[i].name !== dice[j].name && dice[i].value === dice[j].value) {
+                    if (dice[i].label !== dice[j].label && dice[i].value === dice[j].value) {
                         num++;
                         if (num <= 4) result += dice[j].value;
                     }
@@ -97,7 +97,7 @@ class ScoreUtil {
                 num = 1;
                 result = dice[i].value;
                 for (j = 0; j < dice.length; j++) {
-                    if (dice[i].name !== dice[j].name && dice[i].value === dice[j].value) {
+                    if (dice[i].label !== dice[j].label && dice[i].value === dice[j].value) {
                         num++;
                         result += dice[j].value;
                     }
