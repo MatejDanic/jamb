@@ -20,7 +20,7 @@
 
 .label-sum {
   background-color: lightskyblue;
-  font-size: 16px;
+  font-size: 10px;
 }
 
 .label-sum-number {
@@ -34,4 +34,9 @@
   grid-column-start: 5;
   grid-column-end: 7;
   width: auto;
+}
+
+.info {
+  background-color: lightpink;
+  font-size: 16px;
 }

@@ -4,11 +4,14 @@ import "./button.css"
 export default class DiceButton extends PureComponent {
 
     componentDidUpdate() {
-        console.log("componentDidUpdate, hold: dice ", this.props.variables.label, " -> ", this.props.variables.hold);
+        // console.log("UPDATE (DiceButton): dice ->", this.props.variables);
+    }
+
+    componentDidMount() {
+        // console.log("MOUNT (DiceButton): dice -> ", this.props.variables);
     }
 
     render() {
-        console.log(this.props);
         const label = this.props.variables.label;
         let value = this.props.variables.value;
         let hold = this.props.variables.hold;

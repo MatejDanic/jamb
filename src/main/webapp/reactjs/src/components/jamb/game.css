@@ -1,21 +1,16 @@
 .game {
 	text-align: center;
 	background-color: aliceblue;
-	margin: 0px;
-	padding: 0px;
-	padding-bottom: 2px;
 	padding-top: 2px;
+	padding-bottom: 5px;
 }
 .dice-rack {
-	padding-bottom: 0px;
-	margin-bottom: 0px;
+	padding-top: 5px;
 }
 .form {
+	padding-top: 5px;
     display: inline-grid;
 	text-align: center;
 	grid-template-columns: repeat(6, 64px);
 	grid-template-rows: repeat(18, 32px);
-	margin-top: 5px;
-	margin-bottom: 0px;
-	padding-bottom: 0px;
 }

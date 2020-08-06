@@ -3,6 +3,10 @@ import "./button.css"
 
 export default class RollDiceButton extends Component {
 
+  componentDidUpdate() {
+    // console.log("UPDATE (RollDiceButton): button -> ", this.props);
+  }
+
   render() {
     let disabled = this.props.disabled;
     let btnClass = this.getBtnClass(this.props.rollsLeft);
