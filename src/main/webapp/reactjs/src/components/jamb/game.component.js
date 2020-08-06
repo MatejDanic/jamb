@@ -16,7 +16,7 @@ export default class Game extends Component {
         this.state = {
             boxesLeft: 52,
             annoucement: null,
-            announcementMandatory: false,
+            announcementRequired: false,
             rollsLeft: 3,
             rollDisabled: false,
             diceDisabled: true,
@@ -96,7 +96,15 @@ export default class Game extends Component {
                 if (!state.dice[i].hold) state.dice[i].value = Math.round(1 + Math.random() * 5);
             }
         });
-        this.setState({ announcementDisabled: this.state.rollsLeft <= 2 ,rollsLeft: this.state.rollsLeft - 1, rollDisabled: (this.state.rollsLeft === 1), diceDisabled: (this.state.rollsLeft === 1), boxesDisabled: false });
+        var announcementRequired = this.state.announcement == null;
+        for (var column = 0; column < 3; column++) {
+            for (var box = 0; box < 13; box++) {
+                if (!this.state.boxes[column*13+box].filled)
+                    announcementRequired = false;
+                    break;
+            }
+        }
+        this.setState({ rollsLeft: this.state.rollsLeft - 1, rollDisabled: (this.state.rollsLeft === 1 || announcementRequired), diceDisabled: (this.state.rollsLeft === 1), boxesDisabled: false });
     }
 
     toggleDice(label) {
@@ -122,7 +130,7 @@ export default class Game extends Component {
     }
 
     announce(label) {
-        this.setState({ boxesDisabled: true, announcement: label });
+        this.setState({ boxesDisabled: true, announcement: label, rollDisabled: false });
     }
 
     fillBox(label) {
@@ -141,7 +149,7 @@ export default class Game extends Component {
             }
         });
         this.setState({ rollsLeft: 3, rollDisabled: false, diceDisabled: true, boxesDisabled: true, boxesLeft: this.state.boxesLeft - 1, announcement: null}, () => {
-            if (this.state.boxesLeft === 1) {
+            if (this.state.boxesLeft === 0) {
                 this.endGame();
             }
         });
@@ -184,12 +192,19 @@ export default class Game extends Component {
         })
     }
 
+    handleKeyPress = (event) => {
+        console.log(event);
+        if (event.key === 'Space') {
+          console.log('enter press here! ')
+        }
+      }
+
     render() {
         let sums = this.state.sums;
         let boxes = this.state.boxes;
         let gameInfo = [this.state.announcement, this.state.boxesDisabled, this.state.rollsLeft]
         return (
-            <div className="game">
+            <div className="game" >
                 {/* <DiceRack  rollDisabled={this.state.rollDisabled} rollsLeft={this.state.rollsLeft} diceDisabled={this.state.diceDisabled} dice={this.state.dice} 
                 onToggleDice={this.toggleDice} /> */}
                 <div className="form">
@@ -299,7 +314,7 @@ export default class Game extends Component {
                     <Label labelClass={"label label-sum-number"} number={sums[12]} id="ANY_DIRECTION-labelSum" />
                     <Label labelClass={"label label-sum-number"} number={sums[13]} id="ANNOUNCEMENT-labelSum" />
                     <Label labelClass={"label label-sum-number"} number={sums[14]} id="labelSum" />
-                    <RollDiceButton rollsLeft={this.state.rollsLeft} disabled={this.state.rollDisabld} onRollDice={this.rollDice} />
+                    <RollDiceButton rollsLeft={this.state.rollsLeft} disabled={this.state.rollDisabled} onRollDice={this.rollDice} />
                     {/* <button className="show-button rules" onClick={showRules}>Pravila</button>
                     <button className="show-button leaderboard" onClick={showLeaderboard}>Ljestvica</button> */}
                     <Label labelClass={"label label-sum-number-final"} number={sums[15]} id="labelSum" />
