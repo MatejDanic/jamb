@@ -18,6 +18,7 @@ class App extends Component {
     this.logout = this.logout.bind(this);
 
     this.state = {
+      version: "Offline",
       showAdminBoard: false,
       currentUser: undefined
     };
@@ -28,6 +29,7 @@ class App extends Component {
 
     if (user) {
       this.setState({
+        version: "Online",
         currentUser: user,
         showAdminBoard: user.roles.includes("ADMIN")
       });
@@ -40,7 +42,6 @@ class App extends Component {
 
   render() {
     const { currentUser, showAdminBoard } = this.state;
-
     return (
       <Router>
         <div>
@@ -107,7 +108,7 @@ class App extends Component {
 
           <div>
             <Switch>
-              <Route exact path="/" component={Game} />
+              <Route exact path="/" component={() => <Game user={currentUser} />}/>
               <Route exact path="/login" component={Login} />
               <Route exact path="/register" component={Register} />
               <Route exact path="/profile" component={Profile} />

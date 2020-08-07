@@ -108,7 +108,7 @@ class ScoreUtil {
                 }
             }
         }
-        console.log("Score: ", score);
+        // console.log("Score: ", score);
         return score;
     }
 }

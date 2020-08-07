@@ -2,8 +2,6 @@ package matej.api.controllers;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -30,11 +28,11 @@ public class HomeController {
 		scoreService.clearUnfinishedScores();
 	}
 	
-	@GetMapping("")
-	public void handleGet(HttpServletResponse response) {
-		response.setHeader("Location", "http://localhost:3000");
-		response.setStatus(302);
-	}
+	// @GetMapping("")
+	// public void handleGet(HttpServletResponse response) {
+	// 	response.setHeader("Location", "http://localhost:3000");
+	// 	response.setStatus(302);
+	// }
 	
 	@GetMapping("/scores")
 	public List<Score> getLeaderboard() {

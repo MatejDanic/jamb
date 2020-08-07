@@ -27,7 +27,7 @@ public class User {
     @OneToMany(mappedBy="user")
     private Set<Score> scores;
 
-    @OneToOne
+    @OneToOne(mappedBy="user")
     private Form form;
     
     @javax.persistence.Column(name="username", nullable=false, unique=true)
@@ -41,7 +41,6 @@ public class User {
     @JoinTable(	name = "auth_user_role", 
 				joinColumns = @JoinColumn(name = "user_id"), 
                 inverseJoinColumns = @JoinColumn(name = "role_id"))
-                
     private Set<Role> roles;
 
     public User() {

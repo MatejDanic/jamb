@@ -2,7 +2,6 @@ package matej.api.controllers;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,17 +9,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javassist.NotFoundException;
+
 import com.google.common.util.concurrent.RateLimiter;
 
 import matej.api.services.FormService;
 import matej.exceptions.IllegalMoveException;
+import matej.exceptions.InvalidOwnershipException;
 import matej.models.Box;
 import matej.models.Dice;
 import matej.models.Form;
@@ -30,7 +31,7 @@ import matej.models.enums.ColumnType;
 import matej.security.jwt.JwtUtils;
 
 @RestController
-@CrossOrigin(origins="*")
+@CrossOrigin(origins = "*")
 @RequestMapping("/forms")
 public class FormController {
 
@@ -38,19 +39,24 @@ public class FormController {
 	FormService formService;
 
 	@Autowired
-	JwtUtils jwtUtils;	
+	JwtUtils jwtUtils;
 
 	private final RateLimiter rateLimiter = RateLimiter.create(0.2);
 
-	// public String getUsername(@RequestHeader(value="Authorization") String headerAuth) {
-	// 	return jwtUtils.getUsernameFromHeader(headerAuth);
+	// public String getUsername(@RequestHeader(value="Authorization") String
+	// headerAuth) {
+	// return jwtUtils.getUsernameFromHeader(headerAuth);
 	// }
 
-	@PostMapping("")
-	public int initializeForm(@RequestHeader(value="Authorization") String headerAuth) {
+	@PutMapping("")
+	public ResponseEntity<Object> initializeForm(@RequestHeader(value = "Authorization") String headerAuth) {
 		if (!rateLimiter.tryAcquire(1))
-			return 0;
-		return formService.initializeForm(jwtUtils.getUsernameFromHeader(headerAuth));
+			return null;
+		try {
+			return new ResponseEntity<>(formService.initializeForm(jwtUtils.getUsernameFromHeader(headerAuth)), HttpStatus.OK);
+		} catch (NotFoundException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
 	}
 
 	@GetMapping("")
@@ -64,7 +70,7 @@ public class FormController {
 	}
 
 	@GetMapping("/{id}/columns")
-	public Set<Column> getColumns(@PathVariable(value = "id") int id) {
+	public List<Column> getColumns(@PathVariable(value = "id") int id) {
 		return formService.getFormById(id).getColumns();
 	}
 
@@ -75,7 +81,7 @@ public class FormController {
 	}
 
 	@GetMapping("/{id}/columns/{columnTypeOrdinal}/boxes")
-	public Set<Box> getColumnBoxes(@PathVariable(value = "id") int id,
+	public List<Box> getColumnBoxes(@PathVariable(value = "id") int id,
 			@PathVariable(value = "columnTypeOrdinal") int columnTypeOrdinal) {
 		return formService.getFormById(id).getColumnByType(ColumnType.values()[columnTypeOrdinal]).getBoxes();
 	}
@@ -89,37 +95,36 @@ public class FormController {
 	}
 
 	@GetMapping("/{id}/dice")
-	public Set<Dice> getFormDice(@PathVariable(value = "id") int id) {
-		return formService.getFormById(id).getDiceSet();
+	public List<Dice> getFormDice(@PathVariable(value = "id") int id) {
+		return formService.getFormById(id).getDice();
 	}
 
 	@PutMapping("/{id}/roll")
-	public ResponseEntity<Object> rollDice(@PathVariable(value = "id") int id,
+	public ResponseEntity<Object> rollDice(@RequestHeader(value = "Authorization") String headerAuth, @PathVariable(value = "id") int id,
 			@RequestBody Map<Integer, Boolean> diceToThrow) {
 		try {
-			return new ResponseEntity<>(formService.rollDice(id, diceToThrow), HttpStatus.OK);
-		} catch (IllegalMoveException e) {
+			return new ResponseEntity<>(formService.rollDice(jwtUtils.getUsernameFromHeader(headerAuth), id, diceToThrow), HttpStatus.OK);
+		} catch (InvalidOwnershipException | IllegalMoveException e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
 
 	@PutMapping("/{id}/announce")
-	public ResponseEntity<Object> announce(@PathVariable(value = "id") int id, @RequestBody int announcementOrdinal) {
+	public ResponseEntity<Object> announce(@RequestHeader(value = "Authorization") String headerAuth, @PathVariable(value = "id") int id, @RequestBody int announcementOrdinal) {
 		try {
-			return new ResponseEntity<>(formService.announce(id, announcementOrdinal), HttpStatus.OK);
-		} catch (IllegalMoveException e) {
+			return new ResponseEntity<>(formService.announce(jwtUtils.getUsernameFromHeader(headerAuth), id, announcementOrdinal), HttpStatus.OK);
+		} catch (IllegalMoveException | InvalidOwnershipException e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
 
 	@PutMapping("/{id}/columns/{columnTypeOrdinal}/boxes/{boxTypeOrdinal}/fill")
-	public ResponseEntity<Object> fillBox(@PathVariable(value = "id") int id,
+	public ResponseEntity<Object> fillBox(@RequestHeader(value = "Authorization") String headerAuth, @PathVariable(value = "id") int id,
 			@PathVariable(value = "columnTypeOrdinal") int columnTypeOrdinal,
 			@PathVariable(value = "boxTypeOrdinal") int boxTypeOrdinal) {
 		try {
-			return new ResponseEntity<>(formService.fillBox(id, columnTypeOrdinal, boxTypeOrdinal), HttpStatus.OK);
-		} catch (IllegalMoveException e) {
-			e.printStackTrace();
+			return new ResponseEntity<>(formService.fillBox(jwtUtils.getUsernameFromHeader(headerAuth), id, columnTypeOrdinal, boxTypeOrdinal), HttpStatus.OK);
+		} catch (IllegalMoveException | InvalidOwnershipException e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}

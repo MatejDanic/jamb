@@ -1,6 +1,6 @@
 package matej.models;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -79,8 +79,8 @@ public class Box {
 		this.available = available;
 	}
 
-	public int fill(Set<Dice> diceSet) {
-		value = ScoreUtil.checkScore(diceSet, boxType);
+	public int fill(List<Dice> diceList) {
+		value = ScoreUtil.checkScore(diceList, boxType);
 		filled = true;
 		available = false;
 		return value;

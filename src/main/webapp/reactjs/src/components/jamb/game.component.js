@@ -5,8 +5,8 @@ import Label from "./label.component";
 import DiceRack from "./dice-rack.component";
 import ScoreUtil from "../../utils/score.util";
 import RollDiceButton from "./roll-dice-button.component";
-import "./game.css"
-import "./button.css"
+import "./game.css";
+import "./button.css";
 
 export default class Game extends Component {
 
@@ -14,6 +14,8 @@ export default class Game extends Component {
         super();
 
         this.state = {
+            apiURL: "http://www.jamb.com.hr",
+            formId: null,
             boxesLeft: 52,
             annoucement: null,
             announcementRequired: false,
@@ -21,7 +23,7 @@ export default class Game extends Component {
             rollDisabled: false,
             diceDisabled: true,
             boxesDisabled: true,
-            sums: [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            sums: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             dice: [
                 { value: 6, hold: false, label: 0 },
                 { value: 6, hold: false, label: 1 },
@@ -88,20 +90,96 @@ export default class Game extends Component {
         this.toggleDice = this.toggleDice.bind(this);
         this.boxClick = this.boxClick.bind(this);
         this.fillBox = this.fillBox.bind(this);
+        this.initializeForm = this.initializeForm.bind(this);
+    }
+
+    componentDidMount() {
+        if (this.props.user) {
+            var user = this.props.user;
+            //	var url = 'https://jamb-remote.herokuapp.com/forms';
+            var url = this.state.apiURL + 'forms';
+            var http = new XMLHttpRequest();
+            http.open('PUT', url, true);
+            http.setRequestHeader('Content-type', 'application/json');
+            http.setRequestHeader('Authorization', user.tokenType + " " + user.accessToken);
+            http.addEventListener('load', () => {
+                if (http.readyState === 4 && http.status === 200) {
+                    var form = JSON.parse(http.responseText);
+                    // console.log(form);
+                    this.initializeForm(form);
+                }
+            });
+            http.send();
+        }
+    }
+
+    initializeForm(form) {
+        this.setState(state => {
+            state.boxesLeft = 52;
+            for (var column = 0; column < 4; column++) {
+                for (var box = 0; box < 13; box++) {
+                    state.boxes[column * 13 + box].value = form.columns[column].boxes[box].value;
+                    state.boxes[column * 13 + box].filled = form.columns[column].boxes[box].filled;
+                    if (form.columns[column].boxes[box].filled) state.boxesLeft--;
+                    state.boxes[column * 13 + box].available = form.columns[column].boxes[box].available;
+                }
+            }
+            for (var i = 0; i < form.dice.length; i++) {
+                state.dice[i].value = form.dice[i].value;
+            }
+        });
+        this.setState({
+            formId: form.id,
+            announcement: form.announcement,
+            announcementRequired: form.announcementRequired,
+            rollsLeft: 3 - form.rollCount,
+            rollDisabled: form.rollCount === 3 || form.announcementRequired,
+            diceDisabled: form.rollCount === 0 || form.rollCount === 3,
+            boxesDisabled: form.rollCount === 0
+        })
     }
 
     rollDice() {
-        this.setState(state => {
-            for (var i = 0; i < state.dice.length; i++) {
-                if (!state.dice[i].hold) state.dice[i].value = Math.round(1 + Math.random() * 5);
+        if (this.props.user) {
+            var user = this.props.user;
+            var url = this.state.apiURL + 'forms/' + this.state.formId + "/roll";
+            var text = '{';
+            for (var i = 0; i < this.state.dice.length; i++) {
+                text += '"' + this.state.dice[i].label + '" : "';
+                text += !this.state.dice[i].hold;
+                text += '",';
             }
-        });
+            text = text.substring(0, text.length - 1) + '}';
+            var http = new XMLHttpRequest();
+            http.open('PUT', url, true);
+            http.setRequestHeader('Content-type', 'application/json');
+            http.setRequestHeader('Authorization', user.tokenType + " " + user.accessToken);
+            http.addEventListener('load', () => {
+                if (http.readyState === 4 && http.status === 200) {
+                    var dice = JSON.parse(http.responseText);
+                    // console.log(dice);
+                    this.setState(state => {
+                        for (var i = 0; i < dice.length; i++) {
+                            state.dice[i].value = dice[i].value;
+                        }
+                    });
+                    this.setState({});
+                }
+            });
+            http.send(text);
+        } else {
+            this.setState(state => {
+                for (var i = 0; i < state.dice.length; i++) {
+                    if (!state.dice[i].hold) state.dice[i].value = Math.round(1 + Math.random() * 5);
+                }
+            });
+        }
         var announcementRequired = this.state.announcement == null;
         for (var column = 0; column < 3; column++) {
             for (var box = 0; box < 13; box++) {
-                if (!this.state.boxes[column*13+box].filled)
+                if (!this.state.boxes[column * 13 + box].filled)
                     announcementRequired = false;
-                    break;
+                break;
             }
         }
         this.setState({ rollsLeft: this.state.rollsLeft - 1, rollDisabled: (this.state.rollsLeft === 1 || announcementRequired), diceDisabled: (this.state.rollsLeft === 1), boxesDisabled: false });
@@ -110,17 +188,18 @@ export default class Game extends Component {
     toggleDice(label) {
         this.setState(state => {
             state.dice[label].hold = !state.dice[label].hold;
-            console.log("Hold: dice " + label + " -> " + state.dice[label].hold);
+            // console.log("Hold: dice " + label + " -> " + state.dice[label].hold);
         });
         this.setState({});
     }
 
     boxClick(label) {
-        console.log("Clicked: (col " + parseInt(label / 13, 10) + ", box " + (label % 13) + ")\nLabel: " + label);
+        // console.log(label);
+        // console.log("Clicked: (col " + parseInt(label / 13, 10) + ", box " + (label % 13) + ")\nLabel: " + label);
         var announced = false;
         if (label >= 39) {
             if (this.state.announcement == null) {
-                announced=true;
+                announced = true;
                 this.announce(label);
             }
         }
@@ -129,42 +208,88 @@ export default class Game extends Component {
         }
     }
 
-    announce(label) {
-        this.setState({ boxesDisabled: true, announcement: label, rollDisabled: false });
+    announce(index) {
+        if (this.props.user) {
+            var user = this.props.user;
+            var url = this.state.apiURL + 'forms/' + this.state.formId + "/announce";
+            var http = new XMLHttpRequest();
+            http.open('PUT', url, true);
+            http.setRequestHeader('Content-type', 'application/json');
+            http.setRequestHeader('Authorization', user.tokenType + " " + user.accessToken);
+            http.addEventListener('load', () => {
+                if (http.readyState === 4 && http.status === 200) {
+                    var box = JSON.parse(http.responseText);
+                    // console.log(box);
+                    this.setState({announcement: box});
+                }
+            });
+            http.send(index%13);
+        } else {
+            this.setState({ boxesDisabled: true, announcement: index, rollDisabled: false });
+        }
     }
 
-    fillBox(label) {
-        var score = ScoreUtil.checkScore(label % 13, this.state.dice);
-        this.setState((state) => {
-            state.boxes[label].value = score;
-            state.boxes[label].available = false;
-            state.boxes[label].filled = true;
-            if (label <= 11) {
-                state.boxes[label + 1].available = true;
-            } else if (label >= 14 && label <= 25) {
-                state.boxes[label - 1].available = true;
-            }
+    fillBox(index) {
+        if (this.props.user) {
+            var user = this.props.user;
+            var url = this.state.apiURL + 'forms/' + this.state.formId + "/columns/" + parseInt(index/13, 10) + "/boxes/" + index%13 + "/fill";
+            var http = new XMLHttpRequest();
+            http.open('PUT', url, true);
+            http.setRequestHeader('Content-type', 'application/json');
+            http.setRequestHeader('Authorization', user.tokenType + " " + user.accessToken);
+            http.addEventListener('load', () => {
+                if (http.readyState === 4 && http.status === 200) {
+                    var value = JSON.parse(http.responseText);
+                    // console.log(value);
+                    this.setState(state => {
+                        state.boxes[index].value = value
+                        state.boxes[index].available = false;
+                        state.boxes[index].filled = true;
+                        if (index <= 11) {
+                            state.boxes[index + 1].available = true;
+                        } else if (index >= 14 && index <= 25) {
+                            state.boxes[index - 1].available = true;
+                        }
+                    });
+                    this.setState({});
+                }
+            });
+            http.send();
+        } else {
+            var score = ScoreUtil.checkScore(index % 13, this.state.dice);
+            this.setState(state => {
+                state.boxes[index].value = score;
+                state.boxes[index].available = false;
+                state.boxes[index].filled = true;
+                if (index <= 11) {
+                    state.boxes[index + 1].available = true;
+                } else if (index >= 14 && index <= 25) {
+                    state.boxes[index - 1].available = true;
+                }
+            });
+        }
+        this.setState(state => {
             for (var i = 0; i < state.dice.length; i++) {
                 state.dice[i].hold = false;
             }
         });
-        this.setState({ rollsLeft: 3, rollDisabled: false, diceDisabled: true, boxesDisabled: true, boxesLeft: this.state.boxesLeft - 1, announcement: null}, () => {
+        this.setState({ rollsLeft: 3, rollDisabled: false, diceDisabled: true, boxesDisabled: true, boxesLeft: this.state.boxesLeft - 1, announcement: null }, () => {
             if (this.state.boxesLeft === 0) {
                 this.endGame();
             }
         });
-        this.updateSums(label);
+        this.updateSums(index);
     }
 
     updateSums(label) {
-        var column = parseInt(label/13, 10);
-        var box = label%13;
+        var column = parseInt(label / 13, 10);
+        var box = label % 13;
         var i;
         this.setState(state => {
             if (box <= 5) {
                 state.sums[column] = 0;
                 for (i = 0; i < 6; i++) {
-                    state.sums[column] += state.boxes[column*13+i].value;
+                    state.sums[column] += state.boxes[column * 13 + i].value;
                 }
                 if (state.sums[column] >= 60) state.sums[column] += 30;
                 state.sums[4] = 0;
@@ -172,32 +297,25 @@ export default class Game extends Component {
                     state.sums[4] += state.sums[i]
                 }
             } else if (box >= 8) {
-                state.sums[column+10] = 0;
+                state.sums[column + 10] = 0;
                 for (i = 8; i < 13; i++) {
-                    state.sums[column+10] += state.boxes[column*13+i].value;
+                    state.sums[column + 10] += state.boxes[column * 13 + i].value;
                 }
                 state.sums[14] = 0;
                 for (i = 0; i < 4; i++) {
-                    state.sums[14] += state.sums[10+i]
+                    state.sums[14] += state.sums[10 + i]
                 }
             }
-            if (state.boxes[column*13].filled && state.boxes[column*13 + 6].filled && state.boxes[column*13+7].filled) {
-                state.sums[column+5] = state.boxes[column*13].value * (state.boxes[column*13 + 6].value - state.boxes[column*13+7].value);
+            if (state.boxes[column * 13].filled && state.boxes[column * 13 + 6].filled && state.boxes[column * 13 + 7].filled) {
+                state.sums[column + 5] = state.boxes[column * 13].value * (state.boxes[column * 13 + 6].value - state.boxes[column * 13 + 7].value);
                 state.sums[9] = 0;
                 for (i = 0; i < 4; i++) {
-                    state.sums[9] += state.sums[5+i]
+                    state.sums[9] += state.sums[5 + i]
                 }
             }
             state.sums[15] = state.sums[4] + state.sums[9] + state.sums[14];
         })
     }
-
-    handleKeyPress = (event) => {
-        console.log(event);
-        if (event.key === 'Space') {
-          console.log('enter press here! ')
-        }
-      }
 
     render() {
         let sums = this.state.sums;
@@ -209,7 +327,7 @@ export default class Game extends Component {
                 onToggleDice={this.toggleDice} /> */}
                 <div className="form">
                     <a href="https://github.com/MatejDanic/jamb">
-                        <Label labelClass={"label info"} value="jamb" />
+                        <Label labelClass={"label info"} value="matej" />
                     </a>
                     <Label labelClass={"label label-image"} imgUrl={"../images/field/downwards.bmp"} />
                     <Label labelClass={"label label-image"} imgUrl={"../images/field/upwards.bmp"} />
@@ -326,7 +444,7 @@ export default class Game extends Component {
     }
 
     endGame() {
-        console.log("END");
+        // console.log("END");
     }
 }
 
@@ -343,7 +461,7 @@ function showRules() {
 function showLeaderboard() {
     var http = new XMLHttpRequest();
     //	var url = 'https://jamb-remote.herokuapp.com/scores';
-    var url = 'http://localhost:8080/scores';
+    var url = this.state.apiURL + 'scores';
     http.open('GET', url, true);
 
     http.addEventListener('load', () => {

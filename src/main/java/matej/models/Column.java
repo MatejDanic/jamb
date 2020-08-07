@@ -2,11 +2,10 @@ package matej.models;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -34,11 +33,11 @@ public class Column {
 	@JoinColumn(name = "form_id", referencedColumnName = "id", nullable = false)
 	private Form form;
 
-	@javax.persistence.Column(name = "type")
+	@javax.persistence.Column(name = "type", nullable = false)
 	private ColumnType columnType;
 
-	@OneToMany(mappedBy ="column", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	private Set<Box> boxes;
+	@OneToMany(mappedBy = "column", cascade = CascadeType.ALL)
+	private List<Box> boxes;
 
 	public int getId() {
 		return id;
@@ -64,11 +63,11 @@ public class Column {
 		this.columnType = columnType;
 	}
 
-	public Set<Box> getBoxes() {
+	public List<Box> getBoxes() {
 		return boxes;
 	}
 
-	public void setBoxes(Set<Box> boxes) {
+	public void setBoxes(List<Box> boxes) {
 		this.boxes = boxes;
 	}
 
