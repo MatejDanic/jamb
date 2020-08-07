@@ -16,7 +16,6 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/x
 <description>Online implementation of the game jamb</description>
 
 <properties>
-	<projectName>Jamb</projectName>
 	<java.version>11</java.version>
 </properties>
 
@@ -110,7 +109,6 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/x
 				<archive>
 					<manifest>
 						<addClasspath>true</addClasspath>
-						<projectName>Jamb</projectName>
 						<mainClass>matej.MainClass</mainClass>
 					</manifest>
 				</archive>
