@@ -12,13 +12,13 @@ public class DiceId implements Serializable {
 
 	private int form;
 	
-	private int ordinalNumber;
+	private int label;
 	
 	public DiceId() {}
  
-    public DiceId(int form, int ordinalNumber) {
+    public DiceId(int form, int label) {
         this.form = form;
-        this.ordinalNumber = ordinalNumber;
+        this.label = label;
     }
     
     @Override
@@ -29,11 +29,11 @@ public class DiceId implements Serializable {
         DiceId that = (DiceId) o;
 
         return Objects.equals(form, that.form) 
-        		&& Objects.equals(ordinalNumber, that.ordinalNumber);
+        		&& Objects.equals(label, that.label);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(form, ordinalNumber);
+        return Objects.hash(form, label);
     }
 }

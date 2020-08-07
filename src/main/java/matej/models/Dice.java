@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import matej.models.composite.DiceId;
 
 @Entity
-@Table(name="DICE")
+@Table(name="dice")
 @IdClass(DiceId.class)
 public class Dice {
 
@@ -26,7 +26,7 @@ public class Dice {
 	
 	@Id
 	@javax.persistence.Column(name = "ordinal_number")
-	private int ordinalNumber;
+	private int label;
 
 	@javax.persistence.Column(name = "value")
 	private int value;
@@ -47,12 +47,12 @@ public class Dice {
 		this.value = value;
 	}
 	
-	public int getOrdinalNumber() {
-		return ordinalNumber;
+	public int getLabel() {
+		return label;
 	}
 
-	public void setOrdinalNumber(int ordinalNumber) {
-		this.ordinalNumber = ordinalNumber;
+	public void setLabel(int label) {
+		this.label = label;
 	}
 
 	public void roll() {
@@ -61,7 +61,7 @@ public class Dice {
 	
 	@Override
 	public String toString() {
-		return form.getId() + " Dice #" + ordinalNumber + ": " + value;
+		return form.getId() + " Dice #" + label + ": " + value;
 	}
 	
 }

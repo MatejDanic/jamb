@@ -16,5 +16,7 @@ public class JambConstants {
 
 	public static final int NUMBERSUM_BONUS_THRESHOLD = 60;
 	public static final int NUMBERSUM_BONUS = 30;
+
+	public static final int LEADERBOARD_LIMIT = 10;
 	
 }

@@ -6,21 +6,19 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
-@Table(name="SCORE")
+@Table(name="score")
 public class Score {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
-	@javax.persistence.Column(name = "nickname", nullable = true)
-	private String nickname;
+
+	@ManyToOne()
+	private User user;
 	
 	@javax.persistence.Column(name = "value", nullable = false)
 	private int value;
@@ -30,10 +28,6 @@ public class Score {
 	
 	@javax.persistence.Column(name = "finished", nullable = false)
 	private boolean finished;
-	
-	@JsonIgnore
-	@OneToOne(mappedBy = "score")
-	private Form form;
 
 	public int getId() {
 		return id;
@@ -43,12 +37,12 @@ public class Score {
 		this.id = id;
 	}
 	
-	public String getNickname() {
-		return nickname;
+	public User getUser() {
+		return user;
 	}
 	
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
+	public void setUser(User user) {
+		this.user = user;
 	}
 	
 	public int getValue() {
@@ -73,13 +67,5 @@ public class Score {
 	
 	public void setFinished(boolean finished) {
 		this.finished = finished;
-	}
-	
-	public Form getForm() {
-		return form;
-	}
-	
-	public void setForm(Form form) {
-		this.form = form;
 	}
 }

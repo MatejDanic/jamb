@@ -2,10 +2,9 @@ package matej.models;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,34 +13,40 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import matej.models.enums.BoxType;
 import matej.models.enums.ColumnType;
 
 
 @Entity
-@Table(name="FORM")
+@Table(name="form")
 public class Form {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	@OneToOne
-	@JoinColumn(name = "score_id", referencedColumnName = "id", nullable = true)
-	private Score score;
+	@JsonIgnore
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "user_id", nullable = false)
+	private User user;
 	
-	@OneToMany(mappedBy ="form", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	private Set<Column> columns;
+	@OneToMany(mappedBy ="form", cascade = CascadeType.ALL)
+	private List<Column> columns;
 
-	@OneToMany(mappedBy = "form", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<Dice> diceSet;
+	@OneToMany(mappedBy = "form", cascade = CascadeType.ALL)
+    private List<Dice> dice;
 
-	@javax.persistence.Column(name = "roll_count")
+	@javax.persistence.Column(name = "roll_count", nullable = false)
 	private int rollCount;
 	
-	@javax.persistence.Column(name = "announcement")
+	@javax.persistence.Column(name = "announcement", nullable = true)
 	private BoxType announcement;
-	
+
+	@javax.persistence.Column(name = "announcement_required", nullable = false)
+	private boolean announcementRequired;
+
 	public int getId() {
 		return id;
 	}
@@ -50,28 +55,28 @@ public class Form {
 		this.id = id;
 	}
 
-	public Score getScore() {
-		return score;
+	public User getUser() {
+		return user;
 	}
 
-	public void setScore(Score score) {
-		this.score = score;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
-	public Set<Column> getColumns() {
+	public List<Column> getColumns() {
 		return columns;
 	}
 
-	public void setColumns(Set<Column> columns) {
+	public void setColumns(List<Column> columns) {
 		this.columns = columns;
 	}
 
-	public Set<Dice> getDiceSet() {
-		return diceSet;
+	public List<Dice> getDice() {
+		return dice;
 	}
 
-	public void setDiceSet(Set<Dice> diceSet) {
-		this.diceSet = diceSet;
+	public void setDice(List<Dice> dice) {
+		this.dice = dice;
 	}
 
 	public int getRollCount() {
@@ -102,28 +107,16 @@ public class Form {
 	}
 
 	public Dice getDiceByOrdinalNumber(int ordinalNumber) {
-		Dice dice = new Dice();
-		for (Dice d : diceSet) {
-			if (d.getOrdinalNumber() == ordinalNumber) dice = d;
+		Dice newDice = new Dice();
+		for (Dice d : dice) {
+			if (d.getLabel() == ordinalNumber) newDice = d;
 			break;
 		}
-		return dice;
+		return newDice;
 	}
 
 	public boolean isAnnouncementRequired() {
-		for (Column column : columns) {
-			if (column.getColumnType() != ColumnType.ANNOUNCEMENT) {
-				if (!column.isCompleted()) return false;
-			}
-		}
-		return true;
-	}
-	
-	public boolean isCompleted() {
-		for (Column column : columns) {
-			if (!column.isCompleted()) return false;
-		}
-		return true;
+		return announcementRequired;
 	}
 
 	public Map<String, Integer> calculateSums() {
@@ -143,15 +136,19 @@ public class Form {
 		return sums;
 	}
 	
-	@Override
-	public String toString() {
-		String result = "";
-		for (Column column : columns) {
-			for (Box box : column.getBoxes()) {
-				result += " " + box.getValue();
-			}
-			result += "\n";
-		}
-		return result;
+	// @Override
+	// public String toString() {
+	// 	String result = "";
+	// 	for (Column column : columns) {
+	// 		for (Box box : column.getBoxes()) {
+	// 			result += " " + box.getValue();
+	// 		}
+	// 		result += "\n";
+	// 	}
+	// 	return result;
+	// }
+
+	public void setAnnouncementRequired(boolean announcementRequired) {
+		this.announcementRequired = announcementRequired;
 	}
 }

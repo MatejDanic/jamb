@@ -1,7 +1,7 @@
 package matej.utils;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import matej.constants.JambConstants;
 import matej.models.Dice;
@@ -9,7 +9,7 @@ import matej.models.enums.BoxType;
 
 public final class ScoreUtil {
 
-	public static int checkScore(Set<Dice> diceSet, BoxType boxType) {
+	public static int checkScore(List<Dice> diceList, BoxType boxType) {
 		int value = 0;
 		switch(boxType) {
 		case ONES:
@@ -18,36 +18,36 @@ public final class ScoreUtil {
 		case FOURS:
 		case FIVES:
 		case SIXES:
-			value = checkSumByType(diceSet, boxType);
+			value = checkSumByType(diceList, boxType);
 			break;
 		case MAX:
-			value = checkSum(diceSet);
+			value = checkSum(diceList);
 			break;
 		case MIN:
-			value = checkSum(diceSet);
+			value = checkSum(diceList);
 			break;
 		case TRIPS:
-			value = checkTrips(diceSet);
+			value = checkTrips(diceList);
 			break;
 		case STRAIGHT:
-			value = checkStraight(diceSet);
+			value = checkStraight(diceList);
 			break;
 		case FULL:
-			value = checkFull(diceSet);
+			value = checkFull(diceList);
 			break;
 		case POKER:
-			value = checkPoker(diceSet);
+			value = checkPoker(diceList);
 			break;
 		case JAMB:
-			value = checkJamb(diceSet);
+			value = checkJamb(diceList);
 			break;			
 		}
 		return value;
 	}
 	
-	public static int checkSumByType(Set<Dice> diceSet, BoxType boxType) { 
+	public static int checkSumByType(List<Dice> diceList, BoxType boxType) { 
 		int result = 0; 
-		for (Dice d : diceSet) {
+		for (Dice d : diceList) {
 			if (d.getValue() == boxType.ordinal() + 1) {
 				result += d.getValue();
 			}
@@ -55,20 +55,20 @@ public final class ScoreUtil {
 		return result; 
 	} 
 	
-	public static int checkSum(Set<Dice> diceSet) { 
+	public static int checkSum(List<Dice> diceList) { 
 		int result = 0; 
-		for (Dice d : diceSet) { 
+		for (Dice d : diceList) { 
 			result += d.getValue();
 		} 
 		return result; 
 	} 
  
-	public static int checkTrips(Set<Dice> diceSet) { 
+	public static int checkTrips(List<Dice> diceList) { 
 		int result = 0; 
-		for (Dice d1 : diceSet) { 
+		for (Dice d1 : diceList) { 
 			int count = 1; 
 			int value = d1.getValue(); 
-			for (Dice d2 : diceSet) { 
+			for (Dice d2 : diceList) { 
 				if (d1 != d2 && d1.getValue() == d2.getValue()) { 
 					count++; 
 					if (count <= 3) value += d2.getValue(); 
@@ -82,15 +82,15 @@ public final class ScoreUtil {
 		return result; 
 	} 
  
-	public static int checkStraight(Set<Dice> diceSet) { 
+	public static int checkStraight(List<Dice> diceList) { 
 		int result = 0; 
-		Set<Integer> straight = new HashSet<>(); 
+		List<Integer> straight = new ArrayList<>(); 
 		straight.add(2); 
 		straight.add(3); 
 		straight.add(4); 
 		straight.add(5); 
-		Set<Integer> countbers = new HashSet<>(); 
-		for (Dice d : diceSet) { 
+		List<Integer> countbers = new ArrayList<>(); 
+		for (Dice d : diceList) { 
 			countbers.add(d.getValue()); 
 		} 
 		if (countbers.containsAll(straight)) { 
@@ -102,14 +102,14 @@ public final class ScoreUtil {
 		return result; 
 	} 
  
-	public static int checkFull(Set<Dice> diceSet) { 
+	public static int checkFull(List<Dice> diceList) { 
 		int result = 0;
 		int valueTwo = 0;  
 		int valueThree = 0; 
-		for (Dice d1 : diceSet) { 
+		for (Dice d1 : diceList) { 
 			int count = 1; 
 			int value = d1.getValue(); 
-			for (Dice d2 : diceSet) { 
+			for (Dice d2 : diceList) { 
 				if (d1 != d2 && d1.getValue() == d2.getValue()) { 
 					count++; 
 					value += d2.getValue(); 
@@ -127,12 +127,12 @@ public final class ScoreUtil {
 		return result; 
 	} 
  
-	public static int checkPoker(Set<Dice> diceSet) { 
+	public static int checkPoker(List<Dice> diceList) { 
 		int result = 0; 
-		for (Dice d1 : diceSet) { 
+		for (Dice d1 : diceList) { 
 			int count = 1; 
 			int value = d1.getValue(); 
-			for (Dice d2 : diceSet) { 
+			for (Dice d2 : diceList) { 
 				if (d1 != d2 && d1.getValue() == d2.getValue()) { 
 					count++; 
 					if (count <= 4) value += d2.getValue(); 
@@ -146,12 +146,12 @@ public final class ScoreUtil {
 		return result; 
 	} 
  
-	public static int checkJamb(Set<Dice> diceSet) { 
+	public static int checkJamb(List<Dice> diceList) { 
 		int result = 0; 
-		for (Dice d1 : diceSet) { 
+		for (Dice d1 : diceList) { 
 			int count = 1; 
 			int value = d1.getValue(); 
-			for (Dice d2 : diceSet) { 
+			for (Dice d2 : diceList) { 
 				if (d1 != d2 && d1.getValue() == d2.getValue()) { 
 					count++; 
 					if (count <= 5) value += d2.getValue();
