@@ -9,11 +9,11 @@
 		<version>2.2.5.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>matej.jamb</groupId>
-	<artifactId>JambOnline</artifactId>
+	<groupId>matej</groupId>
+	<artifactId>Jamb</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>OnlineGame</name>
-	<description>Demo project for Spring Boot</description>
+	<name>Jamb</name>
+	<description>Online implementation of the game jamb</description>
 
 	<properties>
 		<java.version>1.8</java.version>
@@ -67,6 +67,12 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-cache</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>29.0-jre</version>
 		</dependency>
 	</dependencies>
 
