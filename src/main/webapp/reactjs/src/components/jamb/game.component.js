@@ -14,6 +14,7 @@ export default class Game extends Component {
         super();
 
         this.state = {
+            // apiURL: "http://localhost:8080/",
             apiURL: "http://www.jamb.com.hr",
             formId: null,
             boxesLeft: 52,
@@ -333,7 +334,7 @@ export default class Game extends Component {
                     <Label labelClass={"label label-image"} imgUrl={"../images/field/upwards.bmp"} />
                     <Label labelClass={"label label-image"} imgUrl={"../images/field/any_direction.bmp"} />
                     <Label labelClass={"label"} value={"NAJAVA"} />
-                    <button className="show-button leaderboard" onClick={showLeaderboard}>Lj e s t v i c a</button>
+                    <button className="show-button leaderboard" onClick={() => this.showLeaderboard()}>Lj e s t v i c a</button>
                     {/* <div /> */}
                     <Label labelClass={"label label-image"} imgUrl={"../images/dice/1.bmp"} />
                     <Box gameInfo={gameInfo} variables={boxes[0]} onBoxClick={this.boxClick} />
@@ -400,7 +401,7 @@ export default class Game extends Component {
                     <Box gameInfo={gameInfo} variables={boxes[21]} onBoxClick={this.boxClick} />
                     <Box gameInfo={gameInfo} variables={boxes[34]} onBoxClick={this.boxClick} />
                     <Box gameInfo={gameInfo} variables={boxes[47]} onBoxClick={this.boxClick} />
-                    <button className="show-button rules" onClick={showRules}>P r a v i l a</button>
+                    <button className="show-button rules" onClick={() => this.showRules()}>P r a v i l a</button>
                     {/* <div /> */}
                     <Label labelClass={"label"} value={"SKALA"} />
                     <Box gameInfo={gameInfo} variables={boxes[9]} onBoxClick={this.boxClick} />
@@ -446,35 +447,36 @@ export default class Game extends Component {
     endGame() {
         // console.log("END");
     }
-}
-
-function showRules() {
-    alert("Bacanjem kockica postižu se odredeni rezultati koji se upisuju u obrazac. Na kraju igre postignuti se rezultati zbrajaju.\n" +
-        "Nakon prvog bacanja, igrac gleda u obrazac i odlucuje hoce li nešto odmah upisati ili ce igrati dalje.\n" +
-        "U jednom potezu igrac može kockice (sve ili samo one koje izabere) bacati tri puta\n" +
-        "Prvi stupac obrasca upisuje se odozgo prema dolje, a drugom obrnuto. U treci stupac rezultati se upisuju bez odredenog redosljeda.\n" +
-        "Cetvrti stupac mora se popunjavati tako da se nakon prvog bacanja najavljuje igra za odredeni rezultat.\n" +
-        "Igrac je obavezan u to polje upisati ostvareni rezultat bez obzira da li mu to nakon tri bacanja odgovara ili ne.\n" +
-        "Rezultat se može, ali ne mora upisati u cetvrti stupac nakon prvog bacanja.");
-}
-
-function showLeaderboard() {
-    var http = new XMLHttpRequest();
-    //	var url = 'https://jamb-remote.herokuapp.com/scores';
-    var url = this.state.apiURL + 'scores';
-    http.open('GET', url, true);
-
-    http.addEventListener('load', () => {
-        if (http.readyState === 4 && http.status === 200) {
-
-            var response = JSON.parse(http.responseText);
-            var text = '';
-            for (var i = 0; i < response.length; i++) {
-                var obj = response[i];
-                text += (i + 1) + '. ' + obj.value + ' - ' + obj.value + '\n';
+    
+    showRules() {
+        alert("Bacanjem kockica postižu se odredeni rezultati koji se upisuju u obrazac. Na kraju igre postignuti se rezultati zbrajaju.\n" +
+            "Nakon prvog bacanja, igrac gleda u obrazac i odlucuje hoce li nešto odmah upisati ili ce igrati dalje.\n" +
+            "U jednom potezu igrac može kockice (sve ili samo one koje izabere) bacati tri puta\n" +
+            "Prvi stupac obrasca upisuje se odozgo prema dolje, a drugom obrnuto. U treci stupac rezultati se upisuju bez odredenog redosljeda.\n" +
+            "Cetvrti stupac mora se popunjavati tako da se nakon prvog bacanja najavljuje igra za odredeni rezultat.\n" +
+            "Igrac je obavezan u to polje upisati ostvareni rezultat bez obzira da li mu to nakon tri bacanja odgovara ili ne.\n" +
+            "Rezultat se može, ali ne mora upisati u cetvrti stupac nakon prvog bacanja.");
+    }
+    
+    showLeaderboard() {
+        var http = new XMLHttpRequest();
+        //	var url = 'https://jamb-remote.herokuapp.com/scores';
+        var url = this.state.apiURL + 'scores';
+        http.open('GET', url, true);
+    
+        http.addEventListener('load', () => {
+            if (http.readyState === 4 && http.status === 200) {
+    
+                var response = JSON.parse(http.responseText);
+                var text = '';
+                for (var i = 0; i < response.length; i++) {
+                    var obj = response[i];
+                    text += (i + 1) + '. ' + obj.value + ' - ' + obj.value + '\n';
+                }
+                alert('Najbolji rezultati ovaj tjedan:\n' + text);
             }
-            alert('Najbolji rezultati ovaj tjedan:\n' + text);
-        }
-    });
-    http.send();
+        });
+        http.send();
+    }    
 }
+

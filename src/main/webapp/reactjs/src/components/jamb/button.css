@@ -97,3 +97,15 @@
   line-height: 1.3em;
   font-size: 18px;
 }
+
+
+@media screen and ( max-width : 512px) {
+	.show-button {
+    width: auto;
+    height: auto;
+  }
+  .dice-button {
+    width: 18%;
+    height: calc(18vw * 1)
+  }
+}

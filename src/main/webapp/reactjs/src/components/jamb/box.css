@@ -13,3 +13,11 @@
 .box:disabled {
 	color: black;
 }
+
+@media screen and ( max-width : 512px) {
+	.box{
+		width: auto;
+		height: auto;
+		font-size: 22px;
+	}
+}

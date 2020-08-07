@@ -3,9 +3,7 @@
   background-color: aliceblue;
   padding-top: 2px;
   padding-bottom: 5px;
-}
-.dice-rack {
-  padding-top: 5px;
+  height: 1000px;
 }
 .form {
   padding-top: 5px;
@@ -13,4 +11,28 @@
   text-align: center;
   grid-template-columns: repeat(6, 64px);
   grid-template-rows: repeat(18, 32px);
+}
+.dice-rack {
+  padding-top: 5px;
+}
+
+@media screen and (max-width: 512px) {
+  .game {
+    height: auto;
+    width: auto;
+    padding: 0px;
+    padding-top: 0.5%;
+    padding-bottom: 0.5%;
+  }
+  .form {
+    grid-template-columns: repeat(6, 16.6vw);
+    grid-template-rows: repeat(18, 4.6vh);
+    padding: 0px;
+  }
+
+  .dice-rack {
+    padding: 0px;
+    
+    padding-top: 2%;
+  }
 }
