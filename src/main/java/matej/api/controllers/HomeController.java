@@ -31,10 +31,17 @@ public class HomeController {
 	// }
 	
 	@GetMapping("")
-	public void handleGet(HttpServletResponse response) {
+	public void redirect1(HttpServletResponse response) {
 		response.setHeader("Location", "http://wwwjamb.com.hr");
 		response.setStatus(302);
 	}
+
+	@GetMapping("/bjamb")
+	public void redirect2(HttpServletResponse response) {
+		response.setHeader("Location", "http://wwwjamb.com.hr");
+		response.setStatus(302);
+	}
+	
 	
 	// @GetMapping("/scores")
 	// public List<Score> getLeaderboard() {
