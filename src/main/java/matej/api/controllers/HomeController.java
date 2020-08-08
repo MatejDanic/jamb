@@ -2,6 +2,8 @@ package matej.api.controllers;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -20,30 +22,30 @@ import matej.models.Score;
 @RequestMapping("")
 public class HomeController {
 	
-	@Autowired
-	ScoreService scoreService;
+	// @Autowired
+	// ScoreService scoreService;
 	
-	@Scheduled(fixedRate = 86400000)
-	public void clearUnfinishedScores() {
-		scoreService.clearUnfinishedScores();
-	}
-	
-	// @GetMapping("")
-	// public void handleGet(HttpServletResponse response) {
-	// 	response.setHeader("Location", "http://localhost:3000");
-	// 	response.setStatus(302);
+	// @Scheduled(fixedRate = 86400000)
+	// public void clearUnfinishedScores() {
+	// 	scoreService.clearUnfinishedScores();
 	// }
 	
-	@GetMapping("/scores")
-	public List<Score> getLeaderboard() {
-		return scoreService.getLeaderboard(JambConstants.LEADERBOARD_LIMIT);
+	@GetMapping("")
+	public void handleGet(HttpServletResponse response) {
+		response.setHeader("Location", "http://wwwjamb.com.hr");
+		response.setStatus(302);
 	}
 	
-	@GetMapping("/admin")
-	@PreAuthorize("hasAuthority('ADMIN')")
-	public String adminAccess() {
-		return "You are an admin";
-	}
+	// @GetMapping("/scores")
+	// public List<Score> getLeaderboard() {
+	// 	return scoreService.getLeaderboard(JambConstants.LEADERBOARD_LIMIT);
+	// }
+	
+	// @GetMapping("/admin")
+	// @PreAuthorize("hasAuthority('ADMIN')")
+	// public String adminAccess() {
+	// 	return "You are an admin";
+	// }
 }
 
 
