@@ -6,4 +6,4 @@ https://github.com/MatejDanic/jamb-spring
 
 https://github.com/MatejDanic/jamb-react
 
-Game can be reached at http://www.jamb.com.hr
+Game can be reached at www.jamb.com.hr
