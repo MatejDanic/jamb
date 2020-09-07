@@ -1,0 +1,1245 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 12.4 (Ubuntu 12.4-1.pgdg16.04+1)
+-- Dumped by pg_dump version 12.3
+
+-- Started on 2020-09-07 14:42:53
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- TOC entry 202 (class 1259 OID 46459)
+-- Name: auth_role; Type: TABLE; Schema: public; Owner: tvwexrydbwrtnx
+--
+
+CREATE TABLE public.auth_role (
+    id integer NOT NULL,
+    description character varying(255),
+    label character varying(255)
+);
+
+
+ALTER TABLE public.auth_role OWNER TO tvwexrydbwrtnx;
+
+--
+-- TOC entry 203 (class 1259 OID 46465)
+-- Name: auth_role_id_seq; Type: SEQUENCE; Schema: public; Owner: tvwexrydbwrtnx
+--
+
+CREATE SEQUENCE public.auth_role_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_role_id_seq OWNER TO tvwexrydbwrtnx;
+
+--
+-- TOC entry 3916 (class 0 OID 0)
+-- Dependencies: 203
+-- Name: auth_role_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: tvwexrydbwrtnx
+--
+
+ALTER SEQUENCE public.auth_role_id_seq OWNED BY public.auth_role.id;
+
+
+--
+-- TOC entry 204 (class 1259 OID 46467)
+-- Name: auth_user; Type: TABLE; Schema: public; Owner: tvwexrydbwrtnx
+--
+
+CREATE TABLE public.auth_user (
+    id integer NOT NULL,
+    password character varying(255) NOT NULL,
+    username character varying(15) NOT NULL
+);
+
+
+ALTER TABLE public.auth_user OWNER TO tvwexrydbwrtnx;
+
+--
+-- TOC entry 205 (class 1259 OID 46470)
+-- Name: auth_user_id_seq; Type: SEQUENCE; Schema: public; Owner: tvwexrydbwrtnx
+--
+
+CREATE SEQUENCE public.auth_user_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_user_id_seq OWNER TO tvwexrydbwrtnx;
+
+--
+-- TOC entry 3917 (class 0 OID 0)
+-- Dependencies: 205
+-- Name: auth_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: tvwexrydbwrtnx
+--
+
+ALTER SEQUENCE public.auth_user_id_seq OWNED BY public.auth_user.id;
+
+
+--
+-- TOC entry 206 (class 1259 OID 46472)
+-- Name: auth_user_role; Type: TABLE; Schema: public; Owner: tvwexrydbwrtnx
+--
+
+CREATE TABLE public.auth_user_role (
+    user_id integer NOT NULL,
+    role_id integer NOT NULL
+);
+
+
+ALTER TABLE public.auth_user_role OWNER TO tvwexrydbwrtnx;
+
+--
+-- TOC entry 207 (class 1259 OID 46475)
+-- Name: box; Type: TABLE; Schema: public; Owner: tvwexrydbwrtnx
+--
+
+CREATE TABLE public.box (
+    type integer NOT NULL,
+    column_id integer NOT NULL,
+    available boolean,
+    filled boolean,
+    value integer
+);
+
+
+ALTER TABLE public.box OWNER TO tvwexrydbwrtnx;
+
+--
+-- TOC entry 208 (class 1259 OID 46478)
+-- Name: column; Type: TABLE; Schema: public; Owner: tvwexrydbwrtnx
+--
+
+CREATE TABLE public."column" (
+    id integer NOT NULL,
+    type integer NOT NULL,
+    form_id integer NOT NULL
+);
+
+
+ALTER TABLE public."column" OWNER TO tvwexrydbwrtnx;
+
+--
+-- TOC entry 209 (class 1259 OID 46481)
+-- Name: column_id_seq; Type: SEQUENCE; Schema: public; Owner: tvwexrydbwrtnx
+--
+
+CREATE SEQUENCE public.column_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.column_id_seq OWNER TO tvwexrydbwrtnx;
+
+--
+-- TOC entry 3918 (class 0 OID 0)
+-- Dependencies: 209
+-- Name: column_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: tvwexrydbwrtnx
+--
+
+ALTER SEQUENCE public.column_id_seq OWNED BY public."column".id;
+
+
+--
+-- TOC entry 210 (class 1259 OID 46483)
+-- Name: dice; Type: TABLE; Schema: public; Owner: tvwexrydbwrtnx
+--
+
+CREATE TABLE public.dice (
+    form_id integer NOT NULL,
+    ordinal_number integer NOT NULL,
+    value integer
+);
+
+
+ALTER TABLE public.dice OWNER TO tvwexrydbwrtnx;
+
+--
+-- TOC entry 211 (class 1259 OID 46486)
+-- Name: form; Type: TABLE; Schema: public; Owner: tvwexrydbwrtnx
+--
+
+CREATE TABLE public.form (
+    id integer NOT NULL,
+    announcement integer,
+    roll_count integer NOT NULL,
+    user_id integer NOT NULL
+);
+
+
+ALTER TABLE public.form OWNER TO tvwexrydbwrtnx;
+
+--
+-- TOC entry 212 (class 1259 OID 46489)
+-- Name: form_id_seq; Type: SEQUENCE; Schema: public; Owner: tvwexrydbwrtnx
+--
+
+CREATE SEQUENCE public.form_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.form_id_seq OWNER TO tvwexrydbwrtnx;
+
+--
+-- TOC entry 3919 (class 0 OID 0)
+-- Dependencies: 212
+-- Name: form_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: tvwexrydbwrtnx
+--
+
+ALTER SEQUENCE public.form_id_seq OWNED BY public.form.id;
+
+
+--
+-- TOC entry 213 (class 1259 OID 46491)
+-- Name: score; Type: TABLE; Schema: public; Owner: tvwexrydbwrtnx
+--
+
+CREATE TABLE public.score (
+    id integer NOT NULL,
+    date timestamp without time zone NOT NULL,
+    value integer NOT NULL,
+    user_id integer NOT NULL
+);
+
+
+ALTER TABLE public.score OWNER TO tvwexrydbwrtnx;
+
+--
+-- TOC entry 214 (class 1259 OID 46494)
+-- Name: score_id_seq; Type: SEQUENCE; Schema: public; Owner: tvwexrydbwrtnx
+--
+
+CREATE SEQUENCE public.score_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.score_id_seq OWNER TO tvwexrydbwrtnx;
+
+--
+-- TOC entry 3920 (class 0 OID 0)
+-- Dependencies: 214
+-- Name: score_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: tvwexrydbwrtnx
+--
+
+ALTER SEQUENCE public.score_id_seq OWNED BY public.score.id;
+
+
+--
+-- TOC entry 3740 (class 2604 OID 46496)
+-- Name: auth_role id; Type: DEFAULT; Schema: public; Owner: tvwexrydbwrtnx
+--
+
+ALTER TABLE ONLY public.auth_role ALTER COLUMN id SET DEFAULT nextval('public.auth_role_id_seq'::regclass);
+
+
+--
+-- TOC entry 3741 (class 2604 OID 46497)
+-- Name: auth_user id; Type: DEFAULT; Schema: public; Owner: tvwexrydbwrtnx
+--
+
+ALTER TABLE ONLY public.auth_user ALTER COLUMN id SET DEFAULT nextval('public.auth_user_id_seq'::regclass);
+
+
+--
+-- TOC entry 3742 (class 2604 OID 46498)
+-- Name: column id; Type: DEFAULT; Schema: public; Owner: tvwexrydbwrtnx
+--
+
+ALTER TABLE ONLY public."column" ALTER COLUMN id SET DEFAULT nextval('public.column_id_seq'::regclass);
+
+
+--
+-- TOC entry 3743 (class 2604 OID 46499)
+-- Name: form id; Type: DEFAULT; Schema: public; Owner: tvwexrydbwrtnx
+--
+
+ALTER TABLE ONLY public.form ALTER COLUMN id SET DEFAULT nextval('public.form_id_seq'::regclass);
+
+
+--
+-- TOC entry 3744 (class 2604 OID 46500)
+-- Name: score id; Type: DEFAULT; Schema: public; Owner: tvwexrydbwrtnx
+--
+
+ALTER TABLE ONLY public.score ALTER COLUMN id SET DEFAULT nextval('public.score_id_seq'::regclass);
+
+
+--
+-- TOC entry 3896 (class 0 OID 46459)
+-- Dependencies: 202
+-- Data for Name: auth_role; Type: TABLE DATA; Schema: public; Owner: tvwexrydbwrtnx
+--
+
+INSERT INTO public.auth_role (id, description, label) VALUES (1, NULL, 'USER');
+INSERT INTO public.auth_role (id, description, label) VALUES (2, NULL, 'ADMIN');
+
+
+--
+-- TOC entry 3898 (class 0 OID 46467)
+-- Dependencies: 204
+-- Data for Name: auth_user; Type: TABLE DATA; Schema: public; Owner: tvwexrydbwrtnx
+--
+
+INSERT INTO public.auth_user (id, password, username) VALUES (1, '$2a$10$4mtJPUySOPSWIgqOi9YbQ.bDX46wC3Moefxvk8pAvGtrZ0418.EXS', 'matej');
+INSERT INTO public.auth_user (id, password, username) VALUES (4, '$2a$10$7wY9nvMQFw0RvYTn8fReeei8uQ83lbInzrXER8/asVDeNxjvxJWje', 'Bumer');
+INSERT INTO public.auth_user (id, password, username) VALUES (5, '$2a$10$IKVwNSZPJXj81KRXFDjRFe.N9pwxlDAaaax2dD7wKfYIK58TKju7m', 'anja');
+INSERT INTO public.auth_user (id, password, username) VALUES (7, '$2a$10$gwowQgcd7hlpGv/NxfHA4OtHmFFrH.yxT/a5.Or3/sdwyo.XJ5xl6', 'Barbara');
+INSERT INTO public.auth_user (id, password, username) VALUES (8, '$2a$10$sgVBigHoFjRGBTAaYTraJepioCtd7CwFjPp3ZpxdwreWxmmnQn8De', 'Kery');
+INSERT INTO public.auth_user (id, password, username) VALUES (9, '$2a$10$eBZuGRS6xY9vFSvODvWO5.nSZSUMrV6KctEa0DfPXZfLWq0G6XHdC', 'brana');
+
+
+--
+-- TOC entry 3900 (class 0 OID 46472)
+-- Dependencies: 206
+-- Data for Name: auth_user_role; Type: TABLE DATA; Schema: public; Owner: tvwexrydbwrtnx
+--
+
+INSERT INTO public.auth_user_role (user_id, role_id) VALUES (1, 1);
+INSERT INTO public.auth_user_role (user_id, role_id) VALUES (1, 2);
+INSERT INTO public.auth_user_role (user_id, role_id) VALUES (4, 1);
+INSERT INTO public.auth_user_role (user_id, role_id) VALUES (5, 1);
+INSERT INTO public.auth_user_role (user_id, role_id) VALUES (7, 1);
+INSERT INTO public.auth_user_role (user_id, role_id) VALUES (8, 1);
+INSERT INTO public.auth_user_role (user_id, role_id) VALUES (9, 1);
+
+
+--
+-- TOC entry 3901 (class 0 OID 46475)
+-- Dependencies: 207
+-- Data for Name: box; Type: TABLE DATA; Schema: public; Owner: tvwexrydbwrtnx
+--
+
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (12, 3159, false, true, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (11, 3159, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (0, 3158, false, true, 2);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (10, 3161, false, true, 42);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (2, 3160, false, true, 6);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (1, 3158, false, true, 2);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (2, 3164, false, true, 9);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (2, 3158, false, true, 9);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (1, 3164, false, true, 4);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (0, 3162, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (1, 3162, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (2, 3162, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (3, 3162, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (4, 3162, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (5, 3162, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (6, 3162, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (0, 3146, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (1, 3146, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (2, 3146, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (3, 3146, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (4, 3146, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (5, 3146, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (6, 3146, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (7, 3146, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (8, 3146, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (9, 3146, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (10, 3146, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (11, 3146, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (12, 3146, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (0, 3147, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (1, 3147, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (2, 3147, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (3, 3147, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (4, 3147, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (5, 3147, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (6, 3147, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (7, 3147, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (8, 3147, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (9, 3147, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (10, 3147, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (11, 3147, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (12, 3147, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (0, 3148, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (1, 3148, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (2, 3148, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (3, 3148, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (4, 3148, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (5, 3148, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (6, 3148, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (7, 3148, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (8, 3148, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (9, 3148, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (7, 3162, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (4, 3160, false, true, 15);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (11, 3160, false, true, 52);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (1, 3160, false, true, 4);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (7, 3158, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (8, 3158, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (9, 3158, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (10, 3158, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (11, 3158, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (12, 3158, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (0, 3159, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (1, 3159, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (2, 3159, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (3, 3159, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (4, 3159, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (5, 3159, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (6, 3159, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (7, 3159, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (8, 3159, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (9, 3159, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (10, 3159, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (8, 3162, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (9, 3162, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (10, 3162, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (11, 3162, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (10, 3148, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (11, 3148, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (0, 3160, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (5, 3160, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (6, 3160, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (12, 3160, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (0, 3161, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (1, 3161, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (2, 3161, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (12, 3148, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (10, 3160, false, true, 49);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (3, 3161, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (0, 3149, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (8, 3160, false, true, 22);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (4, 3161, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (12, 3162, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (0, 3163, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (5, 3161, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (1, 3163, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (6, 3161, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (7, 3161, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (1, 3149, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (2, 3163, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (2, 3149, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (8, 3161, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (3, 3163, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (4, 3163, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (11, 3161, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (5, 3163, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (12, 3161, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (3, 3149, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (6, 3163, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (4, 3149, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (5, 3149, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (6, 3149, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (7, 3163, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (7, 3149, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (8, 3149, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (9, 3149, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (10, 3149, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (11, 3149, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (12, 3149, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (8, 3163, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (9, 3163, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (10, 3163, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (0, 3164, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (5, 3164, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (6, 3164, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (7, 3164, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (9, 3164, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (11, 3164, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (12, 3164, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (0, 3165, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (1, 3165, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (3, 3165, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (4, 3165, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (5, 3165, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (6, 3165, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (7, 3165, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (8, 3165, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (9, 3165, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (10, 3165, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (11, 3165, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (12, 3165, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (3, 3158, false, true, 8);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (6, 3158, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (4, 3158, false, true, 15);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (8, 3164, false, true, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (9, 3161, false, true, 35);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (2, 3165, false, true, 12);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (4, 3164, false, true, 15);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (5, 3158, false, true, 12);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (10, 3164, false, true, 54);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (9, 3160, false, true, 45);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (3, 3164, false, true, 4);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (3, 3160, false, true, 12);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (7, 3160, false, true, 6);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (12, 3163, false, true, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (11, 3163, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (0, 2990, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (1, 2990, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (2, 2990, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (3, 2990, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (4, 2990, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (5, 2990, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (6, 2990, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (7, 2990, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (8, 2990, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (9, 2990, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (10, 2990, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (11, 2990, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (12, 2990, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (0, 2991, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (1, 2991, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (2, 2991, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (3, 2991, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (4, 2991, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (5, 2991, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (6, 2991, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (7, 2991, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (8, 2991, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (9, 2991, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (10, 2991, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (11, 2991, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (12, 2991, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (0, 2992, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (1, 2992, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (2, 2992, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (3, 2992, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (4, 2992, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (5, 2992, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (6, 2992, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (7, 2992, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (8, 2992, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (9, 2992, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (10, 2992, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (11, 2992, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (12, 2992, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (0, 2993, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (1, 2993, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (2, 2993, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (3, 2993, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (4, 2993, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (5, 2993, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (6, 2993, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (7, 2993, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (8, 2993, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (9, 2993, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (10, 2993, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (11, 2993, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (12, 2993, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (0, 3114, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (1, 3114, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (2, 3114, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (3, 3114, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (4, 3114, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (5, 3114, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (6, 3114, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (7, 3114, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (8, 3114, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (9, 3114, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (10, 3114, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (11, 3114, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (12, 3114, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (0, 3115, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (1, 3115, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (2, 3115, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (3, 3115, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (4, 3115, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (5, 3115, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (6, 3115, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (7, 3115, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (8, 3115, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (9, 3115, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (10, 3115, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (11, 3115, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (12, 3115, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (0, 3116, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (1, 3116, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (2, 3116, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (3, 3116, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (4, 3116, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (5, 3116, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (6, 3116, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (7, 3116, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (8, 3116, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (9, 3116, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (10, 3116, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (11, 3116, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (12, 3116, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (0, 3117, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (1, 3117, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (2, 3117, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (3, 3117, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (4, 3117, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (5, 3117, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (6, 3117, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (7, 3117, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (8, 3117, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (9, 3117, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (10, 3117, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (11, 3117, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (12, 3117, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (0, 3130, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (1, 3130, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (2, 3130, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (3, 3130, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (4, 3130, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (5, 3130, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (6, 3130, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (7, 3130, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (8, 3130, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (9, 3130, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (10, 3130, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (11, 3130, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (12, 3130, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (0, 3131, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (1, 3131, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (2, 3131, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (3, 3131, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (4, 3131, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (5, 3131, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (6, 3131, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (7, 3131, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (8, 3131, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (9, 3131, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (10, 3131, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (11, 3131, false, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (12, 3131, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (0, 3132, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (1, 3132, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (2, 3132, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (3, 3132, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (4, 3132, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (5, 3132, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (6, 3132, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (7, 3132, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (8, 3132, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (9, 3132, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (10, 3132, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (11, 3132, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (12, 3132, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (0, 3133, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (1, 3133, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (2, 3133, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (3, 3133, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (4, 3133, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (5, 3133, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (6, 3133, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (7, 3133, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (8, 3133, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (9, 3133, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (10, 3133, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (11, 3133, true, false, 0);
+INSERT INTO public.box (type, column_id, available, filled, value) VALUES (12, 3133, true, false, 0);
+
+
+--
+-- TOC entry 3902 (class 0 OID 46478)
+-- Dependencies: 208
+-- Data for Name: column; Type: TABLE DATA; Schema: public; Owner: tvwexrydbwrtnx
+--
+
+INSERT INTO public."column" (id, type, form_id) VALUES (3130, 0, 808);
+INSERT INTO public."column" (id, type, form_id) VALUES (3131, 1, 808);
+INSERT INTO public."column" (id, type, form_id) VALUES (3132, 2, 808);
+INSERT INTO public."column" (id, type, form_id) VALUES (3133, 3, 808);
+INSERT INTO public."column" (id, type, form_id) VALUES (3146, 0, 812);
+INSERT INTO public."column" (id, type, form_id) VALUES (3147, 1, 812);
+INSERT INTO public."column" (id, type, form_id) VALUES (3148, 2, 812);
+INSERT INTO public."column" (id, type, form_id) VALUES (3149, 3, 812);
+INSERT INTO public."column" (id, type, form_id) VALUES (2990, 0, 773);
+INSERT INTO public."column" (id, type, form_id) VALUES (2991, 1, 773);
+INSERT INTO public."column" (id, type, form_id) VALUES (2992, 2, 773);
+INSERT INTO public."column" (id, type, form_id) VALUES (2993, 3, 773);
+INSERT INTO public."column" (id, type, form_id) VALUES (3158, 0, 815);
+INSERT INTO public."column" (id, type, form_id) VALUES (3159, 1, 815);
+INSERT INTO public."column" (id, type, form_id) VALUES (3160, 2, 815);
+INSERT INTO public."column" (id, type, form_id) VALUES (3161, 3, 815);
+INSERT INTO public."column" (id, type, form_id) VALUES (3162, 0, 816);
+INSERT INTO public."column" (id, type, form_id) VALUES (3163, 1, 816);
+INSERT INTO public."column" (id, type, form_id) VALUES (3164, 2, 816);
+INSERT INTO public."column" (id, type, form_id) VALUES (3165, 3, 816);
+INSERT INTO public."column" (id, type, form_id) VALUES (3114, 0, 804);
+INSERT INTO public."column" (id, type, form_id) VALUES (3115, 1, 804);
+INSERT INTO public."column" (id, type, form_id) VALUES (3116, 2, 804);
+INSERT INTO public."column" (id, type, form_id) VALUES (3117, 3, 804);
+
+
+--
+-- TOC entry 3904 (class 0 OID 46483)
+-- Dependencies: 210
+-- Data for Name: dice; Type: TABLE DATA; Schema: public; Owner: tvwexrydbwrtnx
+--
+
+INSERT INTO public.dice (form_id, ordinal_number, value) VALUES (773, 0, 6);
+INSERT INTO public.dice (form_id, ordinal_number, value) VALUES (815, 0, 3);
+INSERT INTO public.dice (form_id, ordinal_number, value) VALUES (815, 1, 3);
+INSERT INTO public.dice (form_id, ordinal_number, value) VALUES (815, 2, 2);
+INSERT INTO public.dice (form_id, ordinal_number, value) VALUES (815, 3, 4);
+INSERT INTO public.dice (form_id, ordinal_number, value) VALUES (804, 0, 6);
+INSERT INTO public.dice (form_id, ordinal_number, value) VALUES (816, 0, 5);
+INSERT INTO public.dice (form_id, ordinal_number, value) VALUES (816, 2, 3);
+INSERT INTO public.dice (form_id, ordinal_number, value) VALUES (773, 1, 5);
+INSERT INTO public.dice (form_id, ordinal_number, value) VALUES (773, 2, 5);
+INSERT INTO public.dice (form_id, ordinal_number, value) VALUES (808, 0, 6);
+INSERT INTO public.dice (form_id, ordinal_number, value) VALUES (804, 1, 6);
+INSERT INTO public.dice (form_id, ordinal_number, value) VALUES (804, 2, 6);
+INSERT INTO public.dice (form_id, ordinal_number, value) VALUES (804, 3, 6);
+INSERT INTO public.dice (form_id, ordinal_number, value) VALUES (804, 4, 6);
+INSERT INTO public.dice (form_id, ordinal_number, value) VALUES (808, 1, 6);
+INSERT INTO public.dice (form_id, ordinal_number, value) VALUES (808, 2, 6);
+INSERT INTO public.dice (form_id, ordinal_number, value) VALUES (808, 3, 6);
+INSERT INTO public.dice (form_id, ordinal_number, value) VALUES (808, 4, 6);
+INSERT INTO public.dice (form_id, ordinal_number, value) VALUES (773, 3, 2);
+INSERT INTO public.dice (form_id, ordinal_number, value) VALUES (773, 4, 1);
+INSERT INTO public.dice (form_id, ordinal_number, value) VALUES (816, 3, 2);
+INSERT INTO public.dice (form_id, ordinal_number, value) VALUES (816, 4, 1);
+INSERT INTO public.dice (form_id, ordinal_number, value) VALUES (812, 0, 6);
+INSERT INTO public.dice (form_id, ordinal_number, value) VALUES (812, 1, 6);
+INSERT INTO public.dice (form_id, ordinal_number, value) VALUES (812, 2, 6);
+INSERT INTO public.dice (form_id, ordinal_number, value) VALUES (812, 3, 6);
+INSERT INTO public.dice (form_id, ordinal_number, value) VALUES (812, 4, 6);
+INSERT INTO public.dice (form_id, ordinal_number, value) VALUES (816, 1, 5);
+INSERT INTO public.dice (form_id, ordinal_number, value) VALUES (815, 4, 1);
+
+
+--
+-- TOC entry 3905 (class 0 OID 46486)
+-- Dependencies: 211
+-- Data for Name: form; Type: TABLE DATA; Schema: public; Owner: tvwexrydbwrtnx
+--
+
+INSERT INTO public.form (id, announcement, roll_count, user_id) VALUES (808, NULL, 0, 1);
+INSERT INTO public.form (id, announcement, roll_count, user_id) VALUES (773, NULL, 1, 5);
+INSERT INTO public.form (id, announcement, roll_count, user_id) VALUES (815, NULL, 1, 7);
+INSERT INTO public.form (id, announcement, roll_count, user_id) VALUES (804, NULL, 0, 4);
+INSERT INTO public.form (id, announcement, roll_count, user_id) VALUES (812, NULL, 0, 9);
+INSERT INTO public.form (id, announcement, roll_count, user_id) VALUES (816, NULL, 1, 8);
+
+
+--
+-- TOC entry 3907 (class 0 OID 46491)
+-- Dependencies: 213
+-- Data for Name: score; Type: TABLE DATA; Schema: public; Owner: tvwexrydbwrtnx
+--
+
+INSERT INTO public.score (id, date, value, user_id) VALUES (2, '2020-08-11 00:00:00', 1179, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (5, '2020-08-12 00:00:00', 1081, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (6, '2020-08-12 00:00:00', 754, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (7, '2020-08-13 00:00:00', 862, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (8, '2020-08-13 00:00:00', 889, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (9, '2020-08-13 00:00:00', 828, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (10, '2020-08-13 00:00:00', 1033, 1);
+INSERT INTO public.score (id, date, value, user_id) VALUES (11, '2020-08-13 00:00:00', 892, 1);
+INSERT INTO public.score (id, date, value, user_id) VALUES (12, '2020-08-13 00:00:00', 987, 1);
+INSERT INTO public.score (id, date, value, user_id) VALUES (13, '2020-08-14 00:00:00', 1105, 1);
+INSERT INTO public.score (id, date, value, user_id) VALUES (14, '2020-08-14 00:00:00', 1033, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (15, '2020-08-14 00:00:00', 1080, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (16, '2020-08-14 00:00:00', 1030, 1);
+INSERT INTO public.score (id, date, value, user_id) VALUES (17, '2020-08-14 00:00:00', 1171, 5);
+INSERT INTO public.score (id, date, value, user_id) VALUES (18, '2020-08-15 00:00:00', 1069, 1);
+INSERT INTO public.score (id, date, value, user_id) VALUES (19, '2020-08-15 00:00:00', 1190, 1);
+INSERT INTO public.score (id, date, value, user_id) VALUES (20, '2020-08-15 00:00:00', 811, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (21, '2020-08-15 00:00:00', 1217, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (22, '2020-08-15 00:00:00', 1070, 1);
+INSERT INTO public.score (id, date, value, user_id) VALUES (23, '2020-08-16 00:00:00', 1171, 5);
+INSERT INTO public.score (id, date, value, user_id) VALUES (24, '2020-08-16 00:00:00', 1058, 1);
+INSERT INTO public.score (id, date, value, user_id) VALUES (25, '2020-08-16 00:00:00', 951, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (26, '2020-08-16 00:00:00', 976, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (27, '2020-08-16 00:00:00', 1084, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (28, '2020-08-16 00:00:00', 994, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (29, '2020-08-16 00:00:00', 1085, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (30, '2020-08-16 00:00:00', 1106, 1);
+INSERT INTO public.score (id, date, value, user_id) VALUES (31, '2020-08-17 00:00:00', 954, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (32, '2020-08-17 00:00:00', 928, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (33, '2020-08-17 00:00:00', 1027, 1);
+INSERT INTO public.score (id, date, value, user_id) VALUES (34, '2020-08-17 00:00:00', 946, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (35, '2020-08-17 00:00:00', 973, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (36, '2020-08-17 00:00:00', 1061, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (37, '2020-08-17 00:00:00', 1029, 1);
+INSERT INTO public.score (id, date, value, user_id) VALUES (38, '2020-08-17 00:00:00', 1049, 1);
+INSERT INTO public.score (id, date, value, user_id) VALUES (39, '2020-08-17 00:00:00', 1062, 1);
+INSERT INTO public.score (id, date, value, user_id) VALUES (40, '2020-08-17 00:00:00', 1117, 1);
+INSERT INTO public.score (id, date, value, user_id) VALUES (41, '2020-08-17 00:00:00', 1199, 1);
+INSERT INTO public.score (id, date, value, user_id) VALUES (42, '2020-08-17 00:00:00', 872, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (43, '2020-08-17 00:00:00', 1072, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (44, '2020-08-17 00:00:00', 859, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (45, '2020-08-17 00:00:00', 1153, 5);
+INSERT INTO public.score (id, date, value, user_id) VALUES (46, '2020-08-18 00:00:00', 1225, 5);
+INSERT INTO public.score (id, date, value, user_id) VALUES (47, '2020-08-18 00:00:00', 1023, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (48, '2020-08-18 00:00:00', 1041, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (49, '2020-08-18 00:00:00', 857, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (50, '2020-08-18 00:00:00', 1194, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (51, '2020-08-18 00:00:00', 1131, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (52, '2020-08-18 00:00:00', 947, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (53, '2020-08-18 00:00:00', 681, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (54, '2020-08-18 00:00:00', 996, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (55, '2020-08-18 00:00:00', 858, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (56, '2020-08-18 00:00:00', 1128, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (57, '2020-08-18 00:00:00', 1250, 1);
+INSERT INTO public.score (id, date, value, user_id) VALUES (58, '2020-08-18 00:00:00', 1088, 5);
+INSERT INTO public.score (id, date, value, user_id) VALUES (59, '2020-08-18 00:00:00', 967, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (60, '2020-08-19 00:00:00', 1125, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (61, '2020-08-19 00:00:00', 962, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (62, '2020-08-19 00:00:00', 1037, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (63, '2020-08-19 00:00:00', 854, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (64, '2020-08-19 00:00:00', 931, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (65, '2020-08-19 00:00:00', 867, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (66, '2020-08-19 00:00:00', 759, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (67, '2020-08-19 00:00:00', 1088, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (68, '2020-08-19 00:00:00', 1045, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (69, '2020-08-19 00:00:00', 1097, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (70, '2020-08-19 00:00:00', 915, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (71, '2020-08-19 00:00:00', 905, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (72, '2020-08-20 00:00:00', 785, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (73, '2020-08-20 00:00:00', 948, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (74, '2020-08-20 00:00:00', 1144, 5);
+INSERT INTO public.score (id, date, value, user_id) VALUES (75, '2020-08-20 00:00:00', 1089, 5);
+INSERT INTO public.score (id, date, value, user_id) VALUES (76, '2020-08-20 00:00:00', 1270, 5);
+INSERT INTO public.score (id, date, value, user_id) VALUES (77, '2020-08-20 00:00:00', 1108, 1);
+INSERT INTO public.score (id, date, value, user_id) VALUES (78, '2020-08-20 00:00:00', 862, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (79, '2020-08-20 00:00:00', 873, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (80, '2020-08-20 00:00:00', 1139, 1);
+INSERT INTO public.score (id, date, value, user_id) VALUES (81, '2020-08-20 00:00:00', 1102, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (85, '2020-08-21 00:00:00', 1121, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (86, '2020-08-21 00:00:00', 731, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (87, '2020-08-21 00:00:00', 1059, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (88, '2020-08-21 00:00:00', 808, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (89, '2020-08-21 00:00:00', 994, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (90, '2020-08-21 00:00:00', 843, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (91, '2020-08-21 00:00:00', 977, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (92, '2020-08-22 00:00:00', 1210, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (93, '2020-08-22 00:00:00', 928, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (94, '2020-08-22 00:00:00', 1201, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (95, '2020-08-22 00:00:00', 978, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (96, '2020-08-22 00:00:00', 1034, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (97, '2020-08-22 00:00:00', 1075, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (98, '2020-08-23 00:00:00', 1072, 1);
+INSERT INTO public.score (id, date, value, user_id) VALUES (99, '2020-08-23 00:00:00', 770, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (100, '2020-08-23 00:00:00', 1236, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (101, '2020-08-23 00:00:00', 897, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (102, '2020-08-23 00:00:00', 1067, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (103, '2020-08-23 00:00:00', 960, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (104, '2020-08-23 00:00:00', 864, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (105, '2020-08-23 00:00:00', 1085, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (106, '2020-08-23 00:00:00', 783, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (107, '2020-08-23 00:00:00', 1001, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (108, '2020-08-23 00:00:00', 1094, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (109, '2020-08-23 00:00:00', 1040, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (110, '2020-08-23 00:00:00', 936, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (111, '2020-08-23 00:00:00', 860, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (112, '2020-08-23 00:00:00', 983, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (113, '2020-08-23 00:00:00', 991, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (114, '2020-08-23 00:00:00', 1032, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (115, '2020-08-24 00:00:00', 961, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (116, '2020-08-24 00:00:00', 971, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (117, '2020-08-24 00:00:00', 1054, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (118, '2020-08-24 00:00:00', 995, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (119, '2020-08-24 00:00:00', 929, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (120, '2020-08-24 00:00:00', 897, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (121, '2020-08-24 00:00:00', 796, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (122, '2020-08-24 00:00:00', 958, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (123, '2020-08-24 00:00:00', 1093, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (124, '2020-08-24 00:00:00', 912, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (125, '2020-08-24 00:00:00', 574, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (126, '2020-08-24 00:00:00', 975, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (127, '2020-08-24 00:00:00', 913, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (128, '2020-08-24 00:00:00', 888, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (129, '2020-08-24 00:00:00', 991, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (130, '2020-08-25 00:00:00', 810, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (131, '2020-08-25 00:00:00', 716, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (132, '2020-08-25 00:00:00', 1085, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (133, '2020-08-25 00:00:00', 1016, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (134, '2020-08-25 00:00:00', 931, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (135, '2020-08-26 00:00:00', 1107, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (136, '2020-08-26 00:00:00', 1175, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (137, '2020-08-26 00:00:00', 995, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (138, '2020-08-26 00:00:00', 955, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (139, '2020-08-26 00:00:00', 881, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (140, '2020-08-26 00:00:00', 936, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (141, '2020-08-26 00:00:00', 920, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (142, '2020-08-26 00:00:00', 894, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (143, '2020-08-26 00:00:00', 700, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (144, '2020-08-26 00:00:00', 937, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (145, '2020-08-26 00:00:00', 845, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (146, '2020-08-27 00:00:00', 1135, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (147, '2020-08-27 00:00:00', 1004, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (148, '2020-08-27 00:00:00', 1122, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (149, '2020-08-27 00:00:00', 1022, 1);
+INSERT INTO public.score (id, date, value, user_id) VALUES (150, '2020-08-27 00:00:00', 946, 1);
+INSERT INTO public.score (id, date, value, user_id) VALUES (151, '2020-08-27 00:00:00', 893, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (152, '2020-08-27 00:00:00', 862, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (153, '2020-08-27 00:00:00', 1221, 5);
+INSERT INTO public.score (id, date, value, user_id) VALUES (154, '2020-08-27 00:00:00', 855, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (155, '2020-08-27 00:00:00', 825, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (156, '2020-08-27 00:00:00', 1207, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (157, '2020-08-28 00:00:00', 1116, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (158, '2020-08-28 00:00:00', 853, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (159, '2020-08-28 00:00:00', 1013, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (160, '2020-08-28 00:00:00', 959, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (161, '2020-08-28 00:00:00', 900, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (162, '2020-08-28 00:00:00', 947, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (163, '2020-08-28 00:00:00', 1092, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (164, '2020-08-28 00:00:00', 1013, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (165, '2020-08-28 00:00:00', 1077, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (166, '2020-08-28 00:00:00', 859, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (167, '2020-08-28 00:00:00', 914, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (168, '2020-08-28 00:00:00', 898, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (169, '2020-08-28 00:00:00', 906, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (170, '2020-08-28 00:00:00', 952, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (171, '2020-08-28 00:00:00', 1002, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (172, '2020-08-28 00:00:00', 1012, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (173, '2020-08-28 00:00:00', 956, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (174, '2020-08-28 00:00:00', 1012, 1);
+INSERT INTO public.score (id, date, value, user_id) VALUES (175, '2020-08-29 00:00:00', 1045, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (177, '2020-08-29 15:17:09.367372', 925, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (178, '2020-08-29 15:27:28.631252', 880, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (179, '2020-08-29 16:08:10.638475', 857, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (180, '2020-08-29 16:19:17.386313', 1122, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (181, '2020-08-29 16:34:45.801874', 882, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (182, '2020-08-29 22:24:13.796756', 1220, 5);
+INSERT INTO public.score (id, date, value, user_id) VALUES (183, '2020-08-30 06:15:07.125219', 940, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (184, '2020-08-30 10:06:52.930121', 845, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (185, '2020-08-30 11:34:51.146069', 1005, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (186, '2020-08-30 11:44:45.096871', 886, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (187, '2020-08-30 13:05:42.411105', 1002, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (188, '2020-08-30 13:18:24.254513', 1165, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (189, '2020-08-30 13:57:31.619794', 971, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (190, '2020-08-30 15:06:44.240328', 935, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (191, '2020-08-30 15:39:12.303027', 1080, 1);
+INSERT INTO public.score (id, date, value, user_id) VALUES (192, '2020-08-30 15:59:56.487873', 977, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (193, '2020-08-30 16:09:27.928875', 927, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (194, '2020-08-30 16:20:06.646746', 813, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (195, '2020-08-30 18:34:03.128151', 1003, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (196, '2020-08-31 08:11:56.75173', 1083, 5);
+INSERT INTO public.score (id, date, value, user_id) VALUES (197, '2020-08-31 08:59:54.972249', 1032, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (198, '2020-08-31 09:03:09.186449', 931, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (199, '2020-08-31 09:48:37.656402', 1040, 1);
+INSERT INTO public.score (id, date, value, user_id) VALUES (200, '2020-08-31 09:59:09.268731', 847, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (201, '2020-08-31 10:09:11.689884', 967, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (202, '2020-08-31 10:18:30.199312', 831, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (203, '2020-08-31 10:47:42.764747', 1008, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (204, '2020-08-31 10:56:45.277288', 1070, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (205, '2020-08-31 11:07:20.007899', 1087, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (206, '2020-08-31 11:17:09.390353', 988, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (207, '2020-08-31 11:40:34.277894', 886, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (208, '2020-08-31 11:55:48.063747', 1121, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (209, '2020-08-31 12:45:12.299906', 961, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (210, '2020-08-31 12:58:12.881588', 1014, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (211, '2020-08-31 13:25:54.472761', 863, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (244, '2020-08-31 16:03:41.104852', 827, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (245, '2020-08-31 16:23:54.705793', 924, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (246, '2020-08-31 19:54:45.88562', 1257, 5);
+INSERT INTO public.score (id, date, value, user_id) VALUES (247, '2020-08-31 20:42:53.523761', 950, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (248, '2020-09-01 08:10:21.710871', 970, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (249, '2020-09-01 10:03:12.650018', 746, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (250, '2020-09-01 13:30:27.059531', 688, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (251, '2020-09-01 13:39:49.291712', 943, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (252, '2020-09-01 13:49:26.341418', 729, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (253, '2020-09-01 15:31:47.609123', 838, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (254, '2020-09-01 16:13:15.472316', 904, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (255, '2020-09-01 16:20:42.596566', 1050, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (256, '2020-09-01 16:30:24.156919', 922, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (257, '2020-09-01 16:33:45.69869', 1060, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (258, '2020-09-01 16:46:10.880963', 882, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (259, '2020-09-02 15:09:03.485338', 854, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (260, '2020-09-03 08:36:55.442372', 1152, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (261, '2020-09-03 08:46:33.829813', 1171, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (262, '2020-09-03 09:44:17.151668', 953, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (263, '2020-09-03 09:49:34.648879', 895, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (264, '2020-09-03 09:53:29.011719', 1022, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (265, '2020-09-03 10:02:09.957582', 823, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (266, '2020-09-03 10:03:11.019683', 1101, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (267, '2020-09-03 10:14:38.146172', 968, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (268, '2020-09-03 10:17:46.732745', 980, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (269, '2020-09-03 10:27:16.845979', 1006, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (270, '2020-09-03 10:39:08.746111', 859, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (271, '2020-09-03 10:52:02.821158', 1048, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (272, '2020-09-03 11:00:54.818098', 914, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (273, '2020-09-03 11:38:35.778159', 843, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (274, '2020-09-03 12:03:53.585595', 690, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (275, '2020-09-03 14:09:09.644341', 1032, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (276, '2020-09-03 14:18:18.334288', 929, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (277, '2020-09-03 14:56:23.271149', 946, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (278, '2020-09-03 17:40:50.352617', 806, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (279, '2020-09-03 18:22:14.28521', 924, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (280, '2020-09-04 06:45:08.527948', 997, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (281, '2020-09-04 06:54:53.873352', 897, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (282, '2020-09-04 11:33:03.24895', 753, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (283, '2020-09-04 12:34:39.808104', 1216, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (284, '2020-09-04 16:20:16.253275', 1038, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (285, '2020-09-04 18:11:00.428875', 1100, 1);
+INSERT INTO public.score (id, date, value, user_id) VALUES (286, '2020-09-04 20:04:12.653904', 1065, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (287, '2020-09-05 09:13:07.991129', 848, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (288, '2020-09-05 10:22:00.823624', 1002, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (289, '2020-09-05 10:37:27.013104', 783, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (290, '2020-09-05 12:05:39.05631', 938, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (291, '2020-09-05 13:43:58.768045', 917, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (292, '2020-09-05 14:46:52.203485', 1016, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (293, '2020-09-06 10:20:23.539332', 1074, 7);
+INSERT INTO public.score (id, date, value, user_id) VALUES (294, '2020-09-06 10:35:48.401026', 934, 7);
+INSERT INTO public.score (id, date, value, user_id) VALUES (295, '2020-09-06 10:52:34.945407', 935, 7);
+INSERT INTO public.score (id, date, value, user_id) VALUES (296, '2020-09-06 16:04:01.522806', 1176, 1);
+INSERT INTO public.score (id, date, value, user_id) VALUES (297, '2020-09-06 17:13:07.077685', 1192, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (298, '2020-09-06 19:25:38.508011', 1042, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (299, '2020-09-06 19:36:24.176225', 1074, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (300, '2020-09-07 09:31:09.783417', 915, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (301, '2020-09-07 09:40:44.877719', 863, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (302, '2020-09-07 09:41:48.43949', 1003, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (303, '2020-09-07 09:50:30.873242', 877, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (304, '2020-09-07 09:51:04.74675', 1081, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (305, '2020-09-07 09:54:19.622509', 949, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (306, '2020-09-07 09:59:46.660517', 862, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (307, '2020-09-07 10:25:07.641135', 971, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (308, '2020-09-07 10:34:22.993259', 938, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (309, '2020-09-07 12:17:20.936004', 975, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (310, '2020-09-07 12:19:58.90414', 1231, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (311, '2020-09-07 12:26:23.140128', 1000, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (312, '2020-09-07 12:34:55.810235', 871, 7);
+INSERT INTO public.score (id, date, value, user_id) VALUES (313, '2020-09-07 12:35:58.393065', 856, 8);
+
+
+--
+-- TOC entry 3921 (class 0 OID 0)
+-- Dependencies: 203
+-- Name: auth_role_id_seq; Type: SEQUENCE SET; Schema: public; Owner: tvwexrydbwrtnx
+--
+
+SELECT pg_catalog.setval('public.auth_role_id_seq', 1, false);
+
+
+--
+-- TOC entry 3922 (class 0 OID 0)
+-- Dependencies: 205
+-- Name: auth_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: tvwexrydbwrtnx
+--
+
+SELECT pg_catalog.setval('public.auth_user_id_seq', 12, true);
+
+
+--
+-- TOC entry 3923 (class 0 OID 0)
+-- Dependencies: 209
+-- Name: column_id_seq; Type: SEQUENCE SET; Schema: public; Owner: tvwexrydbwrtnx
+--
+
+SELECT pg_catalog.setval('public.column_id_seq', 3165, true);
+
+
+--
+-- TOC entry 3924 (class 0 OID 0)
+-- Dependencies: 212
+-- Name: form_id_seq; Type: SEQUENCE SET; Schema: public; Owner: tvwexrydbwrtnx
+--
+
+SELECT pg_catalog.setval('public.form_id_seq', 816, true);
+
+
+--
+-- TOC entry 3925 (class 0 OID 0)
+-- Dependencies: 214
+-- Name: score_id_seq; Type: SEQUENCE SET; Schema: public; Owner: tvwexrydbwrtnx
+--
+
+SELECT pg_catalog.setval('public.score_id_seq', 313, true);
+
+
+--
+-- TOC entry 3746 (class 2606 OID 46503)
+-- Name: auth_role auth_role_pkey; Type: CONSTRAINT; Schema: public; Owner: tvwexrydbwrtnx
+--
+
+ALTER TABLE ONLY public.auth_role
+    ADD CONSTRAINT auth_role_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3748 (class 2606 OID 46505)
+-- Name: auth_user auth_user_pkey; Type: CONSTRAINT; Schema: public; Owner: tvwexrydbwrtnx
+--
+
+ALTER TABLE ONLY public.auth_user
+    ADD CONSTRAINT auth_user_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3752 (class 2606 OID 46507)
+-- Name: auth_user_role auth_user_role_pkey; Type: CONSTRAINT; Schema: public; Owner: tvwexrydbwrtnx
+--
+
+ALTER TABLE ONLY public.auth_user_role
+    ADD CONSTRAINT auth_user_role_pkey PRIMARY KEY (user_id, role_id);
+
+
+--
+-- TOC entry 3754 (class 2606 OID 46509)
+-- Name: box box_pkey; Type: CONSTRAINT; Schema: public; Owner: tvwexrydbwrtnx
+--
+
+ALTER TABLE ONLY public.box
+    ADD CONSTRAINT box_pkey PRIMARY KEY (type, column_id);
+
+
+--
+-- TOC entry 3756 (class 2606 OID 46511)
+-- Name: column column_pkey; Type: CONSTRAINT; Schema: public; Owner: tvwexrydbwrtnx
+--
+
+ALTER TABLE ONLY public."column"
+    ADD CONSTRAINT column_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3758 (class 2606 OID 46514)
+-- Name: dice dice_pkey; Type: CONSTRAINT; Schema: public; Owner: tvwexrydbwrtnx
+--
+
+ALTER TABLE ONLY public.dice
+    ADD CONSTRAINT dice_pkey PRIMARY KEY (form_id, ordinal_number);
+
+
+--
+-- TOC entry 3760 (class 2606 OID 46516)
+-- Name: form form_pkey; Type: CONSTRAINT; Schema: public; Owner: tvwexrydbwrtnx
+--
+
+ALTER TABLE ONLY public.form
+    ADD CONSTRAINT form_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3762 (class 2606 OID 46518)
+-- Name: score score_pkey; Type: CONSTRAINT; Schema: public; Owner: tvwexrydbwrtnx
+--
+
+ALTER TABLE ONLY public.score
+    ADD CONSTRAINT score_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3750 (class 2606 OID 46520)
+-- Name: auth_user uk_t1iph3dfc25ukwcl9xemtnojn; Type: CONSTRAINT; Schema: public; Owner: tvwexrydbwrtnx
+--
+
+ALTER TABLE ONLY public.auth_user
+    ADD CONSTRAINT uk_t1iph3dfc25ukwcl9xemtnojn UNIQUE (username);
+
+
+--
+-- TOC entry 3763 (class 2606 OID 46521)
+-- Name: auth_user_role fk3eldmba9luu9l0apl0791x8vd; Type: FK CONSTRAINT; Schema: public; Owner: tvwexrydbwrtnx
+--
+
+ALTER TABLE ONLY public.auth_user_role
+    ADD CONSTRAINT fk3eldmba9luu9l0apl0791x8vd FOREIGN KEY (role_id) REFERENCES public.auth_role(id);
+
+
+--
+-- TOC entry 3768 (class 2606 OID 46526)
+-- Name: form fk3s9oibuul2i2n2cj5j4a7a0wv; Type: FK CONSTRAINT; Schema: public; Owner: tvwexrydbwrtnx
+--
+
+ALTER TABLE ONLY public.form
+    ADD CONSTRAINT fk3s9oibuul2i2n2cj5j4a7a0wv FOREIGN KEY (user_id) REFERENCES public.auth_user(id);
+
+
+--
+-- TOC entry 3766 (class 2606 OID 46531)
+-- Name: column fk4tm0coo1ytodhkl7g71xg4c01; Type: FK CONSTRAINT; Schema: public; Owner: tvwexrydbwrtnx
+--
+
+ALTER TABLE ONLY public."column"
+    ADD CONSTRAINT fk4tm0coo1ytodhkl7g71xg4c01 FOREIGN KEY (form_id) REFERENCES public.form(id);
+
+
+--
+-- TOC entry 3764 (class 2606 OID 46536)
+-- Name: auth_user_role fkebutsbqm58ehnlffb299ng0ap; Type: FK CONSTRAINT; Schema: public; Owner: tvwexrydbwrtnx
+--
+
+ALTER TABLE ONLY public.auth_user_role
+    ADD CONSTRAINT fkebutsbqm58ehnlffb299ng0ap FOREIGN KEY (user_id) REFERENCES public.auth_user(id);
+
+
+--
+-- TOC entry 3767 (class 2606 OID 46541)
+-- Name: dice fkkil3cliiocp5msjhyfriid052; Type: FK CONSTRAINT; Schema: public; Owner: tvwexrydbwrtnx
+--
+
+ALTER TABLE ONLY public.dice
+    ADD CONSTRAINT fkkil3cliiocp5msjhyfriid052 FOREIGN KEY (form_id) REFERENCES public.form(id);
+
+
+--
+-- TOC entry 3765 (class 2606 OID 46546)
+-- Name: box fkkw3p6cbmvrnjg7nlc3twaaxkp; Type: FK CONSTRAINT; Schema: public; Owner: tvwexrydbwrtnx
+--
+
+ALTER TABLE ONLY public.box
+    ADD CONSTRAINT fkkw3p6cbmvrnjg7nlc3twaaxkp FOREIGN KEY (column_id) REFERENCES public."column"(id);
+
+
+--
+-- TOC entry 3769 (class 2606 OID 46551)
+-- Name: score fklc33gyad0wxre2rbl4vbr3uem; Type: FK CONSTRAINT; Schema: public; Owner: tvwexrydbwrtnx
+--
+
+ALTER TABLE ONLY public.score
+    ADD CONSTRAINT fklc33gyad0wxre2rbl4vbr3uem FOREIGN KEY (user_id) REFERENCES public.auth_user(id);
+
+
+--
+-- TOC entry 3914 (class 0 OID 0)
+-- Dependencies: 3
+-- Name: SCHEMA public; Type: ACL; Schema: -; Owner: tvwexrydbwrtnx
+--
+
+REVOKE ALL ON SCHEMA public FROM postgres;
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+GRANT ALL ON SCHEMA public TO tvwexrydbwrtnx;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- TOC entry 3915 (class 0 OID 0)
+-- Dependencies: 663
+-- Name: LANGUAGE plpgsql; Type: ACL; Schema: -; Owner: postgres
+--
+
+GRANT ALL ON LANGUAGE plpgsql TO tvwexrydbwrtnx;
+
+
+-- Completed on 2020-09-07 14:43:02
+
+--
+-- PostgreSQL database dump complete
+--
+
