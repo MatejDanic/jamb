@@ -1,11 +1,12 @@
-DELETE FROM score;
 DELETE FROM box;
 DELETE FROM "column";
 DELETE FROM dice;
-DELETE FROM form;
 DELETE FROM auth_user_role;
 DELETE FROM auth_role;
+DELETE FROM score;
+DELETE FROM form;
 DELETE FROM auth_user;
+
 
 --
 -- PostgreSQL database dump
@@ -14,7 +15,7 @@ DELETE FROM auth_user;
 -- Dumped from database version 12.4 (Ubuntu 12.4-1.pgdg16.04+1)
 -- Dumped by pg_dump version 12.3
 
--- Started on 2020-09-10 15:45:04
+-- Started on 2020-09-21 12:30:21
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -28,7 +29,7 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- TOC entry 3896 (class 0 OID 46459)
+-- TOC entry 3888 (class 0 OID 46459)
 -- Dependencies: 202
 -- Data for Name: auth_role; Type: TABLE DATA; Schema: public; Owner: tvwexrydbwrtnx
 --
@@ -38,7 +39,7 @@ INSERT INTO public.auth_role (id, description, label) VALUES (2, NULL, 'ADMIN');
 
 
 --
--- TOC entry 3898 (class 0 OID 46467)
+-- TOC entry 3890 (class 0 OID 46467)
 -- Dependencies: 204
 -- Data for Name: auth_user; Type: TABLE DATA; Schema: public; Owner: tvwexrydbwrtnx
 --
@@ -52,7 +53,7 @@ INSERT INTO public.auth_user (id, password, username) VALUES (9, '$2a$10$eBZuGRS
 
 
 --
--- TOC entry 3900 (class 0 OID 46472)
+-- TOC entry 3892 (class 0 OID 46472)
 -- Dependencies: 206
 -- Data for Name: auth_user_role; Type: TABLE DATA; Schema: public; Owner: tvwexrydbwrtnx
 --
@@ -66,8 +67,9 @@ INSERT INTO public.auth_user_role (user_id, role_id) VALUES (8, 1);
 INSERT INTO public.auth_user_role (user_id, role_id) VALUES (9, 1);
 
 
--- TOC entry 3907 (class 0 OID 46491)
--- Dependencies: 213
+--
+-- TOC entry 3898 (class 0 OID 46491)
+-- Dependencies: 212
 -- Data for Name: score; Type: TABLE DATA; Schema: public; Owner: tvwexrydbwrtnx
 --
 
@@ -405,3 +407,127 @@ INSERT INTO public.score (id, date, value, user_id) VALUES (370, '2020-09-10 07:
 INSERT INTO public.score (id, date, value, user_id) VALUES (371, '2020-09-10 09:43:26.676395', 981, 8);
 INSERT INTO public.score (id, date, value, user_id) VALUES (372, '2020-09-10 11:22:01.546785', 981, 9);
 INSERT INTO public.score (id, date, value, user_id) VALUES (373, '2020-09-10 13:24:16.161635', 874, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (375, '2020-09-11 12:47:19.737839', 1007, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (376, '2020-09-11 19:42:54.636376', 1001, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (377, '2020-09-12 11:31:11.395023', 1126, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (378, '2020-09-12 11:42:36.455536', 1187, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (379, '2020-09-12 11:54:28.672319', 1112, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (380, '2020-09-12 12:23:48.028886', 1045, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (381, '2020-09-12 12:38:55.926194', 945, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (382, '2020-09-12 17:22:54.152108', 987, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (383, '2020-09-12 17:34:11.656394', 1083, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (384, '2020-09-12 17:46:36.565423', 1057, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (385, '2020-09-12 17:57:54.432838', 782, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (386, '2020-09-13 07:33:52.781932', 1040, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (387, '2020-09-13 11:22:31.482782', 1058, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (388, '2020-09-13 11:41:45.282832', 1141, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (389, '2020-09-13 12:15:25.638654', 890, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (390, '2020-09-13 14:33:21.805868', 776, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (391, '2020-09-13 15:23:41.56128', 1053, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (392, '2020-09-13 15:35:48.625874', 995, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (393, '2020-09-13 15:47:31.613425', 924, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (394, '2020-09-13 16:19:41.018148', 924, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (395, '2020-09-13 16:45:29.677457', 1043, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (396, '2020-09-13 16:55:16.778115', 893, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (397, '2020-09-13 17:06:34.223082', 834, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (398, '2020-09-13 17:19:41.621305', 1017, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (399, '2020-09-14 07:34:12.78064', 918, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (400, '2020-09-14 09:53:29.07225', 865, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (401, '2020-09-14 10:03:41.139385', 788, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (402, '2020-09-14 10:21:32.207631', 908, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (403, '2020-09-14 12:47:30.176093', 991, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (404, '2020-09-14 14:48:58.5823', 1001, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (405, '2020-09-14 15:14:26.882431', 884, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (406, '2020-09-14 15:33:45.946206', 1122, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (407, '2020-09-14 15:53:40.327763', 1083, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (408, '2020-09-14 17:38:25.533349', 1103, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (409, '2020-09-15 09:32:26.580719', 874, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (410, '2020-09-15 09:41:45.895812', 906, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (411, '2020-09-15 09:55:42.684782', 909, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (412, '2020-09-15 15:17:16.843515', 1132, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (413, '2020-09-15 18:48:35.375085', 1018, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (414, '2020-09-15 19:02:23.77563', 946, 7);
+INSERT INTO public.score (id, date, value, user_id) VALUES (415, '2020-09-15 19:04:16.151099', 930, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (416, '2020-09-15 19:16:12.042801', 966, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (417, '2020-09-16 10:49:51.970191', 898, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (418, '2020-09-16 10:59:07.801057', 1142, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (419, '2020-09-16 11:13:24.559146', 966, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (420, '2020-09-16 11:38:23.267489', 926, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (421, '2020-09-16 11:52:22.599814', 941, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (422, '2020-09-16 16:23:16.809903', 1051, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (423, '2020-09-16 16:33:21.495014', 911, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (424, '2020-09-16 18:37:13.990793', 1007, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (425, '2020-09-17 06:11:18.71056', 909, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (426, '2020-09-17 09:24:33.957329', 834, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (427, '2020-09-17 10:14:30.10844', 843, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (428, '2020-09-17 10:29:42.97166', 1009, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (429, '2020-09-17 10:57:53.613773', 1008, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (430, '2020-09-17 18:31:31.570491', 1089, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (431, '2020-09-18 05:42:47.204993', 1036, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (432, '2020-09-18 10:56:34.040239', 919, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (433, '2020-09-18 11:36:18.083818', 1109, 7);
+INSERT INTO public.score (id, date, value, user_id) VALUES (434, '2020-09-18 12:44:15.194235', 1000, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (435, '2020-09-18 12:56:54.622572', 893, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (436, '2020-09-18 13:08:42.374001', 1231, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (437, '2020-09-19 08:28:22.80849', 815, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (438, '2020-09-19 09:15:12.357529', 1193, 5);
+INSERT INTO public.score (id, date, value, user_id) VALUES (439, '2020-09-20 07:51:12.072162', 1103, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (440, '2020-09-20 09:22:45.320507', 1051, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (441, '2020-09-20 09:44:26.675069', 909, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (442, '2020-09-20 09:55:51.220535', 1038, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (443, '2020-09-20 11:42:22.279071', 856, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (444, '2020-09-20 13:11:01.398741', 918, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (445, '2020-09-20 13:21:41.234798', 960, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (446, '2020-09-20 13:43:53.559602', 804, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (447, '2020-09-20 14:47:13.571055', 984, 4);
+INSERT INTO public.score (id, date, value, user_id) VALUES (448, '2020-09-20 15:11:46.298071', 983, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (449, '2020-09-20 15:31:08.6776', 969, 8);
+INSERT INTO public.score (id, date, value, user_id) VALUES (450, '2020-09-20 16:11:12.055149', 1037, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (451, '2020-09-20 18:15:30.842493', 1102, 5);
+INSERT INTO public.score (id, date, value, user_id) VALUES (452, '2020-09-20 19:44:22.609453', 1024, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (453, '2020-09-21 04:48:32.411936', 936, 9);
+INSERT INTO public.score (id, date, value, user_id) VALUES (454, '2020-09-21 05:37:44.528418', 1046, 8);
+
+
+--
+-- TOC entry 3911 (class 0 OID 0)
+-- Dependencies: 203
+-- Name: auth_role_id_seq; Type: SEQUENCE SET; Schema: public; Owner: tvwexrydbwrtnx
+--
+
+SELECT pg_catalog.setval('public.auth_role_id_seq', 1, false);
+
+
+--
+-- TOC entry 3912 (class 0 OID 0)
+-- Dependencies: 205
+-- Name: auth_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: tvwexrydbwrtnx
+--
+
+SELECT pg_catalog.setval('public.auth_user_id_seq', 12, true);
+
+
+--
+-- TOC entry 3913 (class 0 OID 0)
+-- Dependencies: 211
+-- Name: form_id_seq; Type: SEQUENCE SET; Schema: public; Owner: tvwexrydbwrtnx
+--
+
+SELECT pg_catalog.setval('public.form_id_seq', 1338, true);
+
+
+--
+-- TOC entry 3914 (class 0 OID 0)
+-- Dependencies: 213
+-- Name: score_id_seq; Type: SEQUENCE SET; Schema: public; Owner: tvwexrydbwrtnx
+--
+
+SELECT pg_catalog.setval('public.score_id_seq', 454, true);
+
+
+-- Completed on 2020-09-21 12:30:29
+
+--
+-- PostgreSQL database dump complete
+--
+
