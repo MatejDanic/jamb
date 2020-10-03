@@ -1,23 +1,4 @@
---
--- PostgreSQL database dump
---
-
-DELETE FROM auth_user_role;
-DELETE FROM auth_role;
-DELETE FROM auth_user;
-DELETE FROM game_score;
-
---
--- Data for Name: auth_role; Type: TABLE DATA; Schema: public; Owner: tvwexrydbwrtnx
---
-
-INSERT INTO public.auth_role (id, description, label) VALUES (1, NULL, 'USER');
-INSERT INTO public.auth_role (id, description, label) VALUES (2, NULL, 'ADMIN');
-
-
---
--- Data for Name: auth_user; Type: TABLE DATA; Schema: public; Owner: tvwexrydbwrtnx
---
+-- USERS
 
 INSERT INTO public.auth_user (id, password, username) VALUES (1, '$2a$10$4mtJPUySOPSWIgqOi9YbQ.bDX46wC3Moefxvk8pAvGtrZ0418.EXS', 'matej');
 INSERT INTO public.auth_user (id, password, username) VALUES (4, '$2a$10$7wY9nvMQFw0RvYTn8fReeei8uQ83lbInzrXER8/asVDeNxjvxJWje', 'Bumer');
@@ -27,9 +8,7 @@ INSERT INTO public.auth_user (id, password, username) VALUES (8, '$2a$10$sgVBigH
 INSERT INTO public.auth_user (id, password, username) VALUES (9, '$2a$10$eBZuGRS6xY9vFSvODvWO5.nSZSUMrV6KctEa0DfPXZfLWq0G6XHdC', 'brana');
 
 
---
--- Data for Name: auth_user_role; Type: TABLE DATA; Schema: public; Owner: tvwexrydbwrtnx
---
+-- USER ROLES
 
 INSERT INTO public.auth_user_role (user_id, role_id) VALUES (1, 1);
 INSERT INTO public.auth_user_role (user_id, role_id) VALUES (1, 2);
@@ -39,10 +18,7 @@ INSERT INTO public.auth_user_role (user_id, role_id) VALUES (7, 1);
 INSERT INTO public.auth_user_role (user_id, role_id) VALUES (8, 1);
 INSERT INTO public.auth_user_role (user_id, role_id) VALUES (9, 1);
 
-
---
--- Data for Name: score; Type: TABLE DATA; Schema: public; Owner: tvwexrydbwrtnx
---
+-- game_scoreS
 
 INSERT INTO public.game_score (id, date, value, user_id) VALUES (467, '2020-09-22 14:52:56.424607', 994, 4);
 INSERT INTO public.game_score (id, date, value, user_id) VALUES (471, '2020-09-22 17:03:56.656687', 1233, 5);
@@ -72,6 +48,8 @@ INSERT INTO public.game_score (id, date, value, user_id) VALUES (558, '2020-10-0
 INSERT INTO public.game_score (id, date, value, user_id) VALUES (562, '2020-10-01 11:44:36.77391', 1197, 7);
 INSERT INTO public.game_score (id, date, value, user_id) VALUES (598, '2020-10-02 05:25:31.956687', 1043, 9);
 INSERT INTO public.game_score (id, date, value, user_id) VALUES (599, '2020-10-02 10:04:56.628144', 788, 8);
+INSERT INTO public.game_score (id, date, value, user_id) VALUES (602, '2020-10-02 14:58:10.445331', 1002, 4);
+INSERT INTO public.game_score (id, date, value, user_id) VALUES (608, '2020-10-03 11:33:24.873299', 971, 8);
 INSERT INTO public.game_score (id, date, value, user_id) VALUES (468, '2020-09-22 15:05:58.923402', 1115, 8);
 INSERT INTO public.game_score (id, date, value, user_id) VALUES (472, '2020-09-23 05:31:59.039248', 1049, 9);
 INSERT INTO public.game_score (id, date, value, user_id) VALUES (477, '2020-09-23 13:11:31.465933', 1168, 8);
@@ -95,6 +73,8 @@ INSERT INTO public.game_score (id, date, value, user_id) VALUES (552, '2020-09-2
 INSERT INTO public.game_score (id, date, value, user_id) VALUES (559, '2020-10-01 08:29:58.525782', 1066, 7);
 INSERT INTO public.game_score (id, date, value, user_id) VALUES (563, '2020-10-01 13:22:43.907984', 785, 8);
 INSERT INTO public.game_score (id, date, value, user_id) VALUES (600, '2020-10-02 10:14:23.689022', 778, 8);
+INSERT INTO public.game_score (id, date, value, user_id) VALUES (603, '2020-10-02 15:10:40.272164', 1025, 4);
+INSERT INTO public.game_score (id, date, value, user_id) VALUES (609, '2020-10-03 12:05:02.195647', 1007, 8);
 INSERT INTO public.game_score (id, date, value, user_id) VALUES (469, '2020-09-22 15:17:13.958899', 793, 8);
 INSERT INTO public.game_score (id, date, value, user_id) VALUES (473, '2020-09-23 09:07:38.060042', 951, 4);
 INSERT INTO public.game_score (id, date, value, user_id) VALUES (480, '2020-09-23 14:52:23.60374', 1021, 7);
@@ -121,6 +101,7 @@ INSERT INTO public.game_score (id, date, value, user_id) VALUES (553, '2020-09-2
 INSERT INTO public.game_score (id, date, value, user_id) VALUES (560, '2020-10-01 08:39:43.343273', 1116, 7);
 INSERT INTO public.game_score (id, date, value, user_id) VALUES (564, '2020-10-01 13:31:44.251333', 917, 8);
 INSERT INTO public.game_score (id, date, value, user_id) VALUES (601, '2020-10-02 11:25:41.906727', 1140, 7);
+INSERT INTO public.game_score (id, date, value, user_id) VALUES (604, '2020-10-02 15:22:17.277942', 990, 4);
 INSERT INTO public.game_score (id, date, value, user_id) VALUES (2, '2020-08-11 00:00:00', 1179, 4);
 INSERT INTO public.game_score (id, date, value, user_id) VALUES (5, '2020-08-12 00:00:00', 1081, 8);
 INSERT INTO public.game_score (id, date, value, user_id) VALUES (6, '2020-08-12 00:00:00', 754, 8);
@@ -573,9 +554,6 @@ INSERT INTO public.game_score (id, date, value, user_id) VALUES (550, '2020-09-2
 INSERT INTO public.game_score (id, date, value, user_id) VALUES (554, '2020-09-29 15:12:21.914181', 1039, 7);
 INSERT INTO public.game_score (id, date, value, user_id) VALUES (561, '2020-10-01 09:30:22.391087', 960, 9);
 INSERT INTO public.game_score (id, date, value, user_id) VALUES (565, '2020-10-01 13:54:58.976884', 975, 9);
-
-
---
--- PostgreSQL database dump complete
---
-
+INSERT INTO public.game_score (id, date, value, user_id) VALUES (605, '2020-10-03 11:04:55.547828', 940, 8);
+INSERT INTO public.game_score (id, date, value, user_id) VALUES (606, '2020-10-03 11:14:43.634049', 907, 8);
+INSERT INTO public.game_score (id, date, value, user_id) VALUES (607, '2020-10-03 11:24:08.891327', 1031, 8);
