@@ -1,4 +1,38 @@
--- USERS
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 12.4 (Ubuntu 12.4-1.pgdg16.04+1)
+-- Dumped by pg_dump version 12.3
+
+-- Started on 2020-10-05 10:21:02
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- TOC entry 3905 (class 0 OID 6140089)
+-- Dependencies: 202
+-- Data for Name: auth_role; Type: TABLE DATA; Schema: public; Owner: tvwexrydbwrtnx
+--
+
+INSERT INTO public.auth_role (id, description, label) VALUES (1, NULL, 'ADMIN');
+INSERT INTO public.auth_role (id, description, label) VALUES (2, NULL, 'USER');
+
+
+--
+-- TOC entry 3907 (class 0 OID 6140099)
+-- Dependencies: 204
+-- Data for Name: auth_user; Type: TABLE DATA; Schema: public; Owner: tvwexrydbwrtnx
+--
 
 INSERT INTO public.auth_user (id, password, username) VALUES (1, '$2a$10$4mtJPUySOPSWIgqOi9YbQ.bDX46wC3Moefxvk8pAvGtrZ0418.EXS', 'matej');
 INSERT INTO public.auth_user (id, password, username) VALUES (4, '$2a$10$7wY9nvMQFw0RvYTn8fReeei8uQ83lbInzrXER8/asVDeNxjvxJWje', 'Bumer');
@@ -8,7 +42,11 @@ INSERT INTO public.auth_user (id, password, username) VALUES (8, '$2a$10$sgVBigH
 INSERT INTO public.auth_user (id, password, username) VALUES (9, '$2a$10$eBZuGRS6xY9vFSvODvWO5.nSZSUMrV6KctEa0DfPXZfLWq0G6XHdC', 'brana');
 
 
--- USER ROLES
+--
+-- TOC entry 3908 (class 0 OID 6140105)
+-- Dependencies: 205
+-- Data for Name: auth_user_role; Type: TABLE DATA; Schema: public; Owner: tvwexrydbwrtnx
+--
 
 INSERT INTO public.auth_user_role (user_id, role_id) VALUES (1, 1);
 INSERT INTO public.auth_user_role (user_id, role_id) VALUES (1, 2);
@@ -18,7 +56,387 @@ INSERT INTO public.auth_user_role (user_id, role_id) VALUES (7, 1);
 INSERT INTO public.auth_user_role (user_id, role_id) VALUES (8, 1);
 INSERT INTO public.auth_user_role (user_id, role_id) VALUES (9, 1);
 
--- game_scoreS
+
+--
+-- TOC entry 3909 (class 0 OID 6140110)
+-- Dependencies: 206
+-- Data for Name: box_type; Type: TABLE DATA; Schema: public; Owner: tvwexrydbwrtnx
+--
+
+INSERT INTO public.box_type (id, label) VALUES (1, 'ONES');
+INSERT INTO public.box_type (id, label) VALUES (2, 'TWOS');
+INSERT INTO public.box_type (id, label) VALUES (3, 'THREES');
+INSERT INTO public.box_type (id, label) VALUES (4, 'FOURS');
+INSERT INTO public.box_type (id, label) VALUES (5, 'FIVES');
+INSERT INTO public.box_type (id, label) VALUES (6, 'SIXES');
+INSERT INTO public.box_type (id, label) VALUES (7, 'MAX');
+INSERT INTO public.box_type (id, label) VALUES (8, 'MIN');
+INSERT INTO public.box_type (id, label) VALUES (9, 'TRIPS');
+INSERT INTO public.box_type (id, label) VALUES (10, 'STRAIGHT');
+INSERT INTO public.box_type (id, label) VALUES (11, 'FULL');
+INSERT INTO public.box_type (id, label) VALUES (12, 'POKER');
+INSERT INTO public.box_type (id, label) VALUES (13, 'JAMB');
+
+
+--
+-- TOC entry 3910 (class 0 OID 6140115)
+-- Dependencies: 207
+-- Data for Name: column_type; Type: TABLE DATA; Schema: public; Owner: tvwexrydbwrtnx
+--
+
+INSERT INTO public.column_type (id, label) VALUES (1, 'DOWNWARDS');
+INSERT INTO public.column_type (id, label) VALUES (2, 'UPWARDS');
+INSERT INTO public.column_type (id, label) VALUES (3, 'ANY_DIRECTION');
+INSERT INTO public.column_type (id, label) VALUES (4, 'ANNOUNCEMENT');
+
+
+--
+-- TOC entry 3915 (class 0 OID 6140137)
+-- Dependencies: 212
+-- Data for Name: game_form; Type: TABLE DATA; Schema: public; Owner: tvwexrydbwrtnx
+--
+
+INSERT INTO public.game_form (id, roll_count, announcement, user_id) VALUES (13, 0, NULL, 1);
+INSERT INTO public.game_form (id, roll_count, announcement, user_id) VALUES (7, 0, NULL, 5);
+INSERT INTO public.game_form (id, roll_count, announcement, user_id) VALUES (17, 3, NULL, 8);
+INSERT INTO public.game_form (id, roll_count, announcement, user_id) VALUES (24, 0, NULL, 9);
+INSERT INTO public.game_form (id, roll_count, announcement, user_id) VALUES (27, 3, NULL, 7);
+
+
+--
+-- TOC entry 3912 (class 0 OID 6140125)
+-- Dependencies: 209
+-- Data for Name: game_column; Type: TABLE DATA; Schema: public; Owner: tvwexrydbwrtnx
+--
+
+INSERT INTO public.game_column (column_type, form_id) VALUES (1, 24);
+INSERT INTO public.game_column (column_type, form_id) VALUES (2, 24);
+INSERT INTO public.game_column (column_type, form_id) VALUES (3, 24);
+INSERT INTO public.game_column (column_type, form_id) VALUES (4, 24);
+INSERT INTO public.game_column (column_type, form_id) VALUES (1, 7);
+INSERT INTO public.game_column (column_type, form_id) VALUES (2, 7);
+INSERT INTO public.game_column (column_type, form_id) VALUES (3, 7);
+INSERT INTO public.game_column (column_type, form_id) VALUES (4, 7);
+INSERT INTO public.game_column (column_type, form_id) VALUES (1, 27);
+INSERT INTO public.game_column (column_type, form_id) VALUES (2, 27);
+INSERT INTO public.game_column (column_type, form_id) VALUES (3, 27);
+INSERT INTO public.game_column (column_type, form_id) VALUES (4, 27);
+INSERT INTO public.game_column (column_type, form_id) VALUES (1, 13);
+INSERT INTO public.game_column (column_type, form_id) VALUES (2, 13);
+INSERT INTO public.game_column (column_type, form_id) VALUES (3, 13);
+INSERT INTO public.game_column (column_type, form_id) VALUES (4, 13);
+INSERT INTO public.game_column (column_type, form_id) VALUES (1, 17);
+INSERT INTO public.game_column (column_type, form_id) VALUES (2, 17);
+INSERT INTO public.game_column (column_type, form_id) VALUES (3, 17);
+INSERT INTO public.game_column (column_type, form_id) VALUES (4, 17);
+
+
+--
+-- TOC entry 3911 (class 0 OID 6140120)
+-- Dependencies: 208
+-- Data for Name: game_box; Type: TABLE DATA; Schema: public; Owner: tvwexrydbwrtnx
+--
+
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 1, 7, 1);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 1, 7, 2);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 1, 7, 3);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 1, 7, 4);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 1, 7, 5);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 1, 7, 6);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 1, 27, 1);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 1, 27, 2);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 1, 27, 3);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 1, 27, 4);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 1, 27, 5);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 1, 27, 6);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 1, 27, 7);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 1, 27, 8);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 1, 27, 9);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 1, 27, 10);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 1, 27, 11);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 1, 27, 12);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 1, 27, 13);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 2, 27, 1);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 2, 27, 2);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 2, 27, 3);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 2, 27, 4);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 2, 27, 5);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 2, 27, 6);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 2, 27, 7);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 2, 27, 8);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 2, 27, 9);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 2, 27, 10);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 2, 27, 11);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 3, 27, 1);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 3, 27, 3);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 3, 27, 4);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 3, 27, 5);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 3, 27, 6);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 3, 27, 7);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 3, 27, 8);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 3, 27, 9);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 3, 27, 10);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 3, 27, 11);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 3, 27, 12);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 3, 27, 13);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 4, 27, 1);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 4, 27, 2);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 4, 27, 3);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 4, 27, 4);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 4, 27, 5);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 4, 27, 6);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 1, 7, 7);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 1, 7, 8);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 1, 7, 9);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 1, 7, 10);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 1, 7, 11);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 1, 7, 12);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 1, 7, 13);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 2, 7, 1);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 2, 7, 2);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 2, 7, 3);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 2, 7, 4);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 2, 7, 5);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 2, 7, 6);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 2, 7, 7);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 2, 7, 8);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 2, 7, 9);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 2, 7, 10);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 2, 7, 11);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 2, 7, 12);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 2, 7, 13);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 3, 7, 1);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 3, 7, 3);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 3, 7, 4);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 3, 7, 5);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 3, 7, 6);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 3, 7, 7);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 3, 7, 8);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 3, 7, 9);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 3, 7, 10);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 3, 7, 11);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 3, 7, 12);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 3, 7, 13);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 4, 7, 1);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 4, 7, 2);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 4, 7, 3);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 4, 7, 4);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 4, 7, 5);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 4, 7, 6);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 4, 7, 7);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 4, 7, 8);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 4, 7, 9);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 4, 7, 10);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 4, 7, 11);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 4, 7, 12);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 4, 7, 13);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 4, 3, 7, 2);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 4, 27, 7);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 4, 27, 8);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 4, 27, 9);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 4, 27, 10);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 4, 27, 11);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 4, 27, 12);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 4, 27, 13);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 8, 3, 27, 2);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 2, 27, 12);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 75, 2, 27, 13);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 1, 13, 1);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 1, 13, 2);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 1, 13, 3);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 1, 13, 4);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 1, 13, 5);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 1, 13, 6);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 1, 13, 7);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 1, 13, 8);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 1, 13, 9);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 1, 13, 10);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 1, 13, 11);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 1, 13, 12);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 1, 13, 13);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 2, 13, 1);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 2, 13, 2);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 2, 13, 3);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 2, 13, 4);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 2, 13, 5);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 2, 13, 6);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 2, 13, 7);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 2, 13, 8);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 2, 13, 9);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 2, 13, 10);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 2, 13, 11);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 2, 13, 12);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 2, 13, 13);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 3, 13, 1);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 3, 13, 2);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 3, 13, 3);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 3, 13, 4);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 3, 13, 5);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 3, 13, 6);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 3, 13, 7);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 3, 13, 8);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 3, 13, 9);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 3, 13, 10);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 3, 13, 11);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 3, 13, 12);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 3, 13, 13);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 4, 13, 1);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 4, 13, 2);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 4, 13, 3);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 4, 13, 4);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 4, 13, 5);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 4, 13, 6);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 4, 13, 7);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 4, 13, 8);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 4, 13, 9);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 4, 13, 10);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 4, 13, 11);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 4, 13, 12);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 4, 13, 13);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 2, 3, 17, 2);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 8, 3, 17, 4);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 75, 2, 17, 13);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 6, 4, 17, 2);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 35, 2, 17, 10);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 60, 2, 17, 12);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 27, 3, 17, 7);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 12, 4, 17, 4);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 6, 3, 17, 3);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 8, 3, 17, 8);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 22, 4, 17, 9);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 4, 1, 17, 1);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 12, 4, 17, 3);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 3, 3, 17, 1);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 4, 1, 17, 2);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 10, 2, 17, 5);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 45, 3, 17, 10);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 0, 4, 17, 10);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 10, 3, 17, 5);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 64, 3, 17, 12);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 6, 1, 17, 3);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 0, 1, 17, 10);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 0, 3, 17, 9);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 24, 3, 17, 6);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 0, 3, 17, 11);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 20, 4, 17, 5);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 41, 2, 17, 11);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 0, 4, 17, 11);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 25, 2, 17, 9);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 0, 1, 17, 11);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 10, 2, 17, 8);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 25, 2, 17, 7);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 24, 4, 17, 6);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 0, 4, 17, 13);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 8, 1, 17, 4);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 2, 4, 17, 1);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 10, 1, 17, 5);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 8, 2, 17, 4);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 15, 4, 17, 8);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 18, 1, 17, 6);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 0, 4, 17, 12);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 0, 3, 17, 13);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 22, 1, 17, 7);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 9, 2, 17, 3);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 23, 4, 17, 7);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 11, 1, 17, 8);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 18, 2, 17, 6);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 28, 1, 17, 9);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 6, 2, 17, 2);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 2, 2, 17, 1);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 56, 1, 17, 12);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 0, 1, 17, 13);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 9, 3, 24, 3);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 12, 3, 24, 4);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 12, 3, 24, 6);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 6, 3, 24, 2);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 27, 3, 24, 7);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 4, 1, 24, 1);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 1, 24, 2);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 3, 3, 24, 1);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 48, 3, 24, 11);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 12, 4, 24, 8);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 19, 3, 24, 9);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 12, 4, 24, 3);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 2, 4, 24, 1);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 2, 24, 12);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 0, 2, 24, 13);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 0, 3, 24, 10);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 1, 24, 3);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 1, 24, 4);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 1, 24, 5);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 1, 24, 6);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 1, 24, 7);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 1, 24, 8);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 1, 24, 9);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 1, 24, 10);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 1, 24, 11);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 1, 24, 12);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 1, 24, 13);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 2, 24, 1);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 2, 24, 2);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 2, 24, 3);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 2, 24, 4);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 2, 24, 5);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 2, 24, 6);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 2, 24, 7);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 2, 24, 8);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 2, 24, 9);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 2, 24, 10);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, false, 0, 2, 24, 11);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 3, 24, 5);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 3, 24, 13);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 4, 24, 2);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 4, 24, 4);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 4, 24, 5);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 4, 24, 6);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 4, 24, 7);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 4, 24, 9);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 4, 24, 10);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 4, 24, 11);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 4, 24, 12);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (true, false, 0, 4, 24, 13);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 60, 3, 24, 12);
+INSERT INTO public.game_box (available, filled, value, column_type_id, form_id, box_type) VALUES (false, true, 10, 3, 24, 8);
+
+
+--
+-- TOC entry 3913 (class 0 OID 6140130)
+-- Dependencies: 210
+-- Data for Name: game_dice; Type: TABLE DATA; Schema: public; Owner: tvwexrydbwrtnx
+--
+
+INSERT INTO public.game_dice (ordinal_number, value, form_id) VALUES (1, 1, 24);
+INSERT INTO public.game_dice (ordinal_number, value, form_id) VALUES (1, 3, 7);
+INSERT INTO public.game_dice (ordinal_number, value, form_id) VALUES (3, 2, 7);
+INSERT INTO public.game_dice (ordinal_number, value, form_id) VALUES (4, 3, 7);
+INSERT INTO public.game_dice (ordinal_number, value, form_id) VALUES (2, 2, 7);
+INSERT INTO public.game_dice (ordinal_number, value, form_id) VALUES (0, 4, 7);
+INSERT INTO public.game_dice (ordinal_number, value, form_id) VALUES (0, 6, 13);
+INSERT INTO public.game_dice (ordinal_number, value, form_id) VALUES (1, 6, 13);
+INSERT INTO public.game_dice (ordinal_number, value, form_id) VALUES (2, 6, 13);
+INSERT INTO public.game_dice (ordinal_number, value, form_id) VALUES (3, 6, 13);
+INSERT INTO public.game_dice (ordinal_number, value, form_id) VALUES (4, 6, 13);
+INSERT INTO public.game_dice (ordinal_number, value, form_id) VALUES (3, 4, 24);
+INSERT INTO public.game_dice (ordinal_number, value, form_id) VALUES (0, 6, 24);
+INSERT INTO public.game_dice (ordinal_number, value, form_id) VALUES (4, 3, 24);
+INSERT INTO public.game_dice (ordinal_number, value, form_id) VALUES (2, 5, 24);
+INSERT INTO public.game_dice (ordinal_number, value, form_id) VALUES (0, 4, 27);
+INSERT INTO public.game_dice (ordinal_number, value, form_id) VALUES (1, 4, 27);
+INSERT INTO public.game_dice (ordinal_number, value, form_id) VALUES (3, 3, 27);
+INSERT INTO public.game_dice (ordinal_number, value, form_id) VALUES (4, 5, 27);
+INSERT INTO public.game_dice (ordinal_number, value, form_id) VALUES (2, 5, 27);
+INSERT INTO public.game_dice (ordinal_number, value, form_id) VALUES (2, 2, 17);
+INSERT INTO public.game_dice (ordinal_number, value, form_id) VALUES (0, 2, 17);
+INSERT INTO public.game_dice (ordinal_number, value, form_id) VALUES (3, 2, 17);
+INSERT INTO public.game_dice (ordinal_number, value, form_id) VALUES (4, 6, 17);
+INSERT INTO public.game_dice (ordinal_number, value, form_id) VALUES (1, 2, 17);
+
+
+--
+-- TOC entry 3917 (class 0 OID 6140145)
+-- Dependencies: 214
+-- Data for Name: game_score; Type: TABLE DATA; Schema: public; Owner: tvwexrydbwrtnx
+--
 
 INSERT INTO public.game_score (id, date, value, user_id) VALUES (467, '2020-09-22 14:52:56.424607', 994, 4);
 INSERT INTO public.game_score (id, date, value, user_id) VALUES (471, '2020-09-22 17:03:56.656687', 1233, 5);
@@ -557,3 +975,41 @@ INSERT INTO public.game_score (id, date, value, user_id) VALUES (565, '2020-10-0
 INSERT INTO public.game_score (id, date, value, user_id) VALUES (605, '2020-10-03 11:04:55.547828', 940, 8);
 INSERT INTO public.game_score (id, date, value, user_id) VALUES (606, '2020-10-03 11:14:43.634049', 907, 8);
 INSERT INTO public.game_score (id, date, value, user_id) VALUES (607, '2020-10-03 11:24:08.891327', 1031, 8);
+INSERT INTO public.game_score (id, date, value, user_id) VALUES (610, '2020-10-04 07:35:49.414196', 1089, 1);
+INSERT INTO public.game_score (id, date, value, user_id) VALUES (611, '2020-10-04 16:33:48.385999', 991, 8);
+INSERT INTO public.game_score (id, date, value, user_id) VALUES (613, '2020-10-05 08:20:56.455141', 860, 8);
+
+
+--
+-- TOC entry 3923 (class 0 OID 0)
+-- Dependencies: 203
+-- Name: auth_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: tvwexrydbwrtnx
+--
+
+SELECT pg_catalog.setval('public.auth_user_id_seq', 10, true);
+
+
+--
+-- TOC entry 3924 (class 0 OID 0)
+-- Dependencies: 211
+-- Name: game_form_id_seq; Type: SEQUENCE SET; Schema: public; Owner: tvwexrydbwrtnx
+--
+
+SELECT pg_catalog.setval('public.game_form_id_seq', 27, true);
+
+
+--
+-- TOC entry 3925 (class 0 OID 0)
+-- Dependencies: 213
+-- Name: game_score_id_seq; Type: SEQUENCE SET; Schema: public; Owner: tvwexrydbwrtnx
+--
+
+SELECT pg_catalog.setval('public.game_score_id_seq', 613, true);
+
+
+-- Completed on 2020-10-05 10:21:13
+
+--
+-- PostgreSQL database dump complete
+--
+
