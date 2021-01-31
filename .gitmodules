@@ -1,0 +1,12 @@
+[submodule "jamb-spring"]
+	path = jamb-spring
+	url = https://github.com/MatejDanic/jamb-spring.git
+[submodule "jamb-flask"]
+	path = jamb-flask
+	url = https://github.com/MatejDanic/jamb-flask.git
+[submodule "jamb-react"]
+	path = jamb-react
+	url = https://github.com/MatejDanic/jamb-react.git
+[submodule "jamb-swing"]
+	path = jamb-swing
+	url = https://github.com/MatejDanic/jamb-swing.git
